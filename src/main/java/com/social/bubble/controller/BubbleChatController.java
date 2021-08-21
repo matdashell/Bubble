@@ -14,27 +14,27 @@ public class BubbleChatController {
         return null;
     }
 
-    @RequestMapping(value = "/global", method = RequestMethod.GET)
+    @RequestMapping(value = "/Publico", method = RequestMethod.GET)
     public ModelAndView globalChat(){
         return null;
     }
 
-    @RequestMapping(value = "/global/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/Publico/{id}", method = RequestMethod.GET)
     public ModelAndView globalChatSala(){
         return null;
     }
 
-    @RequestMapping(value = "/autenticado", method = RequestMethod.GET)
+    @RequestMapping(value = "/Autenticado", method = RequestMethod.GET)
     public ModelAndView authChat(){
         return null;
     }
 
-    @RequestMapping(value = "/autenticado/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/Autenticado/{id}", method = RequestMethod.GET)
     public ModelAndView authChatSala(){
         return null;
     }
 
-    @RequestMapping(value = "/privado/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/Privado/{id}", method = RequestMethod.GET)
     public ModelAndView privateChatSala(){
         return null;
     }

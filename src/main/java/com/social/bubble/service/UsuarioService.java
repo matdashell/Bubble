@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 public interface UsuarioService {
 
     Iterable<Usuario> findAll();
-    Usuario findUser(String username);
-    Iterable<Usuario> findByUsername(String usernam);
-    Iterable<Usuario> findByNickname(String nickname);
+    Usuario findByUsername(String username);
+    Usuario findByNickname(String nickname);
+    Iterable<Usuario> searchByUsername(String usernam);
+    Iterable<Usuario> searchByNickname(String nickname);
     void save(Usuario usuario);
     void delete(Usuario usuario);
 }

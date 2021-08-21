@@ -6,6 +6,8 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,11 +25,13 @@ public class Postagem {
     @Lob
     private byte[] imagemPost;
 
+    private LocalDate dataPostagem;
+
     @NotNull @NotBlank
     private String descricao;
 
     @OneToMany
     @JoinTable(name = "rel_comentarios_post")
-    private Iterable<Comentario> comentariosUsers;
+    private List<Comentario> comentariosUsers;
 
 }

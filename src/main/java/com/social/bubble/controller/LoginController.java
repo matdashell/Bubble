@@ -11,11 +11,6 @@ public class LoginController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView login(){
-        return null;
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ModelAndView validacao(){
-        return null;
+        return new ModelAndView("home/login");
     }
 }

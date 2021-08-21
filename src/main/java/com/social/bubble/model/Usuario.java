@@ -2,17 +2,20 @@ package com.social.bubble.model;
 import com.social.bubble.model.enums.Genero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @Entity
-public class Usuario{
+public class Usuario implements UserDetails {
 
     @Id
     @NotNull
@@ -26,6 +29,8 @@ public class Usuario{
     @NotNull
     @NotBlank
     protected String senha;
+
+    private String descricaoPerfil;
 
     @ElementCollection
     @CollectionTable(name = "rel_cores", 
@@ -68,12 +73,12 @@ public class Usuario{
 
     @OneToMany
     @JoinTable(name = "rel_postagem")
-    private Iterable<Postagem> postagens;
+    private List<Postagem> postagens;
 
     /*lista de comentarios do ususario em posts*/
     @OneToMany
     @JoinTable(name = "rel_comentarios_users")
-    private Iterable<Comentario> comentariosPost;
+    private List<Comentario> comentariosPost;
 
     /*lista de amigos do usuario*/
     @ManyToMany(fetch = FetchType.EAGER)
@@ -81,11 +86,11 @@ public class Usuario{
         joinColumns = @JoinColumn(name = "usuario"),
         inverseJoinColumns = @JoinColumn(name = "amigo")
     )
-    private Iterable<Usuario> listAmigosUsuarios;
+    private List<Usuario> listAmigosUsuarios;
 
     /*lista de usuario que o tem como amigo*/
     @ManyToMany(mappedBy = "listAmigosUsuarios")
-    private Iterable<Usuario> listUsuariosAmigos;
+    private List<Usuario> listUsuariosAmigos;
 
     /*chats do usuario*/
     @ManyToMany
@@ -93,5 +98,35 @@ public class Usuario{
         joinColumns = @JoinColumn(name = "usuario", referencedColumnName = "username"),
         inverseJoinColumns = @JoinColumn(name = "chat", referencedColumnName = "chat_id")
     )
-    private Iterable<BubbleChat> bubbleChats;
+    private List<BubbleChat> bubbleChats;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

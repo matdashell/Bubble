@@ -6,6 +6,9 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -16,9 +19,11 @@ public class Comentario {
     @Id
     private long id;
 
+    @NotNull
+    @NotBlank
     private String comentario;
 
-    private Date dataComentario;
+    private LocalDate dataComentario;
 
     @ManyToOne
     private Usuario comentarioUsuario;

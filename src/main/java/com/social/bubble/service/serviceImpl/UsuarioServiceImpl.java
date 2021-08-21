@@ -18,18 +18,23 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario findUser(String username) {
+    public Usuario findByUsername(String username) {
         return usuarioRepository.findById(username).isEmpty() ?
                 usuarioRepository.findById(username).get() : null;
     }
 
     @Override
-    public Iterable<Usuario> findByUsername(String username) {
-        return usuarioRepository.findByUsername(username);
+    public Iterable<Usuario> searchByUsername(String username) {
+        return usuarioRepository.searchByUsername(username);
     }
 
     @Override
-    public Iterable<Usuario> findByNickname(String nickname) {
+    public Iterable<Usuario> searchByNickname(String nickname) {
+        return usuarioRepository.searchByNickname(nickname);
+    }
+
+    @Override
+    public Usuario findByNickname(String nickname) {
         return usuarioRepository.findByNickname(nickname);
     }
 

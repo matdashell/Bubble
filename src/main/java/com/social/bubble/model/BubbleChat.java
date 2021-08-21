@@ -28,5 +28,5 @@ public class BubbleChat {
     private List<Usuario> usuariosChat;
 
     @OneToMany(mappedBy = "usuarioMsgm")
-    private Iterable<Mensagem> mensagensChat;
+    private List<Mensagem> mensagensChat;
 }
