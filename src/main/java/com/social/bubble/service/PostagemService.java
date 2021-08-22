@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 public interface PostagemService {
 
     Iterable<Postagem> findAll();
+    Iterable<Postagem> findByDataPostagem();
     Iterable<Postagem> findByDescricao(String descricao);
     Postagem findById (Long id);
     void save(Postagem postagem);

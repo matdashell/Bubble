@@ -10,4 +10,7 @@ public interface PostagemRepository extends CrudRepository<Postagem, Long> {
 
     @Query(value = "SELECT * FROM postagem WHERE descricao LIKE %?1%", nativeQuery = true)
     Iterable<Postagem> findByDescricao(String descricao);
+
+    @Query(value = "SELECT TOP 75 * FROM postagem ORDER BY data_postagem", nativeQuery = true)
+    Iterable<Postagem> findByDataPostagem();
 }

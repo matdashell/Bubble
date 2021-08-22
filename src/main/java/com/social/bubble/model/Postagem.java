@@ -34,4 +34,7 @@ public class Postagem {
     @JoinTable(name = "rel_comentarios_post")
     private List<Comentario> comentariosUsers;
 
+    @ManyToMany(mappedBy = "postagensCurtidas")
+    private List<Comentario> usuariosCurtiram;
+
 }

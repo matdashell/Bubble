@@ -1,6 +1,11 @@
 package com.social.bubble.controller;
 
+import com.social.bubble.model.Usuario;
+import com.social.bubble.service.PrincipalUserService;
+import com.social.bubble.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,18 +14,35 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/perfil")
 public class PerfilController {
 
-    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-    public ModelAndView perfil(){
-        return null;
-    }
+    @Autowired
+    private UsuarioService usuarioService;
 
-    @RequestMapping(value = "/{username}/info", method = RequestMethod.GET)
-    public ModelAndView informacoes(){
-        return null;
+    @Autowired
+    private PrincipalUserService principalUserService;
+
+    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
+    public ModelAndView perfil(@PathVariable("username") String username){
+
+        Usuario myUser = principalUserService.get();
+        Usuario usuario = usuarioService.findByUsername(username);
+
+        ModelAndView modelAndView = new ModelAndView("timeline/perfil");
+        modelAndView.addObject("usuario", usuario);
+        modelAndView.addObject("principalUser", myUser);
+
+        return modelAndView;
     }
 
     @RequestMapping(value = "/{username}/amigos", method = RequestMethod.GET)
-    public ModelAndView exibirAmigos(){
-        return null;
+    public ModelAndView exibirAmigos(@PathVariable("username") String username){
+
+        Usuario myUser = principalUserService.get();
+        Usuario usuario = usuarioService.findByUsername(username);
+
+        ModelAndView modelAndView = new ModelAndView("timeline/amigosUser");
+        modelAndView.addObject("usuario", usuario);
+        modelAndView.addObject("principalUser", myUser);
+
+        return modelAndView;
     }
 }

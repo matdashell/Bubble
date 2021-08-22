@@ -2,9 +2,10 @@ package com.social.bubble.model.enums;
 
 public enum Chat {
 
-    PUBLIC("Publico"),
-    PRIVATE("Privado"),
-    AUTH("Autenticado");
+    GLOBAL("global"),
+    PUBLIC("publico"),
+    PRIVATE("privado"),
+    AUTH("autenticado");
 
     private String description;
 

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -35,7 +37,7 @@ public class CadastroController {
 
     //validador de cadastro
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ModelAndView validacao(Usuario usuario, BindingResult bindingResult){
+    public ModelAndView validacao(Usuario usuario, BindingResult bindingResult, @RequestParam("file") MultipartFile multipartFile){
 
         //apresentar itens disponivei na tela de cadastro e informações do usuario anteriores
         ModelAndView modelAndView = new ModelAndView("home/cadastro");
@@ -65,6 +67,11 @@ public class CadastroController {
             modelAndView.addObject("usuario", usuario);
             return modelAndView;
         }
+
+        //adicionar imagem do usuario
+        try{
+            usuario.setFotoPerfil(multipartFile.getBytes());
+        }catch(Exception ignored){ }
 
         //caso todas as informações estejam corretas a senha sera criptografada e usuario salvo
         usuario.setSenha(new BCryptPasswordEncoder(8).encode(usuario.getSenha()));

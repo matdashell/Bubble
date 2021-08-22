@@ -1,6 +1,9 @@
 package com.social.bubble.controller;
 
+import com.social.bubble.service.PostagemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,18 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/postagem")
 public class PostagemController {
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ModelAndView postagem(){
-        return null;
-    }
+    @Autowired
+    private PostagemService postagemService;
 
-    @RequestMapping(value = "/{id}/likes", method = RequestMethod.GET)
-    public ModelAndView exibirUserLikes(){
-        return null;
-    }
+    @RequestMapping(value = "/{idPost}", method = RequestMethod.GET)
+    public ModelAndView postagem(@PathVariable("idPost") long id){
 
-    @RequestMapping(value = "/cadastro", method = RequestMethod.GET)
-    public ModelAndView cadastroPostagem(){
-        return null;
+        ModelAndView modelAndView = new ModelAndView("timeline/postagem");
+        modelAndView.addObject("postagem", postagemService.findById(id));
+
+        return modelAndView;
     }
 }

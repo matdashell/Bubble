@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
@@ -82,7 +83,7 @@ public class UsuarioController {
     //opção somente para perfil
     //adicionar uma nova postagem no perfil pessoal
     @RequestMapping(value = "/addPostagem", method = RequestMethod.POST)
-    public ModelAndView adicionarPostagem(Postagem postagem, BindingResult bindingResult){
+    public ModelAndView adicionarPostagem(Postagem postagem, BindingResult bindingResult, @RequestParam("file") MultipartFile multipartFile){
 
         Usuario myUser = principalUserService.get();
 
@@ -97,6 +98,14 @@ public class UsuarioController {
         //configurar dados da postagem
         postagem.setDataPostagem(LocalDate.now());
         postagem.setUsuarioPost(myUser);
+
+        //adicionar imagem na postagem
+        if(multipartFile != null){
+            try {
+                postagem.setImagemPost(multipartFile.getBytes());
+            } catch (Exception ignored) { }
+        }
+
         postagemService.save(postagem);
 
         return new ModelAndView("redirect:/perfil/"+myUser.getUsername());
@@ -171,7 +180,7 @@ public class UsuarioController {
     //opção somente para bubbles
     //eviar mensagem para um bubblechat e indentificar qual tipo de chat o ususario esta participando
     @RequestMapping(value = "/enviarMensagem/{idChat}", method = RequestMethod.POST)
-    public ModelAndView enviarMensagem(@PathVariable("idChat") long id, Mensagem mensagem){
+    public ModelAndView enviarMensagemChat(@PathVariable("idChat") long id, Mensagem mensagem, @RequestParam("file") MultipartFile multipartFile){
 
         Usuario myUser = principalUserService.get();
         BubbleChat bubbleChat = bubbleChatService.findById(id);
@@ -181,6 +190,15 @@ public class UsuarioController {
 
             mensagem.setUsuarioMsgm(principalUserService.get());
             bubbleChat.getMensagensChat().add(mensagem);
+
+            //adicionar imagem na mensagem caso contenha uma
+            if(multipartFile != null){
+                try{
+                    mensagem.setImagemMsgm(multipartFile.getBytes());
+                }
+                catch(Exception ignored){}
+            }
+
             bubbleChatService.save(bubbleChat);
 
             String tipo = bubbleChat.getTipoChat().description();

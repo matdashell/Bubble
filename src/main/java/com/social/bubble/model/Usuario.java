@@ -100,6 +100,24 @@ public class Usuario implements UserDetails {
     )
     private List<BubbleChat> bubbleChats;
 
+    /*lista de postagens curtidas pelo usuario*/
+    @ManyToMany
+    @JoinTable(name = "rel_likes",
+        joinColumns = @JoinColumn(name = "usuario", referencedColumnName = "username"),
+        inverseJoinColumns = @JoinColumn(name = "postagem", referencedColumnName = "post_id")
+    )
+    private List<Postagem> postagensCurtidas;
+
+    //privacidade do usuario
+
+    boolean perfilPublico;
+
+    boolean chatPublico;
+
+    boolean confirmarSolicitacoes;
+
+    boolean perfilMatch;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -129,4 +147,5 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
