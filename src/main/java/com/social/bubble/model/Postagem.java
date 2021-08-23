@@ -35,6 +35,6 @@ public class Postagem {
     private List<Comentario> comentariosUsers;
 
     @ManyToMany(mappedBy = "postagensCurtidas")
-    private List<Comentario> usuariosCurtiram;
+    private List<Usuario> usuariosCurtiram;
 
 }

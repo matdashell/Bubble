@@ -20,7 +20,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/**").permitAll()
+                .authorizeRequests().anyRequest().permitAll()
                 .and().headers().frameOptions().sameOrigin()
                 .and().formLogin().loginPage("/login/").successForwardUrl("/homePage/timeline").permitAll()
                 .and().logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
@@ -33,13 +33,6 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(
-                "/bootstrap/**",
-                "/style/**",
-                "/css/**",
-                "/error",
-                "/js/**",
-                "/style.css/**",
-                "/resources/**");
+
     }
 }
