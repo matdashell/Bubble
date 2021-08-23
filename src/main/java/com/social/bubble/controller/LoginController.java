@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/login")
 public class LoginController {
 
+    //tela de login com validação spring security
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView login(){
         return new ModelAndView("home/login");

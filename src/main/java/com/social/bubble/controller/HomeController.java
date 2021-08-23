@@ -18,6 +18,8 @@ public class HomeController {
     @Autowired
     PostagemService postagemService;
 
+    /*Necessário criar query para pesquisa de postagens de acordo com a privacidad de cada user*/
+    //home timeline
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView("timeline/home");
@@ -25,6 +27,8 @@ public class HomeController {
         return null;
     }
 
+    /*Necessário criar query para pesquisa de postagens de acordo com a privacidad de cada user*/
+    //apresentar tela de match entre usuários de acordo com as especificações
     @RequestMapping(value = "/match", method = RequestMethod.GET)
     public ModelAndView procurarAmigos(){
         return null;

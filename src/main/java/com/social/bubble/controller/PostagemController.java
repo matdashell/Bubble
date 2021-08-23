@@ -15,6 +15,7 @@ public class PostagemController {
     @Autowired
     private PostagemService postagemService;
 
+    //apresentar postagem maximizada
     @RequestMapping(value = "/{idPost}", method = RequestMethod.GET)
     public ModelAndView postagem(@PathVariable("idPost") long id){
 

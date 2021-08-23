@@ -14,12 +14,14 @@ public class ConfigController {
     @Autowired
     private PrincipalUserService principalUserService;
 
+    //apresentar tela inicial de configurações
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView config(){
 
         return new ModelAndView("config/home");
     }
 
+    //apresentar tela de configurações da conta
     @RequestMapping(value = "/conta", method = RequestMethod.GET)
     public ModelAndView configContaGet(){
 
@@ -28,11 +30,13 @@ public class ConfigController {
         return modelAndView;
     }
 
+    //apresentar tela de configurações da senha
     @RequestMapping(value = "/alterarSenha", method = RequestMethod.GET)
     public ModelAndView configSenha(){
         return new ModelAndView("config/senha");
     }
 
+    //apresentar tela de configurações de privacidade
     @RequestMapping(value = "/privacidade", method = RequestMethod.GET)
     public ModelAndView configPrivacidade(){
         ModelAndView modelAndView = new ModelAndView("config/privacidade");

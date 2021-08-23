@@ -21,12 +21,14 @@ public class BubbleChatController {
     @Autowired
     private PrincipalUserService principalUserService;
 
+    //apresentar telas de chats
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView chats(){
 
         return new ModelAndView("bubble/home");
     }
 
+    //chat global
     @RequestMapping(value = "/global", method = RequestMethod.GET)
     public ModelAndView globalChat(){
 
@@ -36,6 +38,7 @@ public class BubbleChatController {
         return modelAndView;
     }
 
+    //chats com entradas publicas
     @RequestMapping(value = "/publico", method = RequestMethod.GET)
     public ModelAndView globalChatSala(){
 
@@ -45,6 +48,7 @@ public class BubbleChatController {
         return modelAndView;
     }
 
+    //chat publico em especifico
     @RequestMapping(value = "/publico/{idChat}", method = RequestMethod.GET)
     public ModelAndView globalChatSala(@PathVariable("idChat") long id){
 
@@ -54,6 +58,7 @@ public class BubbleChatController {
         return modelAndView;
     }
 
+    //chats com necessidade de autenticação pelo dono da sala
     @RequestMapping(value = "/autenticado", method = RequestMethod.GET)
     public ModelAndView authChat(){
 
@@ -63,11 +68,13 @@ public class BubbleChatController {
         return modelAndView;
     }
 
+    //chat autenticado em especifico
     @RequestMapping(value = "/autenticado/{idChat}", method = RequestMethod.GET)
     public ModelAndView authChatSala(@PathVariable("idChat") long id){
 
         BubbleChat bubbleChat = bubbleChatService.findById(id);
 
+        //validar se o usuario esta autorizado a entrar no chat
         if(bubbleChat.getUsuariosChat().contains(principalUserService.get())) {
             ModelAndView modelAndView = new ModelAndView("bubble/chat");
             modelAndView.addObject("chat", bubbleChat);
@@ -80,11 +87,13 @@ public class BubbleChatController {
         return modelAndView;
     }
 
+    //chat privado
     @RequestMapping(value = "/privado/{idChat}", method = RequestMethod.GET)
     public ModelAndView privateChatSala(@PathVariable("idChat") long id){
 
         BubbleChat bubbleChat = bubbleChatService.findById(id);
 
+        //validar se o usuario esta autorizado a entrar na sala
         if(bubbleChat.getUsuariosChat().contains(principalUserService.get())) {
             ModelAndView modelAndView = new ModelAndView("bubble/chat");
             modelAndView.addObject("chat", bubbleChat);

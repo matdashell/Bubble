@@ -20,6 +20,7 @@ public class PerfilController {
     @Autowired
     private PrincipalUserService principalUserService;
 
+    //verificar perfil de usuairo
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public ModelAndView perfil(@PathVariable("username") String username){
 
@@ -33,6 +34,7 @@ public class PerfilController {
         return modelAndView;
     }
 
+    //exibir lista de amigos do perfil do usuario
     @RequestMapping(value = "/{username}/amigos", method = RequestMethod.GET)
     public ModelAndView exibirAmigos(@PathVariable("username") String username){
 

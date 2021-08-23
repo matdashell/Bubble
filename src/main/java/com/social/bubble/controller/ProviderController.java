@@ -1,5 +1,6 @@
 package com.social.bubble.controller;
 
+import com.social.bubble.service.MensagemService;
 import com.social.bubble.service.PostagemService;
 import com.social.bubble.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,24 @@ public class ProviderController {
     @Autowired
     PostagemService postagemService;
 
+    @Autowired
+    MensagemService mensagemService;
+
+    //prover imagem nick
     @RequestMapping(value = "/nickImg/{username}", method = RequestMethod.GET)
     public byte[] getNickImg(@PathVariable("username") String username){
         return usuarioService.findByUsername(username).getFotoPerfil();
     }
 
+    //prover imagem postagem
     @RequestMapping(value = "/postImg/{id}", method = RequestMethod.GET)
     public byte[] getPostImg(@PathVariable("id") long id){
         return postagemService.findById(id).getImagemPost();
+    }
+
+    //prover imagem da mensagem
+    @RequestMapping(value = "/mensgImg/{id}", method = RequestMethod.GET)
+    public byte[] getPostMsgm(@PathVariable("id") long id){
+        return mensagemService.findById(id).getImagemMsgm();
     }
 }
