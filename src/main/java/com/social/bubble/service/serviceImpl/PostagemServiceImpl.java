@@ -18,13 +18,13 @@ public class PostagemServiceImpl implements PostagemService {
     }
 
     @Override
-    public Iterable<Postagem> findByDataPostagem() {
-        return postagemRepository.findByDataPostagem();
+    public Iterable<Postagem> searchByDataPostagem() {
+        return postagemRepository.searchByDescricao();
     }
 
     @Override
-    public Iterable<Postagem> findByDescricao(String descricao) {
-        return postagemRepository.findByDescricao(descricao);
+    public Iterable<Postagem> searchByDescricao(String descricao) {
+        return postagemRepository.searchByDescricao(descricao);
     }
 
     @Override

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostagemRepository extends CrudRepository<Postagem, Long> {
 
-    @Query(value = "SELECT * FROM postagem WHERE descricao LIKE %?1%", nativeQuery = true)
-    Iterable<Postagem> findByDescricao(String descricao);
+    @Query(value = "SELECT * FROM postagem WHERE descricao LIKE %?1% ORDER BY data_postagem", nativeQuery = true)
+    Iterable<Postagem> searchByDescricao(String descricao);
 
-    @Query(value = "SELECT TOP 75 * FROM postagem ORDER BY data_postagem", nativeQuery = true)
-    Iterable<Postagem> findByDataPostagem();
+    @Query(value = "SELECT TOP 100 * FROM postagem ORDER BY data_postagem", nativeQuery = true)
+    Iterable<Postagem> searchByDescricao();
 }
