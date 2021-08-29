@@ -20,6 +20,12 @@ public class PerfilController {
     @Autowired
     private PrincipalUserService principalUserService;
 
+    //encaminhar para perfil pessoal
+    @RequestMapping(value = "/meuPerfil", method = RequestMethod.GET)
+    public String redirecPerfilUser(){
+        return "redirect:/perfil/"+principalUserService.get().getUsername();
+    }
+
     //verificar perfil de usuairo
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public ModelAndView perfil(@PathVariable("username") String username){

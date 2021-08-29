@@ -47,7 +47,7 @@ public class CadastroController {
 
         //caso haja erros nos campos
         if(bindingResult.hasErrors()){
-            modelAndView.addObject("erro", "Campos preenchidos de forma incorreta ou incompleta!");
+            modelAndView.addObject("warning", "Campos preenchidos de forma incorreta ou incompleta!");
             modelAndView.addObject("usuario", usuario);
             return modelAndView;
         }
@@ -55,7 +55,7 @@ public class CadastroController {
         //caso username ja exista no sistema
         if(usuarioService.findByUsername(usuario.getUsername()) != null){
             usuario.setUsername(null);
-            modelAndView.addObject("erro", "Username selecionado já existe!");
+            modelAndView.addObject("warning", "Username selecionado já existe!");
             modelAndView.addObject("usuario", usuario);
             return modelAndView;
         }
@@ -63,7 +63,7 @@ public class CadastroController {
         //caso nickname ja exista no sistema
         if(usuarioService.findByNickname(usuario.getNickname()) != null){
             usuario.setNickname(null);
-            modelAndView.addObject("erro", "Nickname selecionado já existe!");
+            modelAndView.addObject("warning", "Nickname selecionado já existe!");
             modelAndView.addObject("usuario", usuario);
             return modelAndView;
         }

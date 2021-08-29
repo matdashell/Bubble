@@ -27,7 +27,10 @@ public class Postagem {
 
     private LocalDate dataPostagem;
 
-    @NotNull @NotBlank
+    private boolean postagemPublica;
+
+    @NotNull
+    @NotBlank
     private String descricao;
 
     @OneToMany
