@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="https://www.thymeleaf.org">
+    <head th:replace="replace/base :: css"></head>
+    <body>
+        <header th:replace="replace/base :: navbar"></header>
+        <main>
+            <div class="container card">
+                <div class="col-xs-12">
+                    <ul class="nav nav-pills nav-pills-icons" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active show" href="#sobre" role="tab" data-toggle="tab" aria-selected="true">
+                                <i class="material-icons">account_circle</i>
+                                Sobre
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pref" role="tab" data-toggle="tab" aria-selected="false">
+                                <i class="material-icons">psychology</i>
+                                Preferências
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#amgs" role="tab" data-toggle="tab" aria-selected="false">
+                                <i class="material-icons">people</i>
+                                Amigos
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content tab-space">
+
+                        <!--informações sobre usuario-->
+                        <div class="tab-pane active show container row" id="sobre">
+
+                            <!--opções internas perfil usuairo-->
+                            <div class="card card-nav-tabs card-plain">
+                                <div class="card-header card-header-info">
+
+                                    <div class="nav-tabs-navigation">
+                                        <div class="nav-tabs-wrapper">
+                                            <ul class="nav nav-tabs" data-tabs="tabs">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" href="#home2" data-toggle="tab">Home</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#posts2" data-toggle="tab">Posts</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#amigos2" data-toggle="tab">Amigos</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body ">
+                                    <div class="tab-content text-center">
+
+                                        <!--nav primaria-->
+                                        <div class="tab-pane active" id="home2">
+
+                                            <!--avatar-->
+                                            <div class="container row">
+                                                <div class="col-lg-5 col-sm-12 padding-top-2">
+                                                    <img src="/assets/img/faces/avatar.jpg" alt="Image" class="img-raised rounded-circle" style="max-width: 20em;">
+                                                </div>
+                                                <!--informações/ interações-->
+                                                <div class="col-lg-7 col-sm-12">
+                                                    <h3 class="title">Nome usuario</h3>
+                                                    <h4 class="title">@Nick usuario</h4>
+                                                    <h5 class="card-description">Em linguística, a noção de texto é ampla e ainda aberta a uma definição mais precisa. Grosso modo, pode ser entendido como manifestação linguística das ideias de um autor, que serão interpretadas pelo leitor de acordo com seus conhe</h5>
+                                                    <a class="btn btn-secondary" href="">Favoritar</a>
+                                                    <a class="btn btn-primary" href="">Seguir</a>
+                                                    <a class="btn btn-secondary" href="">Chat</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--nav secundario-->
+                                        <div class="tab-pane" id="posts2">
+                                            <div class="container row">
+                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
+                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">Card title</h4>
+                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
+                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">Card title</h4>
+                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
+                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">Card title</h4>
+                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
+                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">Card title</h4>
+                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
+                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">Card title</h4>
+                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
+                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">Card title</h4>
+                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="amigos2">
+                                            <div class="container row">
+                                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                                    <h4>Rounded Raised</h4>
+                                                    <img src="/assets/img/faces/avatar.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                                    <h4>Rounded Raised</h4>
+                                                    <img src="/assets/img/faces/avatar.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                                    <h4>Rounded Raised</h4>
+                                                    <img src="/assets/img/faces/avatar.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--preferencias do usuario-->
+                        <div class="tab-pane" id="pref">
+
+                        </div>
+
+                        <!--amigos do usuario-->
+                        <div class="tab-pane" id="amgs">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="replace/base :: footer"></footer>
+        <div th:replace="replace/base :: js"></div>
+    </body>
+</html>

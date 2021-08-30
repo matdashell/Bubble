@@ -130,7 +130,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true"><i class="material-icons">clear</i></span>
                 </button>
-                <b>Error:</b> <span th:text="${danger}"></span>
+                <b>Danger:</b> <span th:text="${danger}"></span>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -138,8 +138,8 @@
     </div>
 
     <!--fragmento footer-->
-    <div th:fragment="footer page pagination">
-        <footer class="footer" data-background-color="black">
+    <div th:fragment="footer">
+        <footer class="footer footer-default" data-background-color="black">
             <div class="container">
                 <nav class="float-left">
                     <ul>

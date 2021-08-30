@@ -1,19 +1,25 @@
 package com.social.bubble.model;
+import com.social.bubble.model.enums.Animais;
+import com.social.bubble.model.enums.Cores;
+import com.social.bubble.model.enums.EstMusical;
 import com.social.bubble.model.enums.Genero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.AbstractList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Usuario implements UserDetails {
 
@@ -32,43 +38,32 @@ public class Usuario implements UserDetails {
 
     private String descricaoPerfil;
 
-    @ElementCollection
-    @CollectionTable(name = "rel_cores", 
-        joinColumns = @JoinColumn(name = "id_user")
-    )
     @NotNull
-    @NotBlank
-    private List<String> coresFavoritas;
-
-    @ElementCollection
-    @CollectionTable(name = "rel_animaisfav",
-        joinColumns = @JoinColumn(name = "id_user")
-    )
-    @NotNull
-    @NotBlank
-    private List<String> animaisFavoritos;
-
-    @ElementCollection
-    @CollectionTable(name = "rel_estmusical",
-        joinColumns = @JoinColumn(name = "id_user")
-    )
-    @NotNull
-    @NotBlank
-    private List<String> estiloMusical;
+    @ElementCollection(targetClass = Cores.class)
+    @CollectionTable(name = "rel_cores", joinColumns = @JoinColumn(name = "id_user"))
+    @Enumerated(EnumType.STRING)
+    private List<Cores> coresFavoritas;
 
     @NotNull
-    @NotBlank
+    @ElementCollection(targetClass = Animais.class)
+    @CollectionTable(name = "rel_animaisfav",joinColumns = @JoinColumn(name = "id_user"))
+    @Enumerated(EnumType.STRING)
+    private List<Animais> animaisFavoritos;
+
+    @NotNull
+    @ElementCollection(targetClass = EstMusical.class)
+    @CollectionTable(name = "rel_estmusical", joinColumns = @JoinColumn(name = "id_user"))
+    @Enumerated(EnumType.STRING)
+    private List<EstMusical> estiloMusical;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private Genero genero;
 
+    @NotNull
     private int idade;
 
-    @NotNull
-    @NotBlank
-    private Date dataNasc;
-
     @Lob
-    @NotNull
-    @NotBlank
     private byte[] fotoPerfil;
 
     @OneToMany
@@ -109,7 +104,6 @@ public class Usuario implements UserDetails {
     private List<Postagem> postagensCurtidas;
 
     //privacidade do usuario
-
     boolean perfilPublico;
 
     boolean chatPublico;
@@ -120,7 +114,17 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return new AbstractList<GrantedAuthority>() {
+            @Override
+            public GrantedAuthority get(int index) {
+                return () -> ("USUARIO") ;
+            }
+
+            @Override
+            public int size() {
+                return 1;
+            }
+        };
     }
 
     @Override

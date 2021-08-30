@@ -30,27 +30,25 @@ public class PerfilController {
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public ModelAndView perfil(@PathVariable("username") String username){
 
-        Usuario myUser = principalUserService.get();
-        Usuario usuario = usuarioService.findByUsername(username);
+        return new ModelAndView("timeline/perfil");
 
-        ModelAndView modelAndView = new ModelAndView("timeline/perfil");
-        modelAndView.addObject("usuario", usuario);
-        modelAndView.addObject("principalUser", myUser);
-
-        return modelAndView;
-    }
-
-    //exibir lista de amigos do perfil do usuario
-    @RequestMapping(value = "/{username}/amigos", method = RequestMethod.GET)
-    public ModelAndView exibirAmigos(@PathVariable("username") String username){
-
-        Usuario myUser = principalUserService.get();
-        Usuario usuario = usuarioService.findByUsername(username);
-
-        ModelAndView modelAndView = new ModelAndView("timeline/amigosUser");
-        modelAndView.addObject("usuario", usuario);
-        modelAndView.addObject("principalUser", myUser);
-
-        return modelAndView;
+//        Usuario usuario = usuarioService.findByUsername(username);
+//
+//        if(usuario != null){
+//            Usuario myUser = principalUserService.get();
+//
+//            ModelAndView modelAndView = new ModelAndView("timeline/perfil");
+//            if(!myUser.getListAmigosUsuarios().contains(usuario)){
+//                modelAndView.addObject("info", "Envie uma solicitação de amizade para "+usuario.getNickname()+" :)");
+//            }
+//            modelAndView.addObject("usuario", usuario);
+//            modelAndView.addObject("principalUser", myUser);
+//
+//            return modelAndView;
+//        }
+//
+//        ModelAndView modelAndView = new ModelAndView("redirect:/perfil/meuPerfil");
+//        modelAndView.addObject("warning", "Perfil não encontrado!");
+//        return modelAndView;
     }
 }

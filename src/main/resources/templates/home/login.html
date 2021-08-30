@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="https://www.thymeleaf.org">
-    <head>
-        <div th:replace="base :: css"></div>
-    </head>
+    <head th:replace="replace/base :: css"></head>
 
     <body>
-        <header>
-            <div th:replace="base :: navbar"></div>
-        </header>
+        <header th:replace="replace/base :: navbar"></header>
         <main>
             <div class="container">
                 <br/>
@@ -49,17 +45,15 @@
                                 <p>Não possui conta? <a class="btn-primary btn-link" href="/cadastro/">Cadastre-se!</a></p>
                             </div>
 
-                            <div th:replace="base :: token"></div>
+                            <div th:replace="replace/base :: token"></div>
                         </form>
-                        <div th:replace="base :: alert"></div>
+                        <div th:replace="replace/base :: alert"></div>
                     </div>
                 </div>
 
             </div><!--container-->
         </main>
-        <footer>
-            <div th:replace="base :: footer"></div>
-        </footer>
-        <div th:replace="base :: js"></div>
+        <footer th:replace="replace/base :: footer"></footer>
+        <div th:replace="replace/base :: js"></div>
     </body>
 </html>

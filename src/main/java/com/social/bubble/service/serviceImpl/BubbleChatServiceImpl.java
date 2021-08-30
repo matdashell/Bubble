@@ -20,7 +20,7 @@ public class BubbleChatServiceImpl implements BubbleChatService {
 
     @Override
     public Iterable<BubbleChat> findByTipo(Chat tipo) {
-        return bubbleChatRepository.findByTipo(tipo.description());
+        return bubbleChatRepository.findByTipo(tipo);
     }
 
     @Override

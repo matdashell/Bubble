@@ -20,6 +20,7 @@ public class BubbleChat {
 
     private String nomeChat;
 
+    @Enumerated(EnumType.STRING)
     private Chat tipoChat;
 
     private Date dataCriacao;

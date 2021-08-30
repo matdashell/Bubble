@@ -1,6 +1,10 @@
 package com.social.bubble.service.serviceImpl;
 
 import com.social.bubble.model.Usuario;
+import com.social.bubble.model.enums.Animais;
+import com.social.bubble.model.enums.Cores;
+import com.social.bubble.model.enums.EstMusical;
+import com.social.bubble.model.enums.Genero;
 import com.social.bubble.repository.UsuarioRepository;
 import com.social.bubble.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +23,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario findByUsername(String username) {
-        return usuarioRepository.findById(username).isEmpty() ?
+        return usuarioRepository.findById(username).isPresent() ?
                 usuarioRepository.findById(username).get() : null;
     }
 
@@ -31,6 +35,18 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Iterable<Usuario> searchByNickname(String nickname) {
         return usuarioRepository.searchByNickname(nickname);
+    }
+
+    @Override
+    public Iterable<Usuario> searchByMatch(
+            Genero genero,
+            int menorIdade,
+            int maiorIdade,
+            Cores cores,
+            EstMusical estMusical,
+            Animais animais) {
+
+        return usuarioRepository.matches(genero, menorIdade, maiorIdade, cores, estMusical, animais);
     }
 
     @Override

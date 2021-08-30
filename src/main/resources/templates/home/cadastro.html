@@ -1,232 +1,254 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <div th:replace="base :: css"></div>
-</head>
+    <head th:replace="replace/base :: css"></head>
 
-<body>
-    <header>
-        <div th:replace="base :: navbar"></div>
-    </header>
-    <main>
-        <div class="container">
-            <div class="title center">Cadastro de Usuário</div>
-            <div class="card card-nav-tabs">
-                <div class="card-header card-header-primary">
-                    <div class="nav-tabs-navigation">
-                        <div class="nav-tabs-wrapper">
-                            <ul class="nav nav-tabs" data-tabs="tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active show" href="#perfil" data-toggle="tab">
-                                        <i class="material-icons">face</i>
-                                        Profile
-                                        <div class="ripple-container"></div></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#preferencias" data-toggle="tab">
-                                        <i class="material-icons">psychology</i>
-                                        Preferencias
-                                        <div class="ripple-container"></div></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#config" data-toggle="tab">
-                                        <i class="material-icons">lock_open</i>
-                                        Privacidade
-                                        <div class="ripple-container"></div></a>
-                                </li>
-                            </ul>
+    <body>
+        <header>
+            <div th:replace="replace/base :: navbar"></div>
+        </header>
+        <main>
+            <div class="container">
+                <div th:replace="replace/base :: alert"></div>
+                <div class="title center">Cadastro de Usuário</div>
+                <div class="card card-nav-tabs">
+                    <div class="card-header card-header-primary">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active show" href="#perfil" data-toggle="tab">
+                                            <i class="material-icons">face</i>
+                                            Profile
+                                            <div class="ripple-container"></div></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#preferencias" data-toggle="tab">
+                                            <i class="material-icons">psychology</i>
+                                            Preferencias
+                                            <div class="ripple-container"></div></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#config" data-toggle="tab">
+                                            <i class="material-icons">lock_open</i>
+                                            Privacidade
+                                            <div class="ripple-container"></div></a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                    <!---->
+                    <form id="formCad" action="/cadastro/" method="post" enctype="multipart/form-data">
+                        <div class="card-login">
+                            <div class="tab-content text-center">
+
+                                <!--formulario de perfil-->
+
+                                <div class="tab-pane active show" id="perfil">
+                                    <div class="card-body">
+                                        <span class="bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="material-icons">person_outline</i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="none">
+                                            </div>
+                                        </span>
+
+                                        <span class="bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="material-icons">face</i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control" name="nickname" placeholder="Nickname" autocomplete="none">
+                                            </div>
+                                        </span>
+
+                                        <span class="bmd-form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="material-icons">lock</i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control" name="senha" placeholder="Password" autocomplete="none">
+                                            </div>
+                                        </span>
+
+                                        <div class="row">
+                                            <span class="bmd-form-group col-md-6 col-sm-12">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="material-icons">today</i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="number" class="form-control" name="idade" placeholder="Sua idade" autocomplete="none">
+                                                </div>
+                                            </span>
+
+                                            <span class="bmd-form-group col-md-6 col-sm-12">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="material-icons">add_a_photo</i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="file" class="form-control" name="file" placeholder="Foto de perfil" accept="image/png/jpg/jpeg">
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <br class="padding-bottom-1"/>
+                                    </div>
+                                </div>
+
+                                <!--formulario de preferencias-->
+
+                                <div class="tab-pane" id="preferencias">
+                                    <br/>
+                                    <div class="container row">
+
+                                        <div class="col-md-12">
+                                            <div class="title">
+                                                <h3>Com qual gênero se indentifica? *</h3>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label" th:each="gen : ${genero}">
+                                                    <input class="form-check-input" type="radio" name="genero" th:value="${gen}">
+                                                    <p th:text="${gen}"></p>
+                                                    <span class="circle">
+                                                        <span class="check"></span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col">
+                                            <div class="col">
+                                                <div class="title">
+                                                    <h3>Cores Favoritas *</h3>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label" th:each="cor : ${cores}">
+                                                        <input class="form-check-input" name="coresFavoritas" type="checkbox" th:value="${cor}">
+                                                        <p th:text="${cor}"></p>
+                                                        <span class="form-check-sign">
+                                                            <span class="check"></span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col">
+                                            <div class="col">
+                                                <div class="title">
+                                                    <h3>Animais Favoritos *</h3>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label" th:each="animal : ${animais}">
+                                                        <input class="form-check-input" name="animaisFavoritos" type="checkbox" th:value="${animal}">
+                                                        <p th:text="${animal}"></p>
+                                                        <span class="form-check-sign">
+                                                            <span class="check"></span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col">
+                                            <div class="col">
+                                                <div class="title">
+                                                    <h3>Musicas favoritas *</h3>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="form-check-label" th:each="musica : ${musicas}">
+                                                        <input class="form-check-input" name="estiloMusical" type="checkbox" th:value="${musica}">
+                                                        <p th:text="${musica}"></p>
+                                                        <span class="form-check-sign">
+                                                            <span class="check"></span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br class="padding-bottom-1"/>
+                                </div>
+
+                                <!--formulario de privacidade-->
+
+                                <div class="tab-pane" id="config">
+                                    <div class="container row">
+                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                            <div class="title">
+                                                <h3>Perfil publico</h3>
+                                            </div>
+                                            <div class="togglebutton">
+                                                <label>
+                                                    <input type="checkbox" name="perfilPublico" checked="checked">
+                                                    <span class="toggle"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                            <div class="title">
+                                                <h3>Chat publico</h3>
+                                            </div>
+                                            <div class="togglebutton">
+                                                <label>
+                                                    <input type="checkbox" name="chatPublico" checked="checked">
+                                                    <span class="toggle"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                            <div class="title">
+                                                <h3>Confirmar solicit.</h3>
+                                            </div>
+                                            <div class="togglebutton">
+                                                <label>
+                                                    <input type="checkbox" name="confirmarSolicitacoes" checked="checked">
+                                                    <span class="toggle"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                            <div class="title">
+                                                <h3>Perfil Match</h3>
+                                            </div>
+                                            <div class="togglebutton">
+                                                <label>
+                                                    <input type="checkbox" name="perfilMatch" checked="checked">
+                                                    <span class="toggle"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br class="padding-bottom-2"/>
+                                    <div class="footer text-center">
+                                        <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg">Cadastrar Conta</button>
+                                        <p>Preencha todos os dados antes de submeter o fomulário</p>
+                                    </div>
+                                    <br class="padding-bottom-2"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:replace="replace/base :: token"></div>
+                    </form>
                 </div>
-                <!---->
-                <form action="/cadastro/" method="post" enctype="multipart/form-data">
-                    <div class="card-login">
-                        <div class="tab-content text-center">
 
-                            <!--formulario de perfil-->
-
-                            <div class="tab-pane active show" id="perfil">
-                                <div class="card-body">
-                                    <span class="bmd-form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="material-icons">person_outline</i>
-                                                </span>
-                                            </div>
-                                            <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="none" required>
-                                        </div>
-                                    </span>
-
-                                    <span class="bmd-form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="material-icons">face</i>
-                                                </span>
-                                            </div>
-                                            <input type="text" class="form-control" name="nickname" placeholder="Nickname" autocomplete="none" required>
-                                        </div>
-                                    </span>
-
-                                    <span class="bmd-form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="material-icons">lock</i>
-                                                </span>
-                                            </div>
-                                            <input type="text" class="form-control" name="senha" placeholder="Password" autocomplete="none" required>
-                                        </div>
-                                    </span>
-
-                                    <div class="row">
-                                        <span class="bmd-form-group col-md-6 col-sm-12">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="material-icons">today</i>
-                                                    </span>
-                                                </div>
-                                                <input type="date" class="form-control" name="dataNasc" placeholder="Data de nascimento" autocomplete="none" required>
-                                            </div>
-                                        </span>
-
-                                        <span class="bmd-form-group col-md-6 col-sm-12">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="material-icons">add_a_photo</i>
-                                                    </span>
-                                                </div>
-                                                <input type="file" class="form-control" name="file" placeholder="Foto de perfil" accept="image/png/jpg/jpeg" required>
-                                            </div>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!--formulario de preferencias-->
-
-                            <div class="tab-pane" id="preferencias">
-                                <br/>
-                                <div class="container row">
-                                    <div class="form-group col">
-                                        <div class="col">
-                                            <div class="title">
-                                                <h3>Cores Favoritas</h3>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label" th:each="cor : ${cores}">
-                                                    <input class="form-check-input" name="cores[]" type="checkbox" th:value="cor">
-                                                    <p th:text="${cor}"></p>
-                                                    <span class="form-check-sign">
-                                                        <span class="check"></span>
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col">
-                                        <div class="col">
-                                            <div class="title">
-                                                <h3>Animais Favoritos</h3>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label" th:each="animal : ${animais}">
-                                                    <input class="form-check-input" name="animais[]" type="checkbox" th:value="animal">
-                                                    <p th:text="${animal}"></p>
-                                                    <span class="form-check-sign">
-                                                        <span class="check"></span>
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col">
-                                        <div class="col">
-                                            <div class="title">
-                                                <h3>Musicas favoritas</h3>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label" th:each="musica : ${musicas}">
-                                                    <input class="form-check-input" name="musicas[]" type="checkbox" th:value="musica">
-                                                    <p th:text="${musica}"></p>
-                                                    <span class="form-check-sign">
-                                                        <span class="check"></span>
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!--formulario de privacidade-->
-
-                            <div class="tab-pane" id="config">
-                                <div class="container row">
-                                    <div class="col-lg-3 col-md-3 col-sm-6">
-                                        <div class="title">
-                                            <h3>Perfil publico</h3>
-                                        </div>
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox" name="perfilPublico" checked="checked">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-3 col-sm-6">
-                                        <div class="title">
-                                            <h3>Chat publico</h3>
-                                        </div>
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox" name="chatPublico" checked="checked">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-3 col-sm-6">
-                                        <div class="title">
-                                            <h3>Confirmar solicit.</h3>
-                                        </div>
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox" name="confirmarSolicitacoes" checked="checked">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-3 col-sm-6">
-                                        <div class="title">
-                                            <h3>Perfil Match</h3>
-                                        </div>
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox" name="perfilMatch" checked="checked">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-        </div><!--container-->
-    </main>
-    <footer>
-        <div th:replace="base :: footer"></div>
-    </footer>
-    <div th:replace="base :: js"></div>
-</body>
+            </div><!--container-->
+        </main>
+        <footer th:replace="replace/base :: footer"></footer>
+        <div th:replace="replace/base :: js"></div>
+    </body>
 </html>

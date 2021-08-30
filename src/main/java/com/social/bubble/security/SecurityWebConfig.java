@@ -22,7 +22,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests().anyRequest().permitAll()
                 .and().headers().frameOptions().sameOrigin()
-                .and().formLogin().loginPage("/login/").successForwardUrl("/homePage/timeline").permitAll()
+                .and().formLogin().loginPage("/login/").successForwardUrl("/redirect:perfil/meuPerfil").permitAll()
                 .and().logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
 

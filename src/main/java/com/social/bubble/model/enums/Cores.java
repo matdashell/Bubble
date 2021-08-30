@@ -8,7 +8,8 @@ public enum Cores {
     AZUL("Azul"),
     VERDE("Verde"),
     ROXO("Roxo"),
-    VERMELHO("Vermelho");
+    VERMELHO("Vermelho"),
+    CINZA("cinza");
 
     Cores(String cor) { }
 

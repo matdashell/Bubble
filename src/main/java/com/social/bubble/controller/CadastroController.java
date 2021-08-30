@@ -4,6 +4,7 @@ import com.social.bubble.model.Usuario;
 import com.social.bubble.model.enums.Animais;
 import com.social.bubble.model.enums.Cores;
 import com.social.bubble.model.enums.EstMusical;
+import com.social.bubble.model.enums.Genero;
 import com.social.bubble.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Arrays;
 
 @Controller
 @RequestMapping(value = "/cadastro")
@@ -31,6 +34,7 @@ public class CadastroController {
         modelAndView.addObject("cores", Cores.values());
         modelAndView.addObject("animais", Animais.values());
         modelAndView.addObject("musicas", EstMusical.values());
+        modelAndView.addObject("genero", Genero.values());
 
         return modelAndView;
     }
@@ -44,11 +48,26 @@ public class CadastroController {
         modelAndView.addObject("cores", Cores.values());
         modelAndView.addObject("animais", Animais.values());
         modelAndView.addObject("musicas", EstMusical.values());
+        modelAndView.addObject("genero", Genero.values());
 
         //caso haja erros nos campos
         if(bindingResult.hasErrors()){
-            modelAndView.addObject("warning", "Campos preenchidos de forma incorreta ou incompleta!");
-            modelAndView.addObject("usuario", usuario);
+            if(
+                    !(
+                    bindingResult.hasFieldErrors("perfilPublico") ||
+                    bindingResult.hasFieldErrors("chatPublico") ||
+                    bindingResult.hasFieldErrors("confirmarSolicitacoes") ||
+                    bindingResult.hasFieldErrors("perfilMatch")
+                    )
+            ) {
+                modelAndView.addObject("warning", "Campos preenchidos de forma incorreta ou incompleta!");
+                return modelAndView;
+            }
+        }
+
+        //caso seja menor de idade
+        if(usuario.getIdade() < 18){
+            modelAndView.addObject("danger", "Permitido apenas para maiores de 18 anos!");
             return modelAndView;
         }
 
@@ -56,7 +75,6 @@ public class CadastroController {
         if(usuarioService.findByUsername(usuario.getUsername()) != null){
             usuario.setUsername(null);
             modelAndView.addObject("warning", "Username selecionado já existe!");
-            modelAndView.addObject("usuario", usuario);
             return modelAndView;
         }
 
@@ -64,7 +82,6 @@ public class CadastroController {
         if(usuarioService.findByNickname(usuario.getNickname()) != null){
             usuario.setNickname(null);
             modelAndView.addObject("warning", "Nickname selecionado já existe!");
-            modelAndView.addObject("usuario", usuario);
             return modelAndView;
         }
 
@@ -77,6 +94,8 @@ public class CadastroController {
         usuario.setSenha(new BCryptPasswordEncoder(8).encode(usuario.getSenha()));
         usuarioService.save(usuario);
 
-        return new ModelAndView("redirect:/login/");
+        modelAndView = new ModelAndView("home/login");
+        modelAndView.addObject("sucess","Conta criada com sucesso!, realize o login.");
+        return modelAndView;
     }
 }

@@ -6,7 +6,10 @@ public enum Animais {
     CACHORRO("Cachorro"),
     LEAO("Leão"),
     COBRA("Cobra"),
-    CAPIVARA("Capivara");
+    CAPIVARA("Capivara"),
+    PAPAGAIO("Papagaio"),
+    RAMMISTER("Rammister"),
+    CAVALO("Cavalo");
 
     Animais(String animal) { }
 
