@@ -1,14 +1,18 @@
 package com.social.bubble.model;
 
 import com.social.bubble.model.enums.Chat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Entity
 public class BubbleChat {
@@ -29,5 +33,20 @@ public class BubbleChat {
     private List<Usuario> usuariosChat;
 
     @OneToMany(mappedBy = "usuarioMsgm")
+    @ToString.Exclude
     private List<Mensagem> mensagensChat;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        BubbleChat that = (BubbleChat) o;
+
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1253242342;
+    }
 }

@@ -6,11 +6,5 @@ public enum Genero {
     FEMININO("Feminino"),
     NEUTRO("Neutro");
 
-    private String description;
-
-    public String description() {
-        return description;
-    }
-
     Genero(String genero) { }
 }

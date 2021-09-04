@@ -13,9 +13,4 @@ public enum Animais {
 
     Animais(String animal) { }
 
-    private String description;
-
-    public String description(){
-        return description;
-    }
 }

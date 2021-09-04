@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.AbstractList;
 import java.util.Collection;
@@ -112,12 +111,28 @@ public class Usuario implements UserDetails {
 
     boolean perfilMatch;
 
+    public boolean friendWith(Usuario usuario){
+        return this.listAmigosUsuarios.contains(usuario);
+    }
+
+    public boolean containsCorFav(Cores cor){
+        return this.coresFavoritas.contains(cor);
+    }
+
+    public boolean containsMscFav(EstMusical musica){
+        return this.estiloMusical.contains(musica);
+    }
+
+    public boolean containsAnmFav(Animais animal){
+        return this.animaisFavoritos.contains(animal);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new AbstractList<GrantedAuthority>() {
             @Override
             public GrantedAuthority get(int index) {
-                return () -> ("USUARIO") ;
+                return () -> ("USURIOUS") ;
             }
 
             @Override

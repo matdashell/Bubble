@@ -13,9 +13,4 @@ public enum Cores {
 
     Cores(String cor) { }
 
-    private String description;
-
-    public String description() {
-        return description;
-    }
 }

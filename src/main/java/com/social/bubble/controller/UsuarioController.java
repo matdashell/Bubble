@@ -33,55 +33,6 @@ public class UsuarioController {
     @Autowired
     private BubbleChatService bubbleChatService;
 
-    // funcao somente para perfil
-    // adicionar amigo ao usuario principal
-    @RequestMapping(value = "/addAmigo/{username}", method = RequestMethod.GET)
-    public ModelAndView adicionarAmigo(@PathVariable("username") String username) {
-
-        Usuario myUser = principalUserService.get();
-        Usuario usuario = usuarioService.findByUsername(username);
-
-        // somente caso o usuario exista e nao esteja na lista de amigos do usuario
-        // principal
-        if (usuario != null && !myUser.getListAmigosUsuarios().contains(usuario)) {
-
-            myUser.getListAmigosUsuarios().add(usuario);
-            usuarioService.save(myUser);
-
-            ModelAndView modelAndView = new ModelAndView("timeline/amigosUser");
-            modelAndView.addObject("usuario", myUser);
-            modelAndView.addObject("aviso", usuario.getNickname() + " adicionar com sucesso!.");
-            return modelAndView;
-        }
-
-        return new ModelAndView("redirect:/perfil/{username}/amigos");
-    }
-
-    // opção somente para lista de amigos pessoal
-    // deletar amigo
-    @RequestMapping(value = "/delAmigo/{username}", method = RequestMethod.GET)
-    public ModelAndView deletarAmigo(@PathVariable("username") String username) {
-
-        Usuario myUser = principalUserService.get();
-        Usuario usuario = usuarioService.findByUsername(username);
-
-        // somente caso o usuario exista e esteja na lista de amigos do usuario
-        // principal
-        if (usuario != null && myUser.getListAmigosUsuarios().contains(usuario)) {
-
-            myUser.getListUsuariosAmigos().remove(usuario);
-            usuarioService.save(usuario);
-
-            ModelAndView modelAndView = new ModelAndView("timeline/amigosUser");
-            modelAndView.addObject("aviso", usuario.getNickname() + " excluido com sucesso!");
-            modelAndView.addObject("usuario", myUser);
-
-            return modelAndView;
-        }
-
-        return new ModelAndView("redirect:/perfil/{username}/amigos");
-    }
-
     // opção somente para perfil
     // adicionar uma nova postagem no perfil pessoal
     @RequestMapping(value = "/addPostagem", method = RequestMethod.POST)
@@ -93,7 +44,7 @@ public class UsuarioController {
         // em caso de erros retornar erro ao usuario
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("timeline/perfil");
-            modelAndView.addObject("erro", "Erro nos campos da postagem!.");
+            modelAndView.addObject("warning", "Erro nos campos da postagem!.");
             modelAndView.addObject("usuario", myUser);
             return modelAndView;
         }
@@ -128,7 +79,7 @@ public class UsuarioController {
             postagemService.delete(postagem);
 
             ModelAndView modelAndView = new ModelAndView("timeline/perfil");
-            modelAndView.addObject("aviso", "Postagem excluida com sucesso.");
+            modelAndView.addObject("warning", "Postagem excluida com sucesso.");
             modelAndView.addObject("usuario", myUser);
             return modelAndView;
         }
@@ -147,7 +98,7 @@ public class UsuarioController {
         // em caso de erro na mensagem
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("timeline/postagem");
-            modelAndView.addObject("erro", "Preencha o campo de mensagem antes de enviar!");
+            modelAndView.addObject("warning", "Preencha o campo de mensagem antes de enviar!");
             modelAndView.addObject("postagem", postagem);
             return modelAndView;
         }
@@ -208,9 +159,7 @@ public class UsuarioController {
 
             bubbleChatService.save(bubbleChat);
 
-            String tipo = bubbleChat.getTipoChat().description();
-
-            return new ModelAndView("redirect:/bubbleChat/" + tipo + "/{id}");
+            return new ModelAndView("redirect:/bubbleChat/" + bubbleChat.getTipoChat() + "/{id}");
         }
 
         // caso nao esteja é enviado para a pagina inicial chat

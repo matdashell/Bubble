@@ -11,7 +11,12 @@ public class LoginController {
 
     //tela de login com validação spring security
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView login(){
+    public ModelAndView loginGet(){
         return new ModelAndView("home/login");
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public ModelAndView loginPost(){
+        return new ModelAndView("redirect:/perfil/meuPerfil");
     }
 }

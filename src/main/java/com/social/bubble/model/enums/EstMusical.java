@@ -12,11 +12,7 @@ public enum EstMusical {
     RAP("Rap"),
     INDIE("Indie");
 
-    EstMusical(String estilo) { }
+    EstMusical(String estilo) {
 
-    private String description;
-
-    public String description(){
-        return description;
     }
 }

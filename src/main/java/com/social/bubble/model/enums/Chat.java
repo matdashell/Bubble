@@ -7,11 +7,5 @@ public enum Chat {
     PRIVATE("privado"),
     AUTH("autenticado");
 
-    private String description;
-
-    public String description() {
-        return description;
-    }
-
     Chat(String tipo) { }
 }

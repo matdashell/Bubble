@@ -4,6 +4,7 @@
     <body>
         <header th:replace="replace/base :: navbar"></header>
         <main>
+            <div id="alert-replace"></div>
             <div class="container card">
                 <div class="col-xs-12">
                     <ul class="nav nav-pills nav-pills-icons" role="tablist">
@@ -20,9 +21,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#amgs" role="tab" data-toggle="tab" aria-selected="false">
-                                <i class="material-icons">people</i>
-                                Amigos
+                            <a class="nav-link" href="#bubble" role="tab" data-toggle="tab" aria-selected="false">
+                                <i class="material-icons">public</i>
+                                Bubble's
                             </a>
                         </li>
                     </ul>
@@ -45,7 +46,7 @@
                                                     <a class="nav-link" href="#posts2" data-toggle="tab">Posts</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" href="#amigos2" data-toggle="tab">Amigos</a>
+                                                    <a class="nav-link" href="#amigos2" data-toggle="tab">Conexões</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -60,93 +61,59 @@
                                             <!--avatar-->
                                             <div class="container row">
                                                 <div class="col-lg-5 col-sm-12 padding-top-2">
-                                                    <img src="/assets/img/faces/avatar.jpg" alt="Image" class="img-raised rounded-circle" style="max-width: 20em;">
+                                                    <img th:src="${'/provedor/nickImg/' + usuario.getUsername}" alt="Image" class="img-raised rounded-circle" style="max-width: 20em;">
                                                 </div>
                                                 <!--informações/ interações-->
-                                                <div class="col-lg-7 col-sm-12">
-                                                    <h3 class="title">Nome usuario</h3>
-                                                    <h4 class="title">@Nick usuario</h4>
-                                                    <h5 class="card-description">Em linguística, a noção de texto é ampla e ainda aberta a uma definição mais precisa. Grosso modo, pode ser entendido como manifestação linguística das ideias de um autor, que serão interpretadas pelo leitor de acordo com seus conhe</h5>
-                                                    <a class="btn btn-secondary" href="">Favoritar</a>
-                                                    <a class="btn btn-primary" href="">Seguir</a>
-                                                    <a class="btn btn-secondary" href="">Chat</a>
+                                                <div th:fragment="panel" class="col-lg-7 col-sm-12" xmlns:th="http://www.w3.org/1999/xhtml">
+                                                    <h3 th:text="${'@'+usuario.getUsername}" class="title"></h3>
+                                                    <h4 th:text="${'@'+usuario.getNickname}" class="title"></h4>
+                                                    <h5 th:text="${usuario.getDescricaoPerfil}" class="card-description"></h5>
+
+                                                    <!--verificar se perfil pertence ao usuario-->
+                                                    <div th:if="${(principalUser.getUsername) != (usuario.getUsername)}">
+                                                        <a class="btn btn-secondary" href="">Favoritar</a>
+
+                                                        <form id="formPerfil" action="/perfil/altAmizade" method="POST">
+                                                            <input type="hidden" name="username" th:value="${usuario.getUsername}">
+                                                            <button id="btnSeguir" type="submit" class="btn btn-primary">
+                                                                <span id="textoSeguir" th:text="${principalUser.friendWith(usuario)} ? 'Desconectar' : 'Conectar'"></span>
+                                                            </button>
+                                                        </form>
+
+                                                        <a class="btn btn-secondary" href="">Chat</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!--nav secundario-->
+                                        <!--Postagens do usuario dentro do perfil (for)-->
                                         <div class="tab-pane" id="posts2">
+
+                                            <!--Formulario para adicionar nova postagem em perfil-->
+                                            <br/>
+                                            <form>
+                                                <span>Replace para aparecer um content com preechimento dos campos</span>
+                                            </form>
+                                            <br/>
+
                                             <div class="container row">
-                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
-                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
+                                                <div th:each="post : ${usuario.getPostagens}" class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
+                                                    <img class="card-img-top" th:src="${'/provedor/postImg/'+post.getId}" rel="nofollow" alt="Card image cap">
                                                     <div class="card-body">
-                                                        <h4 class="card-title">Card title</h4>
-                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
-                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Card title</h4>
-                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
-                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Card title</h4>
-                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
-                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Card title</h4>
-                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
-                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Card title</h4>
-                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
-                                                    <img class="card-img-top" src="https://images.unsplash.com/photo-1517303650219-83c8b1788c4c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bd4c162d27ea317ff8c67255e955e3c8&auto=format&fit=crop&w=2691&q=80" rel="nofollow" alt="Card image cap">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">Card title</h4>
-                                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                                        <h4 class="card-title"></h4>
+                                                        <p th:text="${post.getDescricao}" class="card-text"></p>
+                                                        <p class="card-text"><small th:text="${post.getDataPostagem}" class="text-muted"></small></p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <!--Amigos do usuario dentro do perfil ( for)-->
                                         <div class="tab-pane" id="amigos2">
                                             <div class="container row">
-                                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                                    <h4>Rounded Raised</h4>
-                                                    <img src="/assets/img/faces/avatar.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
-                                                </div>
-
-                                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                                    <h4>Rounded Raised</h4>
-                                                    <img src="/assets/img/faces/avatar.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
-                                                </div>
-
-                                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                                    <h4>Rounded Raised</h4>
-                                                    <img src="/assets/img/faces/avatar.jpg" alt="Raised Image" class="img-raised rounded img-fluid">
+                                                <div th:each="amigo : ${usuario.ListAmigosUsuarios}" class="col-lg-3 col-md-4 col-sm-6">
+                                                    <h4 th:text="${amigo.getNickname}"></h4>
+                                                    <img th:src="${'/provedor/nickImg/'+amigo.getUsername}" alt="Raised Image" class="img-raised rounded img-fluid">
                                                 </div>
                                             </div>
                                         </div>
@@ -158,11 +125,33 @@
 
                         <!--preferencias do usuario-->
                         <div class="tab-pane" id="pref">
+                            <div class="container row justify-md-center col-md-8">
 
+                                <span class="badge badge-info" style="margin-left: 10px; margin-top: 10px;">Cores Favoritas -->></span>
+
+                                <span th:each="cor : ${usuario.getCoresFavoritas}"
+                                      th:class="${principalUser.containsCorFav(cor)} ? ('badge badge-success') : ('badge badge-danger')"
+                                      th:text="${cor}" style="margin-left: 10px; margin-top: 10px;">
+                                </span>
+
+                                <span class="badge badge-info" style="margin-left: 10px; margin-top: 10px;">Estilos Musicais Favoritos -->></span>
+
+                                <span th:each="musica : ${usuario.estiloMusical}"
+                                      th:class="${principalUser.containsMscFav(musica)} ? ('badge badge-success') : ('badge badge-danger')"
+                                      th:text="${musica}" style="margin-left: 10px; margin-top: 10px;">
+                                </span>
+
+                                <span class="badge badge-info" style="margin-left: 10px; margin-top: 10px;">Animais Favoritos -->></span>
+
+                                <span th:each="animal : ${usuario.animaisFavoritos}"
+                                      th:class="${principalUser.containsAnmFav(animal)} ? ('badge badge-success') : ('badge badge-danger')"
+                                      th:text="${animal}" style="margin-left: 10px; margin-top: 10px;">
+                                </span>
+                            </div>
                         </div>
 
-                        <!--amigos do usuario-->
-                        <div class="tab-pane" id="amgs">
+                        <!--chats do usuario-->
+                        <div class="tab-pane" id="bubble">
 
                         </div>
                     </div>
