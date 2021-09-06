@@ -41,17 +41,20 @@ public class UsuarioController {
 
         Usuario myUser = principalUserService.get();
 
+        ModelAndView modelAndView = new ModelAndView("timeline/perfil");
+        modelAndView.addObject("usuario", myUser);
+        modelAndView.addObject("principalUser", myUser);
+
         // em caso de erros retornar erro ao usuario
         if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView("timeline/perfil");
             modelAndView.addObject("warning", "Erro nos campos da postagem!.");
-            modelAndView.addObject("usuario", myUser);
             return modelAndView;
         }
 
         // configurar dados da postagem
         postagem.setDataPostagem(LocalDate.now());
         postagem.setUsuarioPost(myUser);
+        postagem.setPostagemPublica(true);
 
         // adicionar imagem na postagem
         if (multipartFile != null) {
@@ -63,6 +66,7 @@ public class UsuarioController {
 
         postagemService.save(postagem);
 
+        modelAndView.addObject("sucess","Postagem salva com sucesso!");
         return new ModelAndView("redirect:/perfil/" + myUser.getUsername());
     }
 

@@ -20,7 +20,7 @@ public class PostagemController {
     public ModelAndView postagem(@PathVariable("idPost") long id){
 
         ModelAndView modelAndView = new ModelAndView("timeline/postagem");
-        modelAndView.addObject("postagem", postagemService.findById(id));
+        modelAndView.addObject("amigos", postagemService.findById(id));
 
         return modelAndView;
     }

@@ -4,7 +4,7 @@
     <body>
         <header th:replace="replace/base :: navbar"></header>
         <main>
-            <div id="alert-replace"></div>
+            <div th:replace="replace/base :: alert"></div>
             <div class="container card">
                 <div class="col-xs-12">
                     <ul class="nav nav-pills nav-pills-icons" role="tablist">
@@ -60,11 +60,11 @@
 
                                             <!--avatar-->
                                             <div class="container row">
-                                                <div class="col-lg-5 col-sm-12 padding-top-2">
+                                                <div class="col-lg-5 col-sm-12 padding-top-2 mx-auto">
                                                     <img th:src="${'/provedor/nickImg/' + usuario.getUsername}" alt="Image" class="img-raised rounded-circle" style="max-width: 20em;">
                                                 </div>
                                                 <!--informações/ interações-->
-                                                <div th:fragment="panel" class="col-lg-7 col-sm-12" xmlns:th="http://www.w3.org/1999/xhtml">
+                                                <div th:fragment="panel" class="col-lg-7 col-sm-12 mx-auto">
                                                     <h3 th:text="${'@'+usuario.getUsername}" class="title"></h3>
                                                     <h4 th:text="${'@'+usuario.getNickname}" class="title"></h4>
                                                     <h5 th:text="${usuario.getDescricaoPerfil}" class="card-description"></h5>
@@ -73,7 +73,8 @@
                                                     <div th:if="${(principalUser.getUsername) != (usuario.getUsername)}">
                                                         <a class="btn btn-secondary" href="">Favoritar</a>
 
-                                                        <form id="formPerfil" action="/perfil/altAmizade" method="POST">
+                                                        <!--botao de alt amizade-->
+                                                        <form id="formPerfil" action="/perfil/altAmizade" method="GET">
                                                             <input type="hidden" name="username" th:value="${usuario.getUsername}">
                                                             <button id="btnSeguir" type="submit" class="btn btn-primary">
                                                                 <span id="textoSeguir" th:text="${principalUser.friendWith(usuario)} ? 'Desconectar' : 'Conectar'"></span>
@@ -92,11 +93,57 @@
 
                                             <!--Formulario para adicionar nova postagem em perfil-->
                                             <br/>
-                                            <form>
-                                                <span>Replace para aparecer um content com preechimento dos campos</span>
+                                            <form action="/principalUser/addPostagem" method="post" class="mx-auto" enctype="multipart/form-data">
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPost">
+                                                    Adicionar Nova Postagem
+                                                </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="modalPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">Criar Postagem</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <!--inputs-->
+                                                            <div class="modal-body">
+                                                                <span class="bmd-form-group">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">
+                                                                                <i class="material-icons">article</i>
+                                                                            </span>
+                                                                        </div>
+                                                                        <input type="text" rows="5" class="form-control" name="descricao" placeholder="Texto Postagem" autocomplete="none">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="bmd-form-group">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">
+                                                                                <i class="material-icons">collections</i>
+                                                                            </span>
+                                                                        </div>
+                                                                        <input type="file" class="form-control" name="file" placeholder="Foto" autocomplete="none" accept="image/png/jpg/jpeg/jfif">
+                                                                    </div>
+                                                                </span>
+                                                            </div>
+                                                            <!--footer modal-->
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </form>
                                             <br/>
 
+                                            <!--postagens-->
                                             <div class="container row">
                                                 <div th:each="post : ${usuario.getPostagens}" class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
                                                     <img class="card-img-top" th:src="${'/provedor/postImg/'+post.getId}" rel="nofollow" alt="Card image cap">
@@ -111,10 +158,10 @@
                                         <!--Amigos do usuario dentro do perfil ( for)-->
                                         <div class="tab-pane" id="amigos2">
                                             <div class="container row">
-                                                <div th:each="amigo : ${usuario.ListAmigosUsuarios}" class="col-lg-3 col-md-4 col-sm-6">
+                                                <a th:each="amigo : ${usuario.ListAmigosUsuarios}" th:href="${'/perfil/'+amigo.getUsername}" class="col-lg-3 col-md-4 col-sm-6">
                                                     <h4 th:text="${amigo.getNickname}"></h4>
                                                     <img th:src="${'/provedor/nickImg/'+amigo.getUsername}" alt="Raised Image" class="img-raised rounded img-fluid">
-                                                </div>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +172,7 @@
 
                         <!--preferencias do usuario-->
                         <div class="tab-pane" id="pref">
-                            <div class="container row justify-md-center col-md-8">
+                            <div class="container row justify-md-center col-md-8 mx-auto">
 
                                 <span class="badge badge-info" style="margin-left: 10px; margin-top: 10px;">Cores Favoritas -->></span>
 

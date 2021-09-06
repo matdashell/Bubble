@@ -3,11 +3,18 @@ package com.social.bubble.service.serviceImpl;
 import com.social.bubble.model.Postagem;
 import com.social.bubble.repository.PostagemRepository;
 import com.social.bubble.service.PostagemService;
+import com.social.bubble.service.PrincipalUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PostagemServiceImpl implements PostagemService {
+
+    @Autowired
+    private PrincipalUserService principalUserService;
 
     @Autowired
     private PostagemRepository postagemRepository;
@@ -25,6 +32,16 @@ public class PostagemServiceImpl implements PostagemService {
     @Override
     public Iterable<Postagem> searchByDescricao(String descricao) {
         return postagemRepository.searchByDescricao(descricao);
+    }
+
+    @Override
+    public Iterable<Postagem> searchByPostAmigos() {
+        List<Long> ids = postagemRepository.getPostagensAmigos(principalUserService.get().getUsername());
+
+        return ids.stream()
+                .filter(id -> postagemRepository.findById(id).isPresent())
+                .map(id -> postagemRepository.findById(id).get())
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -38,7 +38,7 @@ public class PerfilController {
 
             ModelAndView modelAndView = new ModelAndView("timeline/perfil");
             if(!myUser.getListAmigosUsuarios().contains(usuario)){
-                modelAndView.addObject("info", "Siga "+usuario.getNickname()+" Para Aumentar Sua Rede De Amizades :)");
+                modelAndView.addObject("info", "Conecte com '"+usuario.getNickname()+"' Para Aumentar Sua Rede De Amizades :)");
             }
             modelAndView.addObject("usuario", usuario);
             modelAndView.addObject("principalUser", myUser);
@@ -52,7 +52,7 @@ public class PerfilController {
     }
 
     //metodo responsavel por atualizar estado de amizade entre dois usuario por meio ajax
-    @RequestMapping(value = "/altAmizade", method = RequestMethod.POST)
+    @RequestMapping(value = "/altAmizade", method = RequestMethod.GET)
     public ModelAndView method(@RequestParam("username") String username){
 
         Usuario usuario = usuarioService.findByUsername(username);

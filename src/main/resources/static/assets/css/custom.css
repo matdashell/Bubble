@@ -16,3 +16,15 @@
 .padding-top-3{
     padding-top:75px;
 }
+
+.container-img {
+  border: 1px black;
+  width: 100%;
+  height: 25em;
+}
+
+.container-img img {
+  width: 100%;
+  height: 25em;
+  object-fit: cover;
+}

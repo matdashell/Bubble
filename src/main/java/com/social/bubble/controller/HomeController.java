@@ -23,8 +23,8 @@ public class HomeController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView("timeline/home");
-
-        return null;
+        modelAndView.addObject("postagens", postagemService.searchByPostAmigos());
+        return modelAndView;
     }
 
     /*Necessário criar query para pesquisa de postagens de acordo com a privacidad de cada user*/

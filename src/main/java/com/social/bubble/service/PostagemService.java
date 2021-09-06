@@ -9,6 +9,7 @@ public interface PostagemService {
     Iterable<Postagem> findAll();
     Iterable<Postagem> searchByDataPostagem();
     Iterable<Postagem> searchByDescricao(String descricao);
+    Iterable<Postagem> searchByPostAmigos();
     Postagem findById (Long id);
     void save(Postagem postagem);
     void delete(Postagem postagem);

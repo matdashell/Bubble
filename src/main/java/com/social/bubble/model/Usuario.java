@@ -3,9 +3,8 @@ import com.social.bubble.model.enums.Animais;
 import com.social.bubble.model.enums.Cores;
 import com.social.bubble.model.enums.EstMusical;
 import com.social.bubble.model.enums.Genero;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,10 +14,13 @@ import javax.validation.constraints.NotNull;
 import java.util.AbstractList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class Usuario implements UserDetails {
 
@@ -65,13 +67,13 @@ public class Usuario implements UserDetails {
     @Lob
     private byte[] fotoPerfil;
 
-    @OneToMany
-    @JoinTable(name = "rel_postagem")
+    @OneToMany(mappedBy = "usuarioPost")
+    @ToString.Exclude
     private List<Postagem> postagens;
 
     /*lista de comentarios do ususario em posts*/
-    @OneToMany
-    @JoinTable(name = "rel_comentarios_users")
+    @OneToMany(mappedBy = "comentarioUsuario")
+    @ToString.Exclude
     private List<Comentario> comentariosPost;
 
     /*lista de amigos do usuario*/
@@ -84,6 +86,7 @@ public class Usuario implements UserDetails {
 
     /*lista de usuario que o tem como amigo*/
     @ManyToMany(mappedBy = "listAmigosUsuarios")
+    @ToString.Exclude
     private List<Usuario> listUsuariosAmigos;
 
     /*chats do usuario*/
@@ -92,6 +95,7 @@ public class Usuario implements UserDetails {
         joinColumns = @JoinColumn(name = "usuario", referencedColumnName = "username"),
         inverseJoinColumns = @JoinColumn(name = "chat", referencedColumnName = "chat_id")
     )
+    @ToString.Exclude
     private List<BubbleChat> bubbleChats;
 
     /*lista de postagens curtidas pelo usuario*/
@@ -100,6 +104,7 @@ public class Usuario implements UserDetails {
         joinColumns = @JoinColumn(name = "usuario", referencedColumnName = "username"),
         inverseJoinColumns = @JoinColumn(name = "postagem", referencedColumnName = "post_id")
     )
+    @ToString.Exclude
     private List<Postagem> postagensCurtidas;
 
     //privacidade do usuario
@@ -132,7 +137,7 @@ public class Usuario implements UserDetails {
         return new AbstractList<GrantedAuthority>() {
             @Override
             public GrantedAuthority get(int index) {
-                return () -> ("USURIOUS") ;
+                return () -> ("USER") ;
             }
 
             @Override
@@ -165,6 +170,20 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Usuario usuario = (Usuario) o;
+
+        return Objects.equals(username, usuario.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1225039686;
     }
 
 }

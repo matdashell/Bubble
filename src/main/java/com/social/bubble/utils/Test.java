@@ -21,6 +21,7 @@ public class Test {
     @Autowired
     private UsuarioService usuarioService;
 
+//    @PostConstruct
     void teste() {
 
         Usuario usuario = new Usuario();
@@ -37,5 +38,7 @@ public class Test {
         usuario.setDescricaoPerfil("Perfil com descrição teste");
 
         usuarioService.save(usuario);
+
+        System.out.println(usuarioService.findByNickname("teste") != null ? "true" : "false");
     }
 }
