@@ -13,45 +13,44 @@
     </head>
 
     <!--fragmento navbar-->
-    <div th:fragment="navbar">
-        <nav class="navbar navbar-expand-lg bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="/homePage/">Bubble</a>
-                <button sec:authorize="${isAuthenticated()}" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="navbar-toggler-icon"></span>
-                    <span class="navbar-toggler-icon"></span>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li sec:authorize="${isAuthenticated()}" class="nav-item">
-                            <a class="nav-link" href="/homePage/">Home</a>
-                        </li>
-                        <li sec:authorize="${isAuthenticated()}" class="nav-item">
-                            <a class="nav-link" href="/homePage/match">Match</a>
-                        </li>
-                        <li sec:authorize="${isAuthenticated()}" class="nav-item">
-                            <a class="nav-link" href="/bubbleChat/">Chats</a>
-                        </li>
-                        <li sec:authorize="${!isAuthenticated()}" class="nav-item">
-                            <a class="nav-link" href="/login/">Login</a>
-                        </li>
-                        <li sec:authorize="${isAuthenticated()}" class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                               Menu
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/perfil/meuPerfil">Minha Conta</a>
-                                <a class="dropdown-item" href="/config/">Configurações</a>
-                                <a class="dropdown-item" href="/logout">Logout</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+
+    <nav th:fragment="navbar" class="navbar fixed-top navbar-expand-lg bg-primary navbar-color-on-scroll">
+        <div class="container">
+            <a class="navbar-brand" href="/homePage/">Bubble</a>
+            <button sec:authorize="${isAuthenticated()}" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li sec:authorize="${isAuthenticated()}" class="nav-item">
+                        <a class="nav-link" href="/homePage/">Home</a>
+                    </li>
+                    <li sec:authorize="${isAuthenticated()}" class="nav-item">
+                        <a class="nav-link" href="/homePage/match">Match</a>
+                    </li>
+                    <li sec:authorize="${isAuthenticated()}" class="nav-item">
+                        <a class="nav-link" href="/bubbleChat/">Chats</a>
+                    </li>
+                    <li sec:authorize="${!isAuthenticated()}" class="nav-item">
+                        <a class="nav-link" href="/login/">Login</a>
+                    </li>
+                    <li sec:authorize="${isAuthenticated()}" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           Menu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/perfil/meuPerfil">Minha Conta</a>
+                            <a class="dropdown-item" href="/config/">Configurações</a>
+                            <a class="dropdown-item" href="/logout">Logout</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </div>
+        </div>
+    </nav>
 
     <!--fragmentos de alerta-->
     <div th:fragment="alert">
@@ -138,33 +137,32 @@
     </div>
 
     <!--fragmento footer-->
-    <div th:fragment="footer">
-        <footer class="footer footer-default" data-background-color="black">
-            <div class="container">
-                <nav class="float-left">
-                    <ul>
-                        <li>
-                            <a target="_blank" href="https://github.com/matdashell/Bubble">
-                                GitHub
-                            </a>
-                        </li>
-                        <li>
-                            <a target="_blank" href="https://www.linkedin.com/in/mateus-lima-a61430205/">
-                                Linkedin
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <div class="copyright float-right">
-                    ©
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script>2021, made with <i class="material-icons">favorite</i> by
-                    <a href="https://www.creative-tim.com/" target="_blank">Creative Tim</a> for a better web.
-                </div>
+
+    <footer th:fragment="footer" class="footer footer-default" data-background-color="black">
+        <div class="container">
+            <nav class="float-left">
+                <ul>
+                    <li>
+                        <a target="_blank" href="https://github.com/matdashell/Bubble">
+                            GitHub
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/mateus-lima-a61430205/">
+                            Linkedin
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright float-right">
+                ©
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>2021, made with <i class="material-icons">favorite</i> by
+                <a href="https://www.creative-tim.com/" target="_blank">Creative Tim</a> for a better web.
             </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <!--fragmento de imposts js-->
     <div th:fragment="js">

@@ -16,7 +16,7 @@ public interface PostagemRepository extends CrudRepository<Postagem, Long> {
     @Query(value = "SELECT TOP 100 * FROM postagem ORDER BY data_postagem", nativeQuery = true)
     Iterable<Postagem> searchByDescricao();
 
-    @Query(value = "SELECT TOP 100 p.post_id FROM postagem AS p, usuario AS u, rel_amigos as r " +
+    @Query(value = "SELECT TOP 100 id FROM postagem AS p, usuario AS u, rel_amigos as r " +
             "WHERE u.username = p.usuario_post_username " +
             "AND r.usuario = ?1 " +
             "AND r.amigo = u.username " +

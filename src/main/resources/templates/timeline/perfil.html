@@ -61,7 +61,8 @@
                                             <!--avatar-->
                                             <div class="container row">
                                                 <div class="col-lg-5 col-sm-12 padding-top-2 mx-auto">
-                                                    <img th:src="${'/provedor/nickImg/' + usuario.getUsername}" alt="Image" class="img-raised rounded-circle" style="max-width: 20em;">
+                                                    <img th:src="${'/provedor/nickImg/' + usuario.getUsername}" alt="Image"
+                                                         class="img-raised rounded-circle" style="max-width: 20em;">
                                                 </div>
                                                 <!--informações/ interações-->
                                                 <div th:fragment="panel" class="col-lg-7 col-sm-12 mx-auto">
@@ -70,14 +71,15 @@
                                                     <h5 th:text="${usuario.getDescricaoPerfil}" class="card-description"></h5>
 
                                                     <!--verificar se perfil pertence ao usuario-->
-                                                    <div th:if="${(principalUser.getUsername) != (usuario.getUsername)}">
-                                                        <a class="btn btn-secondary" href="">Favoritar</a>
+                                                    <div th:if="${principalUser != usuario}">
+                                                        <a class="btn btn-secondary" href="">Doar Bc</a>
 
                                                         <!--botao de alt amizade-->
                                                         <form id="formPerfil" action="/perfil/altAmizade" method="GET">
                                                             <input type="hidden" name="username" th:value="${usuario.getUsername}">
                                                             <button id="btnSeguir" type="submit" class="btn btn-primary">
-                                                                <span id="textoSeguir" th:text="${principalUser.friendWith(usuario)} ? 'Desconectar' : 'Conectar'"></span>
+                                                                <span id="textoSeguir"
+                                                                      th:text="${principalUser.friendWith(usuario)} ? 'Desconectar' : 'Conectar'"></span>
                                                             </button>
                                                         </form>
 
@@ -93,24 +95,26 @@
 
                                             <!--Formulario para adicionar nova postagem em perfil-->
                                             <br/>
-                                            <form action="/principalUser/addPostagem" method="post" class="mx-auto" enctype="multipart/form-data">
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPost">
-                                                    Adicionar Nova Postagem
-                                                </button>
+                                            <div th:if="${principalUser == usuario}">
+                                                <form  action="/principalUser/addPostagem" method="post" class="mx-auto" enctype="multipart/form-data">
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPost">
+                                                        Adicionar Nova Postagem
+                                                    </button>
 
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="modalPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLongTitle">Criar Postagem</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <!--inputs-->
-                                                            <div class="modal-body">
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="modalPost" tabindex="-1" role="dialog"
+                                                         aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Criar Postagem</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <!--inputs-->
+                                                                <div class="modal-body">
                                                                 <span class="bmd-form-group">
                                                                     <div class="input-group">
                                                                         <div class="input-group-prepend">
@@ -118,39 +122,46 @@
                                                                                 <i class="material-icons">article</i>
                                                                             </span>
                                                                         </div>
-                                                                        <input type="text" rows="5" class="form-control" name="descricao" placeholder="Texto Postagem" autocomplete="none">
+                                                                        <input type="text" rows="5" class="form-control"
+                                                                               name="descricao" placeholder="Texto Postagem" autocomplete="none">
                                                                     </div>
                                                                 </span>
-                                                                <span class="bmd-form-group">
+                                                                    <span class="bmd-form-group">
                                                                     <div class="input-group">
                                                                         <div class="input-group-prepend">
                                                                             <span class="input-group-text">
                                                                                 <i class="material-icons">collections</i>
                                                                             </span>
                                                                         </div>
-                                                                        <input type="file" class="form-control" name="file" placeholder="Foto" autocomplete="none" accept="image/png/jpg/jpeg/jfif">
+                                                                        <input type="file" class="form-control" name="file"
+                                                                               placeholder="Foto" autocomplete="none" accept="image/png/jpg/jpeg/jfif">
                                                                     </div>
                                                                 </span>
-                                                            </div>
-                                                            <!--footer modal-->
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                                                </div>
+                                                                <!--footer modal-->
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            </div>
                                             <br/>
 
                                             <!--postagens-->
                                             <div class="container row">
-                                                <div th:each="post : ${usuario.getPostagens}" class="card mb-3 col-lg-4 col-md-6 col-sm-12 padding-top-2">
-                                                    <img class="card-img-top" th:src="${'/provedor/postImg/'+post.getId}" rel="nofollow" alt="Card image cap">
+                                                <div th:each="post : ${usuario.getPostagens}"
+                                                     class="card mb-3 col-lg-4 col-md-6 col-sm-6 padding-top-2">
+                                                    <img th:if="${post.getImagemPost != null}"
+                                                         class="card-img-top" th:src="${'/provedor/postImg/'+post.getId}"
+                                                         rel="nofollow" alt=":p error">
                                                     <div class="card-body">
                                                         <h4 class="card-title"></h4>
                                                         <p th:text="${post.getDescricao}" class="card-text"></p>
-                                                        <p class="card-text"><small th:text="${post.getDataPostagem}" class="text-muted"></small></p>
+                                                        <p class="card-text"><small th:text="${post.getDataPostagem}"
+                                                                                    class="text-muted"></small></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,9 +169,11 @@
                                         <!--Amigos do usuario dentro do perfil ( for)-->
                                         <div class="tab-pane" id="amigos2">
                                             <div class="container row">
-                                                <a th:each="amigo : ${usuario.ListAmigosUsuarios}" th:href="${'/perfil/'+amigo.getUsername}" class="col-lg-3 col-md-4 col-sm-6">
-                                                    <h4 th:text="${amigo.getNickname}"></h4>
-                                                    <img th:src="${'/provedor/nickImg/'+amigo.getUsername}" alt="Raised Image" class="img-raised rounded img-fluid">
+                                                <a th:each="amigo : ${usuario.ListAmigosUsuarios}"
+                                                   th:href="${'/perfil/'+amigo.getUsername}" class="col-lg-3 col-md-4 col-xm-6">
+                                                    <h4 th:text="${'@'+amigo.getNickname}"></h4>
+                                                    <img th:src="${'/provedor/nickImg/'+amigo.getUsername}"
+                                                         alt="Raised Image" class="img-raised rounded img-fluid">
                                                 </a>
                                             </div>
                                         </div>

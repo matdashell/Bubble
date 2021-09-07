@@ -102,7 +102,7 @@ public class Usuario implements UserDetails {
     @ManyToMany
     @JoinTable(name = "rel_likes",
         joinColumns = @JoinColumn(name = "usuario", referencedColumnName = "username"),
-        inverseJoinColumns = @JoinColumn(name = "postagem", referencedColumnName = "post_id")
+        inverseJoinColumns = @JoinColumn(name = "postagem", referencedColumnName = "id")
     )
     @ToString.Exclude
     private List<Postagem> postagensCurtidas;
@@ -115,6 +115,10 @@ public class Usuario implements UserDetails {
     boolean confirmarSolicitacoes;
 
     boolean perfilMatch;
+
+    public boolean curtiu(Postagem postagem){
+        return postagensCurtidas != null && postagensCurtidas.contains(postagem);
+    }
 
     public boolean friendWith(Usuario usuario){
         return this.listAmigosUsuarios.contains(usuario);

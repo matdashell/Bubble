@@ -9,8 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario, String> {
 
@@ -23,7 +21,7 @@ public interface UsuarioRepository extends CrudRepository<Usuario, String> {
     @Query(value = "SELECT * FROM usuario WHERE nickname LIKE %?1%", nativeQuery = true)
     Iterable<Usuario> searchByNickname(String nickname);
 
-    @Query(value = "SELECT u.foto_perfil " +
+    @Query(value = "SELECT u.username " +
             "FROM usuario AS u, rel_cores AS c, rel_estmusical AS e, rel_animaisfav AS a " +
             "WHERE u.genero LIKE %?1% " +
             "AND (u.idade BETWEEN ?2 AND ?3) " +

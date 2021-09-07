@@ -3,34 +3,76 @@
     <head th:replace="replace/base :: head"></head>
     <header th:replace="replace/base :: navbar"></header>
     <main>
-       <!-- <div class="container row">
-            <div th:each="post : ${postagens}" class="card mb-3 col-11 padding-top-3 mx-auto">
-                <div
-                <img th:if="${post.getImagemPost}" class="card-img-top" th:src="${'/provedor/postImg/'+post.getId}" rel="nofollow" alt="Card image cap">
-                <div class="card-body">
-                    <h4 class="card-title"></h4>
-                    <p th:text="${post.getDescricao}" class="card-text"></p>
-                    <p class="card-text"><small th:text="${post.getDataPostagem}" class="text-muted"></small></p>
-                </div>
-            </div>
-        </div>-->
 
         <div class="container">
-            <div th:each="post : ${postagens}" class="col-md-8 mx-auto padding-top-2">
-                <div class="card">
-                    <div class="card-header card-header-primary container row">
-                        <img th:src="${'/provedor/nickImg/' + post.getUsuarioPost.getUsername}" alt="Image" class="img-raised rounded-circle col-4" style="max-width: 7em;">
-                        <h4 th:text="${post.getUsuarioPost.getUsername}" class="card-title col-8"></h4>
-                    </div>
-                    <div class="card-body">
-                        <div class=" container-img">
-                            <img th:if="${post.getImagemPost}" class="card-img-top img" th:src="${'/provedor/postImg/'+post.getId}" rel="nofollow" alt="Card image cap">
+            <div th:replace="replace/base :: alert"></div>
+            <!--each-->
+            <section th:each="post : ${postagens}">
+                <div class="col-md-8 mx-auto padding-top-2">
+                    <div class="card">
+                        <!--card-image do usuario header-->
+                        <div class="card-header card-header-primary container row">
+                            <img th:src="${'/provedor/nickImg/' + post.getUsuarioPost.getUsername}" alt="Image"
+                                 class="img-raised rounded-circle col-0" style="max-width: 7em;">
+                            <h4 th:text="${'@'+post.getUsuarioPost.getUsername}" class="card-title col-8 padding-top-1 padding-left-1"></h4>
                         </div>
-                        <p th:text="${post.getDescricao}" class="card-text padding-top-1"></p>
-                        <p class="card-text"><small th:text="${post.getDataPostagem}" class="text-muted"></small></p>
+                        <div class="card-body">
+                            <div class=" container-img">
+                                <img th:if="${post.getImagemPost}" class="card-img-top img"
+                                     th:src="${'/provedor/postImg/'+post.getId}" rel="nofollow" alt="Card image cap">
+                            </div>
+                            <p th:text="${post.getDescricao}" class="card-text padding-top-1"></p>
+                            <p class="card-text"><small th:text="${post.getDataPostagem}" class="text-muted"></small></p>
+                        </div>
+                        <div class="card-footer">
+                            <!--curtidas postagem-->
+                            <form method="post" action="/postagem/altCurtir" class="margin-left-1">
+                                <input type="hidden" name="id" th:value="${post.getId}">
+                                <button class="btn btn-primary btn-fab btn-fab-mini btn-round" type="submit">
+                                    <i class="material-icons" th:text="${principalUser.curtiu(post) ? 'favorite' : 'favorite_border'}"></i>
+                                </button><span th:text="${post.getNumCurtidas}"></span>
+                            </form>
+
+                            <!--comentarios postagem-->
+                            <button type="button" class="btn btn-primary btn-fab btn-fab-mini btn-round margin-left-1"
+                                    data-toggle="modal" th:data-target="${'#comentarios'+post.getId}">
+                                <i class="material-icons">textsms</i>
+                            </button><span th:text="${post.getNumeroComentarios}"></span>
+                        </div>
+                    </div>
+
+                    <!--modal comentarios-->
+                    <div class="modal fade" th:id="${'comentarios'+post.getId}" tabindex="-1" role="dialog"
+                         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <!--input de comentario na postagem-->
+                                <div class="header">
+                                    <form action="" method="post">
+                                        <span class="container padding-top-2 bmd-form-group">
+                                            <div class="container input-group">
+                                                <div class="col-1 input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="material-icons">textsms</i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="col-10 form-control" name="comentario"
+                                                       placeholder="Deixe seu Comentário" autocomplete="none"/>
+                                                <button type="submit" class="col-0 btn btn-primary btn-fab btn-round">
+                                                    <i class="material-icons">send</i>
+                                                </button>
+                                            </div>
+                                        </span>
+                                    </form>
+                                </div>
+                                <div class="modal-body">
+                                    teste
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     </main>
     <footer th:replace="replace/base :: footer"></footer>

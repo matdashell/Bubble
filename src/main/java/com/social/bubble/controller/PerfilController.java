@@ -37,7 +37,7 @@ public class PerfilController {
             Usuario myUser = principalUserService.get();
 
             ModelAndView modelAndView = new ModelAndView("timeline/perfil");
-            if(!myUser.getListAmigosUsuarios().contains(usuario)){
+            if(myUser != usuario && !myUser.getListAmigosUsuarios().contains(usuario)){
                 modelAndView.addObject("info", "Conecte com '"+usuario.getNickname()+"' Para Aumentar Sua Rede De Amizades :)");
             }
             modelAndView.addObject("usuario", usuario);

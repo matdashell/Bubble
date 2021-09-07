@@ -19,7 +19,6 @@ import java.util.Objects;
 public class Postagem {
 
     @Id
-    @Column(name = "post_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
@@ -45,6 +44,18 @@ public class Postagem {
     @ManyToMany(mappedBy = "postagensCurtidas")
     @ToString.Exclude
     private List<Usuario> usuariosCurtiram;
+
+    public byte[] getImagemPost(){
+        return imagemPost != null ? this.imagemPost : null;
+    }
+
+    public long getNumCurtidas(){
+        return usuariosCurtiram.size();
+    }
+
+    public long getNumeroComentarios(){
+        return comentariosUsers.size();
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -24,6 +24,7 @@ public class HomeController {
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView("timeline/home");
         modelAndView.addObject("postagens", postagemService.searchByPostAmigos());
+        modelAndView.addObject("principalUser", principalUserService.get());
         return modelAndView;
     }
 
