@@ -60,19 +60,19 @@
 
                                             <!--avatar-->
                                             <div class="container row">
-                                                <div class="col-lg-5 col-sm-12 padding-top-2 mx-auto">
+                                                <div class="col-5 container-img margin-top-1 mx-auto">
                                                     <img th:src="${'/provedor/nickImg/' + usuario.getUsername}" alt="Image"
                                                          class="img-raised rounded-circle" style="max-width: 20em;">
                                                 </div>
                                                 <!--informações/ interações-->
-                                                <div th:fragment="panel" class="col-lg-7 col-sm-12 mx-auto">
+                                                <div th:fragment="panel" class="col-7 mx-auto">
                                                     <h3 th:text="${'@'+usuario.getUsername}" class="title"></h3>
                                                     <h4 th:text="${'@'+usuario.getNickname}" class="title"></h4>
                                                     <h5 th:text="${usuario.getDescricaoPerfil}" class="card-description"></h5>
 
                                                     <!--verificar se perfil pertence ao usuario-->
                                                     <div th:if="${principalUser != usuario}">
-                                                        <a class="btn btn-secondary" href="">Doar Bc</a>
+                                                        <a class="btn btn-secondary btn-sm" href="">Doar Bc</a>
 
                                                         <!--botao de alt amizade-->
                                                         <form id="formPerfil" action="/perfil/altAmizade" method="GET">
@@ -83,7 +83,7 @@
                                                             </button>
                                                         </form>
 
-                                                        <a class="btn btn-secondary" href="">Chat</a>
+                                                        <a class="btn btn-secondary btn-sm" href="">Chat</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -122,7 +122,7 @@
                                                                                 <i class="material-icons">article</i>
                                                                             </span>
                                                                         </div>
-                                                                        <input type="text" rows="5" class="form-control"
+                                                                        <input type="text" class="form-control"
                                                                                name="descricao" placeholder="Texto Postagem" autocomplete="none">
                                                                     </div>
                                                                 </span>
@@ -151,12 +151,16 @@
                                             <br/>
 
                                             <!--postagens-->
-                                            <div class="container row">
+                                            <div class="container row mx-auto">
                                                 <div th:each="post : ${usuario.getPostagens}"
-                                                     class="card mb-3 col-lg-4 col-md-6 col-sm-6 padding-top-2">
-                                                    <img th:if="${post.getImagemPost != null}"
-                                                         class="card-img-top" th:src="${'/provedor/postImg/'+post.getId}"
-                                                         rel="nofollow" alt=":p error">
+                                                     class="card col-md-4 col-sm-6 padding-top-1">
+                                                    <!--img-->
+                                                    <div class="container-img click" data-toggle="modal" th:data-target="${'#detalhesPostagem'+post.getId}">
+                                                        <img th:if="${post.getImagemPost != null}"
+                                                             class="card-img-top" th:src="${'/provedor/postImg/'+post.getId}"
+                                                             rel="nofollow" alt="Deu erro na hora de carregar meu chapa :p">
+                                                    </div>
+                                                    <!--descricao-->
                                                     <div class="card-body">
                                                         <h4 class="card-title"></h4>
                                                         <p th:text="${post.getDescricao}" class="card-text"></p>
@@ -165,22 +169,48 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- Modal Postagem completa-->
+                                            <div th:each="post : ${usuario.getPostagens}">
+                                                <div class="modal fade" th:id="${'detalhesPostagem'+post.getId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <!--header modal-->
+                                                            <div class="modal-header">
+                                                                <h5 th:text="${post.getDescricao}" class="modal-title" id="exampleModalLabel"></h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <!--body modal-->
+                                                            <div class="modal-body container-img-comport">
+                                                                <img th:if="${post.getImagemPost != null}"
+                                                                     th:src="${'/provedor/postImg/'+post.getId}"
+                                                                     rel="nofollow" alt="Deu erro na hora de carregar a foto meu chapa :p">
+                                                            </div>
+                                                            <!--footer modal-->
+                                                            <div class="modal-footer">
+                                                                <span th:text="${post.getDataPostagem}"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!--Amigos do usuario dentro do perfil ( for)-->
                                         <div class="tab-pane" id="amigos2">
-                                            <div class="container row">
+                                            <div class="container row mx-auto">
                                                 <a th:each="amigo : ${usuario.ListAmigosUsuarios}"
-                                                   th:href="${'/perfil/'+amigo.getUsername}" class="col-lg-3 col-md-4 col-xm-6">
+                                                   th:href="${'/perfil/'+amigo.getUsername}" class="col-md-4 col-sm-6">
                                                     <h4 th:text="${'@'+amigo.getNickname}"></h4>
                                                     <img th:src="${'/provedor/nickImg/'+amigo.getUsername}"
-                                                         alt="Raised Image" class="img-raised rounded img-fluid">
+                                                         alt="Raised Image" class="img-raised rounded img-fluid"/>
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <!--preferencias do usuario-->
