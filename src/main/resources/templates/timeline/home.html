@@ -22,109 +22,25 @@
                         <!--boday card-->
                         <div class="card-body">
                             <!--modal foto postagem em tela cheia-->
-                            <div class="container-img" data-toggle="modal" th:data-target="${'#fotoPostagem'+post.getId}">
-                                <img th:if="${post.getImagemPost}" class="card-img-top img click"
-                                     th:src="${'/provedor/postImg/'+post.getId}" rel="nofollow" alt="Card image cap">
+                            <div th:replace="replace/pack-postagem :: img-modal-container">
+                                <!--replace img modal container-->
                             </div>
                             <p th:text="${post.getDescricao}" class="card-text padding-top-1"></p>
                             <p class="card-text"><small th:text="${post.getDataPostagem}" class="text-muted"></small></p>
                         </div>
-                        <div class="card-footer">
-                            <!--curtidas postagem-->
-                            <form method="post" action="/postagem/altCurtir" class="margin-left-1">
-                                <input type="hidden" name="id" th:value="${post.getId}">
-                                <button class="btn btn-primary btn-fab btn-fab-mini btn-round" type="submit">
-                                    <i class="material-icons" th:text="${principalUser.curtiu(post) ? 'favorite' : 'favorite_border'}"></i>
-                                </button><span th:text="${post.getNumCurtidas}" class="padding-left-1"></span>
-                            </form>
-
-                            <!--comentarios postagem-->
-                            <button type="button" class="btn btn-primary btn-fab btn-fab-mini btn-round margin-left-1"
-                                    data-toggle="modal" th:data-target="${'#comentarios'+post.getId}">
-                                <i class="material-icons">textsms</i>
-                            </button><span th:text="${post.getNumeroComentarios}" class="padding-left-1"></span>
+                        <div th:replace="replace/pack-postagem :: footer-modal-pack">
+                            <!--replace footer modal-->
                         </div>
                     </div>
 
                     <!--modal comentarios-->
-                    <div class="modal fade" th:id="${'comentarios'+post.getId}" tabindex="-1" role="dialog"
-                         aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                               <!--header - modal-->
-                                <div class="modal-header">
-                                    <div class="model-title" th:text="${'Comentarios da postagem @'+post.getUsuarioPost.getUsername}"></div>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <!--input de comentario na postagem-->
-                                <div class="header">
-                                    <!--formulario input comentarios-->
-                                    <form action="/postagem/comentar" method="post">
-                                        <span class="container padding-top-2 bmd-form-group">
-                                            <div class="container input-group">
-                                                <div class="col-1 input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="material-icons">textsms</i>
-                                                    </span>
-                                                </div>
-                                                <input type="hidden" name="id" th:value="${post.getId}"/>
-                                                <input type="text" class="col-10 form-control" name="comentario"
-                                                       placeholder="Deixe seu Comentário" autocomplete="none"/>
-                                                <button type="submit" class="col-0 btn btn-default btn-fab btn-round">
-                                                    <i class="material-icons">send</i>
-                                                </button>
-                                            </div>
-                                        </span>
-                                    </form>
-                                </div>
-                                <!--comentarios postagem (lista)-->
-                                <div class="modal-body">
-                                    <div th:each="comentario : ${post.getComentariosUsers}" class="container card padding-top-0">
-                                        <!--top comentario-->
-                                        <div class="row">
-                                            <!--imagem comentario-->
-                                            <div class="col-md-2 col-sm-3 container-img-xm">
-                                                <img th:if="${post.getImagemPost}"
-                                                     th:src="${'/provedor/nickImg/'+comentario.getComentarioUsuario.getUsername}"
-                                                     alt="Thumbnail Image" class="rounded-circle img-fluid"/>
-                                            </div>
-                                            <div class="col-md-10 col-sm-9 padding-top-0">
-                                                <!--user-->
-                                                <b>
-                                                    <a th:href="${'/perfil/'+comentario.getComentarioUsuario.getUsername}">
-                                                        <span th:text="${'@'+comentario.getComentarioUsuario.getUsername}"></span>
-                                                    </a>
-                                                </b>
-                                                <!--comentario user-->
-                                                <span th:text="${' - '+comentario.getComentario}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div th:replace="replace/pack-postagem :: modal-comentario">
+                        <!--replace modal comentario-->
                     </div>
 
                     <!-- Modal body imagem tela cheia-->
-                    <div class="modal fade" th:id="${'fotoPostagem'+post.getId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <!--header-->
-                                <div class="modal-header">
-                                    <h5 th:text="${'Foto postagem @'+post.getUsuarioPost.getUsername}" class="modal-title" id="exampleModalLabel"></h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <!--body-->
-                                <div class="modal-body container-img-comport">
-                                    <img th:if="${post.getImagemPost}" class="card-img-top img"
-                                         th:src="${'/provedor/postImg/'+post.getId}" rel="nofollow" alt="Card image cap">
-                                </div>
-                            </div>
-                        </div>
+                    <div th:replace="replace/pack-postagem :: img-modal-expand">
+                        <!--replace img-modal-expand-->
                     </div>
                 </div>
             </section>

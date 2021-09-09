@@ -56,7 +56,8 @@ public class PostagemController {
             return modelAndView;
         }
 
-        postagemService.delete(postagem);
+        myUser.getPostagensCurtidas().remove(postagem);
+        usuarioService.save(myUser);
 
         modelAndView.addObject("sucess", "Postagem de "+postagem.getUsuarioPost().getNickname()+" Desfavoritada!");
         modelAndView.addObject("postagens", postagemService.searchByPostAmigos());
@@ -72,6 +73,7 @@ public class PostagemController {
         ModelAndView modelAndView = new ModelAndView("timeline/home");
         Usuario myUser = principalUserService.get();
         Postagem postagem = postagemService.findById(id);
+
         Comentario comentario = new Comentario();
 
         //caso todas as informações estajam corretas

@@ -60,12 +60,12 @@
 
                                             <!--avatar-->
                                             <div class="container row">
-                                                <div class="col-5 container-img margin-top-1 mx-auto">
+                                                <div class="col-md-6 container-img margin-top-1 mx-auto">
                                                     <img th:src="${'/provedor/nickImg/' + usuario.getUsername}" alt="Image"
-                                                         class="img-raised rounded-circle" style="max-width: 20em;">
+                                                         class="img-raised rounded-circle" style="max-width: 20em; max-heigth: 20em;">
                                                 </div>
                                                 <!--informações/ interações-->
-                                                <div th:fragment="panel" class="col-7 mx-auto">
+                                                <div th:fragment="panel" class="col-md-6 mx-auto">
                                                     <h3 th:text="${'@'+usuario.getUsername}" class="title"></h3>
                                                     <h4 th:text="${'@'+usuario.getNickname}" class="title"></h4>
                                                     <h5 th:text="${usuario.getDescricaoPerfil}" class="card-description"></h5>
@@ -155,10 +155,8 @@
                                                 <div th:each="post : ${usuario.getPostagens}"
                                                      class="card col-md-4 col-sm-6 padding-top-1">
                                                     <!--img-->
-                                                    <div class="container-img click" data-toggle="modal" th:data-target="${'#detalhesPostagem'+post.getId}">
-                                                        <img th:if="${post.getImagemPost != null}"
-                                                             class="card-img-top" th:src="${'/provedor/postImg/'+post.getId}"
-                                                             rel="nofollow" alt="Deu erro na hora de carregar meu chapa :p">
+                                                    <div th:replace="replace/pack-postagem :: img-modal-container">
+                                                        <!--replace img-modal-container-->
                                                     </div>
                                                     <!--descricao-->
                                                     <div class="card-body">
@@ -167,33 +165,23 @@
                                                         <p class="card-text"><small th:text="${post.getDataPostagem}"
                                                                                     class="text-muted"></small></p>
                                                     </div>
+                                                    <!--footer-->
+                                                    <div th:replace="replace/pack-postagem :: footer-modal-pack">
+                                                        <!--replace pacote footer (curtir - comentar)-->
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Modal Postagem completa-->
+                                            <!--for para geral modal fora do container-->
                                             <div th:each="post : ${usuario.getPostagens}">
-                                                <div class="modal fade" th:id="${'detalhesPostagem'+post.getId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <!--header modal-->
-                                                            <div class="modal-header">
-                                                                <h5 th:text="${post.getDescricao}" class="modal-title" id="exampleModalLabel"></h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">×</span>
-                                                                </button>
-                                                            </div>
-                                                            <!--body modal-->
-                                                            <div class="modal-body container-img-comport">
-                                                                <img th:if="${post.getImagemPost != null}"
-                                                                     th:src="${'/provedor/postImg/'+post.getId}"
-                                                                     rel="nofollow" alt="Deu erro na hora de carregar a foto meu chapa :p">
-                                                            </div>
-                                                            <!--footer modal-->
-                                                            <div class="modal-footer">
-                                                                <span th:text="${post.getDataPostagem}"></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <!--exibir comentarios-->
+                                                <div th:replace="replace/pack-postagem :: modal-comentario">
+                                                    <!--replace comentairo footer-->
+                                                </div>
+
+                                                <!--mostrar foto completa-->
+                                                <div th:replace="replace/pack-postagem :: img-modal-expand">
+                                                    <!--replace img-modal-expand-->
                                                 </div>
                                             </div>
                                         </div>
@@ -204,7 +192,8 @@
                                                    th:href="${'/perfil/'+amigo.getUsername}" class="col-md-4 col-sm-6">
                                                     <h4 th:text="${'@'+amigo.getNickname}"></h4>
                                                     <img th:src="${'/provedor/nickImg/'+amigo.getUsername}"
-                                                         alt="Raised Image" class="img-raised rounded img-fluid"/>
+                                                         alt="Raised Image" class="img-raised rounded img-fluid"
+                                                         style="max-width: 20em; max-heigth: 20em;"/>
                                                 </a>
                                             </div>
                                         </div>
