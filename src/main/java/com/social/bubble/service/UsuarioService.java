@@ -16,12 +16,12 @@ public interface UsuarioService {
     Iterable<Usuario> searchByUsername(String usernam);
     Iterable<Usuario> searchByNickname(String nickname);
     Iterable<Usuario> searchByMatch(
-            Genero genero,
-            int menorIdade,
-            int maiorIdade,
-            Cores cores,
-            EstMusical estMusical,
-            Animais animais
+            String idade,
+            String cores,
+            String estMusical,
+            String animais,
+            String username,
+            String nickname
     );
     void save(Usuario usuario);
     void delete(Usuario usuario);
