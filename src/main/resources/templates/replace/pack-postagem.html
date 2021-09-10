@@ -72,14 +72,18 @@
                                      alt="Thumbnail Image" class="rounded-circle img-fluid"/>
                             </div>
                             <div class="col-md-10 col-sm-9 padding-top-0">
-                                <!--user-->
-                                <b>
-                                    <a th:href="${'/perfil/'+comentario.getComentarioUsuario.getUsername}">
-                                        <span th:text="${'@'+comentario.getComentarioUsuario.getUsername}"></span>
-                                    </a>
-                                </b>
-                                <!--comentario user-->
-                                <span th:text="${' - '+comentario.getComentario}"></span>
+                                <div class="float-left text-left col-2">
+                                    <!--user-->
+                                    <b>
+                                        <a th:href="${'/perfil/'+comentario.getComentarioUsuario.getUsername}">
+                                            <span th:text="${'@'+comentario.getComentarioUsuario.getUsername}"></span>
+                                        </a>
+                                    </b>
+                                </div>
+                                <div class="float-left col-12">
+                                    <!--comentario user-->
+                                    <span th:text="${' - '+comentario.getComentario}"></span>
+                                </div>
                             </div>
                         </div>
                     </div>

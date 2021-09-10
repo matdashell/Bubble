@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="https://www.thymeleaf.org">
+    <head th:replace="replace/base :: css"></head>
+    <body>
+        <header th:replace="replace/base :: navbar"></header>
+        <main>
+            <div class="container padding-top-1">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Match de Usuários</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="/pesquisa/preferencias" method="post" class="mx-auto padding-top-1">
+                            <div class="row">
+                                <div class="form mx-auto col-6">
+                                    <div class="form-group">
+                                        <label for="input-1">Filtrar Username</label>
+                                        <input class="form-control" id="input-1" type="text" name="username" placeholder="TODOS" value="">
+                                    </div>
+                                </div>
+                                <div class="form mx-auto col-6">
+                                    <div class="form-group">
+                                        <label for="input0">Filtrar Nickname</label>
+                                        <input class="form-control" id="input0" type="text" name="nickname" placeholder="TODOS" value="">
+                                    </div>
+                                </div>
+                                <div class="form mx-auto col-6">
+                                    <div class="form-group">
+                                        <label for="input1">Filtrar Cor Favorita</label>
+                                        <select name="cor" id="input1" class="form-control">
+                                            <option selected value="">TODAS</option>
+                                            <option th:each="cor : ${cores}" th:text="${cor}" th:value="${cor}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form mx-auto col-6">
+                                    <div class="form-group">
+                                        <label for="input2">Filtrar Est. Musical Favorito</label>
+                                        <select name="musica" id="input2" class="form-control">
+                                            <option selected value="">TODAS</option>
+                                            <option th:each="musica : ${musicas}" th:text="${musica}" th:value="${musica}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form mx-auto col-6">
+                                    <div class="form-group">
+                                        <label for="input3">Filtrar Animal Favorito</label>
+                                        <select name="animal" id="input3" class="form-control">
+                                            <option selected value="">TODAS</option>
+                                            <option th:each="animal : ${animais}" th:text="${animal}" th:value="${animal}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form mx-auto col-6">
+                                    <div class="form-group">
+                                        <label for="input4">Filtrar Faixa Etária</label>
+                                        <select name="idade" id="input4" class="form-control">
+                                            <option selected value="18-100">TODAS</option>
+                                            <option value="18-25">18-25</option>
+                                            <option value="25-30">25-30</option>
+                                            <option value="30-35">30-35</option>
+                                            <option value="35-40">35-40</option>
+                                            <option value="40-45">40-45</option>
+                                            <option value="50-55">50-55</option>
+                                            <option value="60-100">60+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary padding-top-0">Pesquisar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div th:if="${usuarios != null}" th:each="usuario : ${usuarios}">
+                    <p th:text="${usuario.getUsername}"></p>
+                </div>
+            </div>
+
+            <div th:replace="replace/base :: js"></div>
+        </main>
+        <footer th:replace="replace/base :: footer"></footer>
+    </body>
+</html>

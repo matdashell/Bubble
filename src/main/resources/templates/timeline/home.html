@@ -17,7 +17,9 @@
                                 <img th:src="${'/provedor/nickImg/' + post.getUsuarioPost.getUsername}" alt="Image"
                                      class="img-raised rounded-circle col-0">
                             </div>
-                            <h4 th:text="${'@'+post.getUsuarioPost.getUsername}" class="card-title col-8 padding-left-1"></h4>
+                            <a th:href="${'/perfil/'+post.getUsuarioPost.getUsername}" class="btn btn-link">
+                                <h4 th:text="${'@'+post.getUsuarioPost.getUsername}" class="card-title col-8 padding-left-1"></h4>
+                            </a>
                         </div>
                         <!--boday card-->
                         <div class="card-body">

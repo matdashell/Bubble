@@ -1,5 +1,8 @@
 package com.social.bubble.controller;
 
+import com.social.bubble.model.enums.Animais;
+import com.social.bubble.model.enums.Cores;
+import com.social.bubble.model.enums.EstMusical;
 import com.social.bubble.service.PostagemService;
 import com.social.bubble.service.PrincipalUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,11 @@ public class HomeController {
     //apresentar tela de match entre usuários de acordo com as especificações
     @RequestMapping(value = "/match", method = RequestMethod.GET)
     public ModelAndView procurarAmigos(){
-        return null;
+        ModelAndView modelAndView = new ModelAndView("timeline/match");
+        modelAndView.addObject("musicas", EstMusical.values());
+        modelAndView.addObject("cores", Cores.values());
+        modelAndView.addObject("animais", Animais.values());
+
+        return modelAndView;
     }
 }

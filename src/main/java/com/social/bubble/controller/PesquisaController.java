@@ -1,6 +1,10 @@
 package com.social.bubble.controller;
 
 import com.social.bubble.model.Postagem;
+import com.social.bubble.model.Usuario;
+import com.social.bubble.model.enums.Animais;
+import com.social.bubble.model.enums.Cores;
+import com.social.bubble.model.enums.EstMusical;
 import com.social.bubble.service.PostagemService;
 import com.social.bubble.service.PrincipalUserService;
 import com.social.bubble.service.UsuarioService;
@@ -27,7 +31,7 @@ public class PesquisaController {
     /*Necessario adicionar funcionalidade de validação das privacidades do usuario*/
     //pesquisar postagens
     @RequestMapping(value = "/postagem", method = RequestMethod.POST)
-    public ModelAndView ModelAndView(@RequestParam("pesquisa") String pesquisa){
+    public ModelAndView ModelAndView(String pesquisa){
 
         ModelAndView modelAndView = new ModelAndView("timeline/home");
 
@@ -42,6 +46,20 @@ public class PesquisaController {
         //caso não hajam pesquisas com os termos descritos
         modelAndView.addObject("erro", "Termo de pesquisa não encontrado!");
         modelAndView.addObject("postagem", postagemService.searchByDataPostagem());
+        return modelAndView;
+    }
+
+    //pesquisa por preferencias de usuario
+    @RequestMapping(value = "/preferencias", method = RequestMethod.POST)
+    public ModelAndView pesquisarPreferencia(String cor, String animal, String musica, String idade, String username, String nickname){
+
+        ModelAndView modelAndView = new ModelAndView("timeline/match");
+
+        Usuario myUser = principalUserService.get();
+
+        modelAndView.addObject("principalUser", myUser);
+        modelAndView.addObject("usuarios", usuarioService.searchByMatch(idade, cor, musica, animal, username, nickname));
+
         return modelAndView;
     }
 }

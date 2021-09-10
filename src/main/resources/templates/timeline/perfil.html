@@ -62,7 +62,7 @@
                                             <div class="container row">
                                                 <div class="col-md-6 container-img margin-top-1 mx-auto">
                                                     <img th:src="${'/provedor/nickImg/' + usuario.getUsername}" alt="Image"
-                                                         class="img-raised rounded-circle" style="max-width: 20em; max-heigth: 20em;">
+                                                         class="img-raised rounded-circle max-20em">
                                                 </div>
                                                 <!--informações/ interações-->
                                                 <div th:fragment="panel" class="col-md-6 mx-auto">
@@ -173,7 +173,7 @@
                                             </div>
 
                                             <!--for para geral modal fora do container-->
-                                            <div th:each="post : ${usuario.getPostagens}">
+                                            <div th:each="post : ${usuario.getPostagens}" class="col-md-8 mx-auto padding-top-2">
                                                 <!--exibir comentarios-->
                                                 <div th:replace="replace/pack-postagem :: modal-comentario">
                                                     <!--replace comentairo footer-->
@@ -187,13 +187,12 @@
                                         </div>
                                         <!--Amigos do usuario dentro do perfil ( for)-->
                                         <div class="tab-pane" id="amigos2">
-                                            <div class="container row mx-auto">
+                                            <div class="container row mx-auto container-img max-10em">
                                                 <a th:each="amigo : ${usuario.ListAmigosUsuarios}"
                                                    th:href="${'/perfil/'+amigo.getUsername}" class="col-md-4 col-sm-6">
                                                     <h4 th:text="${'@'+amigo.getNickname}"></h4>
                                                     <img th:src="${'/provedor/nickImg/'+amigo.getUsername}"
-                                                         alt="Raised Image" class="img-raised rounded img-fluid"
-                                                         style="max-width: 20em; max-heigth: 20em;"/>
+                                                         alt="Raised Image" class="img-raised rounded-circle img-fluid"/>
                                                 </a>
                                             </div>
                                         </div>

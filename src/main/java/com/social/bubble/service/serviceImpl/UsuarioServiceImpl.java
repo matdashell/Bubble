@@ -10,6 +10,8 @@ import com.social.bubble.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
@@ -39,14 +41,23 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Iterable<Usuario> searchByMatch(
-            Genero genero,
-            int menorIdade,
-            int maiorIdade,
-            Cores cores,
-            EstMusical estMusical,
-            Animais animais) {
+            String idade,
+            String cores,
+            String estMusical,
+            String animais,
+            String username,
+            String nickname) {
 
-        return usuarioRepository.matches(genero, menorIdade, maiorIdade, cores, estMusical, animais);
+        String[] val = idade.split("-");
+
+        int menorIdade = Integer.parseInt(val[0].trim());
+        int maiorIdade = Integer.parseInt(val[1].trim());
+
+        return (usuarioRepository.matches(menorIdade, maiorIdade, cores, estMusical, animais, username, nickname))
+                .stream()
+                .filter(u -> usuarioRepository.findById(u).isPresent())
+                .map(u -> usuarioRepository.findById(u).get())
+                .collect(Collectors.toList());
     }
 
     @Override
