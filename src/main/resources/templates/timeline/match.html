@@ -5,7 +5,7 @@
         <header th:replace="replace/base :: navbar"></header>
         <main>
             <div class="container padding-top-1">
-                <div class="card">
+                <div th:if="${usuarios == null}" class="card">
                     <div class="card-header">
                         <h4 class="card-title">Match de Usuários</h4>
                     </div>
@@ -74,8 +74,32 @@
                     </div>
                 </div>
 
-                <div th:if="${usuarios != null}" th:each="usuario : ${usuarios}">
-                    <p th:text="${usuario.getUsername}"></p>
+                <div th:if="${usuarios != null}" class="padding-top-0">
+                    <h4 class="title">Resultados Encontrados:</h4>
+                    <div th:each="usuario : ${usuarios}" class="card">
+                        <div class="row">
+                            <div class="margin-left-1 margin-top-1 col-4 container-img-md">
+                                <img th:src="${'/provedor/nickImg/'+usuario.getUsername}" class="img rounded-circle">
+                            </div>
+                            <div class="col">
+                                <div class="margin-left-1 row">
+                                    <a th:href="${'/perfil/'+usuario.getUsername}">
+                                        <h4 th:text="${'@'+usuario.getUsername}" class="title margin-right-1"></h4>
+                                    </a>
+                                    <h4 th:text="${'Genero: '+usuario.getGenero}" class="title margin-right-1"></h4>
+                                    <h4 th:text="${'Idade '+usuario.getIdade}" class="title"></h4>
+                                </div>
+                                <blockquote class="blockquote">
+                                    <div class="row">
+                                        <span th:text="${usuario.getDescricaoPerfil}" class="row"></span>
+                                        <div th:replace="replace/pack-perfil :: preferencias">
+                                            <!--replace preferencias user-->
+                                        </div>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

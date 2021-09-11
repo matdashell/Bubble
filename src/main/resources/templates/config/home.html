@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="https://www.thymeleaf.org">
+    <head th:replace="replace/base :: css"></head>
+    <body>
+        <header th:replace="replace/base :: navbar"></header>
+        <main class="container">
+            <div th:replace="replace/base :: alert"></div>
+            <div class="card padding-top-0">
+                <div class="card-header">
+                    <h4 class="card-title">Configurações</h4>
+                </div>
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row mx-auto">
+                            <button data-toggle="modal" data-target="#conta" class="margin btn btn-info"><i class="material-icons">perm_identity</i>Conta</button>
+                            <button data-toggle="modal" data-target="#privacidade" class="margin btn btn-info"><i class="material-icons">admin_panel_settings</i>Privacidade</button>
+                            <button data-toggle="modal" data-target="#senha" class="margin btn btn-info"><i class="material-icons">lock</i>Alterar Senha</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Conta-->
+            <div class="modal fade" id="conta" tabindex="-1" role="dialog" aria-labelledby="target-conta" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="target-conta">Configurações Conta</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <!--inputs-->
+                        <form>
+                            <!--input img-->
+                            <div class="modal-body">
+                                <span class="bmd-form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">face</i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="off" required>
+                                    </div>
+                                </span>
+                            </div>
+                            <!--input username-->
+                            <div class="modal-body">
+                                <span class="bmd-form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">person_outline</i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="off" required>
+                                    </div>
+                                </span>
+                            </div>
+                            <!--input username-->
+                            <div class="modal-body">
+                                <span class="bmd-form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">face</i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="off" required>
+                                    </div>
+                                </span>
+                            </div>
+                            <!--input preferencias user (cores)-->
+                            <div class="container row">
+
+                                <div class="col-md-12">
+                                    <div class="title">
+                                        <h5>Com qual gênero se indentifica? *</h5>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label margin-left-0" th:each="gen : ${generos}">
+                                            <input class="form-check-input" type="radio" name="genero" th:value="${gen}">
+                                            <p th:text="${gen}"></p>
+                                            <span class="circle">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col">
+                                    <div class="col">
+                                        <div class="title">
+                                            <h5>Cores Favoritas</h5>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label margin-left-0" th:each="cor : ${cores}">
+                                                <input class="form-check-input" name="coresFavoritas" type="checkbox" th:value="${cor}">
+                                                <p th:text="${cor}"></p>
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col">
+                                    <div class="col">
+                                        <div class="title">
+                                            <h5>Animais Favoritos</h5>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label margin-left-0" th:each="animal : ${animais}">
+                                                <input class="form-check-input" name="animaisFavoritos" type="checkbox" th:value="${animal}">
+                                                <p th:text="${animal}"></p>
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col">
+                                    <div class="col">
+                                        <div class="title">
+                                            <h5>Musicas favoritas</h5>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label margin-left-0" th:each="musica : ${musicas}">
+                                                <input class="form-check-input" name="estiloMusical" type="checkbox" th:value="${musica}">
+                                                <p th:text="${musica}"></p>
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--submit-->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Privacidade-->
+            <div class="modal fade" id="privacidade" tabindex="-1" role="dialog" aria-labelledby="target-privacidade" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="target-privacidade">Configurações Privacidade</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <!--inputs-->
+                        <form>
+                            <div class="modal-body">
+                                <!--chat publico-->
+                                <div class="col-lg-3 col-md-3 col-sm-6">
+                                    <div class="title">
+                                        <h3>Chat publico</h3>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" name="chatPublico" checked="checked">
+                                            <span class="toggle"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--perfil publico-->
+                                <div class="col-lg-3 col-md-3 col-sm-6">
+                                    <div class="title">
+                                        <h3>Chat publico</h3>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" name="chatPublico" checked="checked">
+                                            <span class="toggle"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--perfil match-->
+                                <div class="col-lg-3 col-md-3 col-sm-6">
+                                    <div class="title">
+                                        <h3>Chat publico</h3>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" name="chatPublico" checked="checked">
+                                            <span class="toggle"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!--confirmar solicitacoes-->
+                                <div class="col-lg-3 col-md-3 col-sm-6">
+                                    <div class="title">
+                                        <h3>Chat publico</h3>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" name="chatPublico" checked="checked">
+                                            <span class="toggle"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!--submit-->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Senha-->
+            <div class="modal fade" id="senha" tabindex="-1" role="dialog" aria-labelledby="target-senha" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="target-senha">Configurações Senha</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <!--inputs-->
+                        <form>
+                            <div class="modal-body">
+                                <!--input senha antiga-->
+                                <div class="modal-body">
+                                    <span class="bmd-form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">face</i>
+                                                </span>
+                                            </div>
+                                            <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="off" required>
+                                        </div>
+                                    </span>
+                                </div>
+                                <!--input nova senha-->
+                                <div class="modal-body">
+                                    <span class="bmd-form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">face</i>
+                                                </span>
+                                            </div>
+                                            <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="off" required>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                        <!--submit-->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        <footer th:replace="replace/base :: footer"></footer>
+        <div th:replace="replace/base :: js"></div>
+    </body>
+</html>

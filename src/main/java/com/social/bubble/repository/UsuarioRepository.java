@@ -1,10 +1,6 @@
 package com.social.bubble.repository;
 
 import com.social.bubble.model.Usuario;
-import com.social.bubble.model.enums.Animais;
-import com.social.bubble.model.enums.Cores;
-import com.social.bubble.model.enums.EstMusical;
-import com.social.bubble.model.enums.Genero;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -23,7 +19,7 @@ public interface UsuarioRepository extends CrudRepository<Usuario, String> {
     @Query(value = "SELECT * FROM usuario WHERE nickname LIKE %?1%", nativeQuery = true)
     Iterable<Usuario> searchByNickname(String nickname);
 
-    @Query(value = "SELECT TOP 30 u.username " +
+    @Query(value = "SELECT TOP 50 DISTINCT u.* " +
             "FROM usuario AS u, rel_cores AS c, rel_estmusical AS e, rel_animaisfav AS a " +
             "WHERE u.perfil_match = true " +
             "AND u.username LIKE %?6% " +
@@ -34,9 +30,8 @@ public interface UsuarioRepository extends CrudRepository<Usuario, String> {
             "AND u.username = c.id_user " +
             "AND c.cores_favoritas LIKE %?3% " +
             "AND u.username = a.id_user " +
-            "AND a.animais_favoritos LIKE %?5% " +
-            "ORDER BY RANDOM()", nativeQuery = true)
-    List<String> matches(
+            "AND a.animais_favoritos LIKE %?5%", nativeQuery = true)
+    List<Usuario> matches(
             int menorIdade,
             int maiorIdade,
             String cores,

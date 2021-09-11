@@ -36,12 +36,7 @@ public class PostagemServiceImpl implements PostagemService {
 
     @Override
     public Iterable<Postagem> searchByPostAmigos() {
-        List<Long> ids = postagemRepository.getPostagensAmigos(principalUserService.get().getUsername());
-
-        return ids.stream()
-                .filter(id -> postagemRepository.findById(id).isPresent())
-                .map(id -> postagemRepository.findById(id).get())
-                .collect(Collectors.toList());
+        return postagemRepository.getPostagensAmigos(principalUserService.get().getUsername());
     }
 
     @Override

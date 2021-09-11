@@ -53,11 +53,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         int menorIdade = Integer.parseInt(val[0].trim());
         int maiorIdade = Integer.parseInt(val[1].trim());
 
-        return (usuarioRepository.matches(menorIdade, maiorIdade, cores, estMusical, animais, username, nickname))
-                .stream()
-                .filter(u -> usuarioRepository.findById(u).isPresent())
-                .map(u -> usuarioRepository.findById(u).get())
-                .collect(Collectors.toList());
+        return usuarioRepository.matches(menorIdade, maiorIdade, cores, estMusical, animais, username, nickname);
     }
 
     @Override

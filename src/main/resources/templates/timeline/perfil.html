@@ -202,30 +202,8 @@
                         </div>
 
                         <!--preferencias do usuario-->
-                        <div class="tab-pane" id="pref">
-                            <div class="container row justify-md-center col-md-8 mx-auto">
-
-                                <span class="badge badge-info" style="margin-left: 10px; margin-top: 10px;">Cores Favoritas -->></span>
-
-                                <span th:each="cor : ${usuario.getCoresFavoritas}"
-                                      th:class="${principalUser.containsCorFav(cor)} ? ('badge badge-success') : ('badge badge-danger')"
-                                      th:text="${cor}" style="margin-left: 10px; margin-top: 10px;">
-                                </span>
-
-                                <span class="badge badge-info" style="margin-left: 10px; margin-top: 10px;">Estilos Musicais Favoritos -->></span>
-
-                                <span th:each="musica : ${usuario.estiloMusical}"
-                                      th:class="${principalUser.containsMscFav(musica)} ? ('badge badge-success') : ('badge badge-danger')"
-                                      th:text="${musica}" style="margin-left: 10px; margin-top: 10px;">
-                                </span>
-
-                                <span class="badge badge-info" style="margin-left: 10px; margin-top: 10px;">Animais Favoritos -->></span>
-
-                                <span th:each="animal : ${usuario.animaisFavoritos}"
-                                      th:class="${principalUser.containsAnmFav(animal)} ? ('badge badge-success') : ('badge badge-danger')"
-                                      th:text="${animal}" style="margin-left: 10px; margin-top: 10px;">
-                                </span>
-                            </div>
+                        <div th:replace="replace/pack-perfil :: preferencias">
+                            <!--replace preferencias user-->
                         </div>
 
                         <!--chats do usuario-->

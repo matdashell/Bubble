@@ -1,5 +1,9 @@
 package com.social.bubble.controller;
 
+import com.social.bubble.model.enums.Animais;
+import com.social.bubble.model.enums.Cores;
+import com.social.bubble.model.enums.EstMusical;
+import com.social.bubble.model.enums.Genero;
 import com.social.bubble.service.PrincipalUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +22,13 @@ public class ConfigController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView config(){
 
-        return new ModelAndView("config/home");
+        ModelAndView modelAndView = new ModelAndView("config/home");
+        modelAndView.addObject("generos", Genero.values());
+        modelAndView.addObject("cores", Cores.values());
+        modelAndView.addObject("musicas", EstMusical.values());
+        modelAndView.addObject("animais", Animais.values());
+
+        return modelAndView;
     }
 
     //apresentar tela de configurações da conta
