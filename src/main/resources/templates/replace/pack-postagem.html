@@ -21,10 +21,37 @@
                 data-toggle="modal" th:data-target="${'#inputComentarios'+post.getId}">
             <i class="material-icons">textsms</i>
         </button><span th:text="${post.getNumeroComentarios}" class="padding-left-1"></span>
+
+        <!--excluir postagem-->
+        <button th:if="${principalUser == post.getUsuarioPost}" type="button" class="btn btn-danger btn-fab btn-fab-mini btn-round margin-left-1"
+                data-toggle="modal" th:data-target="${'#deletePost'+post.getId}">
+            <i class="material-icons">delete</i>
+        </button>
     </div>
 
-
-
+    <!--modal confirmar exclusão postagem-->
+    <div th:fragment="delete-post" th:if="${principalUser == post.getUsuarioPost}" class="modal fade" th:id="${'deletePost'+post.getId}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!--header-->
+                <div class="modal-header">
+                    <h5 class="modal-title">Deseja realmente excluir essa postagem?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <!--body-->
+                <div class="modal-body">
+                    <button class="btn btn-info col-6" data-dismiss="modal" aria-label="Close">Cancelar</button>
+                    <form action="/postagem/deletar" method="post">
+                        <input type="hidden" name="id" th:value="${post.getId}">
+                        <button type="submit" class="btn btn-primary col-6">Confirmar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 <!--fragmento modal para exibir comentarios-->
@@ -50,9 +77,9 @@
                                         <i class="material-icons">textsms</i>
                                      </span>
                                 </div>
-                                <input type="hidden" name="id" th:value="${post.getId}"/>
+                                <input type="hidden" name="id" th:value="${post.getId}" autocomplete="off" required/>
                                 <input type="text" class="col-10 form-control" name="comentario"
-                                       placeholder="Deixe seu Comentário" autocomplete="off"/>
+                                       placeholder="Deixe seu Comentário" autocomplete="off" required/>
                                 <button type="submit" class="col-0 btn btn-default btn-fab btn-round">
                                     <i class="material-icons">send</i>
                                 </button>
@@ -80,9 +107,9 @@
                                         </a>
                                     </b>
                                 </div>
-                                <div class="float-left col-12">
+                                <div class="col-12">
                                     <!--comentario user-->
-                                    <span th:text="${' - '+comentario.getComentario}"></span>
+                                    <span th:text="${' - '+comentario.getComentario}" class="float-left"></span>
                                 </div>
                             </div>
                         </div>

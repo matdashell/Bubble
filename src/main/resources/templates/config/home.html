@@ -31,34 +31,21 @@
                             </button>
                         </div>
                         <!--inputs-->
-                        <form>
+                        <form action="/config/conta" method="post" enctype="multipart/form-data">
                             <!--input img-->
                             <div class="modal-body">
                                 <span class="bmd-form-group">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">
-                                                <i class="material-icons">face</i>
+                                                <i class="material-icons">photo_camera</i>
                                             </span>
                                         </div>
-                                        <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="off" required>
+                                        <input type="file" class="form-control" name="file" placeholder="Carregar nova foto perfil" autocomplete="off">
                                     </div>
                                 </span>
                             </div>
-                            <!--input username-->
-                            <div class="modal-body">
-                                <span class="bmd-form-group">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="material-icons">person_outline</i>
-                                            </span>
-                                        </div>
-                                        <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="off" required>
-                                    </div>
-                                </span>
-                            </div>
-                            <!--input username-->
+                            <!--input nickname-->
                             <div class="modal-body">
                                 <span class="bmd-form-group">
                                     <div class="input-group">
@@ -67,20 +54,21 @@
                                                 <i class="material-icons">face</i>
                                             </span>
                                         </div>
-                                        <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="off" required>
+                                        <input type="text" th:value="${principalUser.getNickname}" class="form-control" name="nickname" placeholder="nickname" autocomplete="off" required>
                                     </div>
                                 </span>
                             </div>
                             <!--input preferencias user (cores)-->
                             <div class="container row">
 
-                                <div class="col-md-12">
-                                    <div class="title">
-                                        <h5>Com qual gênero se indentifica? *</h5>
+                                <div class="col">
+                                    <div class="title col">
+                                        <h5>Genero</h5>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label margin-left-0" th:each="gen : ${generos}">
-                                            <input class="form-check-input" type="radio" name="genero" th:value="${gen}">
+                                            <input class="form-check-input" type="radio" name="genero" th:value="${gen}"
+                                                   th:checked="${principalUser.getGenero == gen}">
                                             <p th:text="${gen}"></p>
                                             <span class="circle">
                                                 <span class="check"></span>
@@ -96,7 +84,8 @@
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label margin-left-0" th:each="cor : ${cores}">
-                                                <input class="form-check-input" name="coresFavoritas" type="checkbox" th:value="${cor}">
+                                                <input class="form-check-input" name="coresFavoritas" type="checkbox"
+                                                       th:value="${cor}" th:checked="${principalUser.containsCorFav(cor)}">
                                                 <p th:text="${cor}"></p>
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
@@ -113,7 +102,8 @@
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label margin-left-0" th:each="animal : ${animais}">
-                                                <input class="form-check-input" name="animaisFavoritos" type="checkbox" th:value="${animal}">
+                                                <input class="form-check-input" name="animaisFavoritos" type="checkbox" th:value="${animal}"
+                                                th:checked="${principalUser.containsAnmFav(animal)}">
                                                 <p th:text="${animal}"></p>
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
@@ -130,7 +120,8 @@
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label margin-left-0" th:each="musica : ${musicas}">
-                                                <input class="form-check-input" name="estiloMusical" type="checkbox" th:value="${musica}">
+                                                <input class="form-check-input" name="estiloMusical" type="checkbox" th:value="${musica}"
+                                                th:checked="${principalUser.containsMscFav(musica)}">
                                                 <p th:text="${musica}"></p>
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
@@ -161,63 +152,68 @@
                             </button>
                         </div>
                         <!--inputs-->
-                        <form>
+                        <form action="/config/privacidade" method="post">
                             <div class="modal-body">
                                 <!--chat publico-->
-                                <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="col">
                                     <div class="title">
-                                        <h3>Chat publico</h3>
+                                        <h5>Perfil Público</h5>
                                     </div>
                                     <div class="togglebutton">
                                         <label>
-                                            <input type="checkbox" name="chatPublico" checked="checked">
+                                            <input type="checkbox" name="perfil"
+                                                   th:checked="${principalUser.isPerfilPublico}">
                                             <span class="toggle"></span>
                                         </label>
                                     </div>
                                 </div>
                                 <!--perfil publico-->
-                                <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="col">
                                     <div class="title">
-                                        <h3>Chat publico</h3>
+                                        <h5>Chat publico</h5>
                                     </div>
                                     <div class="togglebutton">
                                         <label>
-                                            <input type="checkbox" name="chatPublico" checked="checked">
+                                            <input type="checkbox" name="chat" checked="checked"
+                                            th:checked="${principalUser.isChatPublico}">
                                             <span class="toggle"></span>
                                         </label>
                                     </div>
                                 </div>
                                 <!--perfil match-->
-                                <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="col">
                                     <div class="title">
-                                        <h3>Chat publico</h3>
+                                        <h5>Confirmar Solicit.</h5>
                                     </div>
                                     <div class="togglebutton">
                                         <label>
-                                            <input type="checkbox" name="chatPublico" checked="checked">
+                                            <input type="checkbox" name="solicit"
+                                            th:checked="${principalUser.isConfirmarSolicitacoes}">
                                             <span class="toggle"></span>
                                         </label>
                                     </div>
                                 </div>
                                 <!--confirmar solicitacoes-->
-                                <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="col">
                                     <div class="title">
-                                        <h3>Chat publico</h3>
+                                        <h5>Perfil Match</h5>
                                     </div>
                                     <div class="togglebutton">
                                         <label>
-                                            <input type="checkbox" name="chatPublico" checked="checked">
+                                            <input type="checkbox" name="match" checked="checked"
+                                            th:checked="${principalUser.isPerfilMatch}">
                                             <span class="toggle"></span>
                                         </label>
                                     </div>
                                 </div>
                             </div>
+
+                            <!--submit-->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
                         </form>
-                        <!--submit-->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -233,7 +229,7 @@
                             </button>
                         </div>
                         <!--inputs-->
-                        <form>
+                        <form action="/config/alterarSenha" method="post">
                             <div class="modal-body">
                                 <!--input senha antiga-->
                                 <div class="modal-body">
@@ -241,10 +237,10 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="material-icons">face</i>
+                                                    <i class="material-icons">lock_open</i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="off" required>
+                                            <input type="text" class="form-control" name="antigaSenha" placeholder="Digite sua senha atual" autocomplete="off" required>
                                         </div>
                                     </span>
                                 </div>
@@ -254,20 +250,21 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                    <i class="material-icons">face</i>
+                                                    <i class="material-icons">lock</i>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control" name="username" placeholder="Username" autocomplete="off" required>
+                                            <input type="text" class="form-control" name="novaSenha" placeholder="Digite sua nova senha" autocomplete="off" required>
                                         </div>
                                     </span>
                                 </div>
                             </div>
+
+                            <!--submit-->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
                         </form>
-                        <!--submit-->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                        </div>
                     </div>
                 </div>
             </div>

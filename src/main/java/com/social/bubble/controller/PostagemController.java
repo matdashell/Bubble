@@ -104,4 +104,27 @@ public class PostagemController {
 
         return modelAndView;
     }
+
+    @RequestMapping(value = "/deletar", method = RequestMethod.POST)
+    ModelAndView deletarPostagem(long id){
+
+        ModelAndView modelAndView = new ModelAndView("timeline/home");
+
+        Usuario myUser = principalUserService.get();
+        Postagem postagem = postagemService.findById(id);
+
+        if(postagem != null && myUser.getPostagens().contains(postagem)){
+
+            postagem.getUsuariosCurtiram().forEach(u -> u.getPostagensCurtidas().remove(postagem));
+            postagemService.save(postagem);
+            postagem.getUsuariosCurtiram().clear();
+            postagemService.save(postagem);
+
+            postagemService.delete(postagemService.findById(id));
+
+            modelAndView.addObject("sucess", "Postagem deletada com sucesso!");
+        }
+
+        return modelAndView;
+    }
 }

@@ -2,6 +2,8 @@ package com.social.bubble.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -36,12 +38,12 @@ public class Postagem {
     @NotBlank
     private String descricao;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "rel_comentarios_post")
     @ToString.Exclude
     private List<Comentario> comentariosUsers;
 
-    @ManyToMany(mappedBy = "postagensCurtidas")
+    @ManyToMany(fetch = FetchType.LAZY ,mappedBy = "postagensCurtidas")
     @ToString.Exclude
     private List<Usuario> usuariosCurtiram;
 

@@ -123,7 +123,7 @@
                                                                             </span>
                                                                         </div>
                                                                         <input type="text" class="form-control"
-                                                                               name="descricao" placeholder="Texto Postagem" autocomplete="none">
+                                                                               name="descricao" placeholder="Texto Postagem" autocomplete="off" required>
                                                                     </div>
                                                                 </span>
                                                                     <span class="bmd-form-group">
@@ -134,7 +134,7 @@
                                                                             </span>
                                                                         </div>
                                                                         <input type="file" class="form-control" name="file"
-                                                                               placeholder="Foto" autocomplete="none" accept="image/png/jpg/jpeg/jfif">
+                                                                               placeholder="Foto" autocomplete="off" accept="image/png/jpg/jpeg/jfif" required>
                                                                     </div>
                                                                 </span>
                                                                 </div>
@@ -182,6 +182,11 @@
                                                 <!--mostrar foto completa-->
                                                 <div th:replace="replace/pack-postagem :: img-modal-expand">
                                                     <!--replace img-modal-expand-->
+                                                </div>
+
+                                                <!--tela de exclusão de postagem-->
+                                                <div th:replace="replace/pack-postagem :: delete-post">
+                                                    <!--replace modal deletar post-->
                                                 </div>
                                             </div>
                                         </div>

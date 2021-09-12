@@ -67,7 +67,7 @@ public class Usuario implements UserDetails {
     @Lob
     private byte[] fotoPerfil;
 
-    @OneToMany(mappedBy = "usuarioPost")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "usuarioPost")
     @ToString.Exclude
     private List<Postagem> postagens;
 
@@ -99,7 +99,7 @@ public class Usuario implements UserDetails {
     private List<BubbleChat> bubbleChats;
 
     /*lista de postagens curtidas pelo usuario*/
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "rel_likes",
         joinColumns = @JoinColumn(name = "usuario", referencedColumnName = "username"),
         inverseJoinColumns = @JoinColumn(name = "postagem", referencedColumnName = "id")

@@ -30,6 +30,9 @@
                     </li>
                     <li sec:authorize="${isAuthenticated()}" class="nav-item">
                         <a class="nav-link" href="/bubbleChat/">Chats</a>
+
+                    <li sec:authorize="${isAuthenticated()}" class="nav-item">
+                        <a class="nav-link" href="/perfil/meuPerfil">Minha Conta</a>
                     </li>
                     <li sec:authorize="${!isAuthenticated()}" class="nav-item">
                         <a class="nav-link" href="/login/">Login</a>
@@ -39,7 +42,6 @@
                            Menu
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="/perfil/meuPerfil">Minha Conta</a>
                             <a class="dropdown-item" href="/config/">Configurações</a>
                             <a class="dropdown-item" href="/logout">Logout</a>
                         </div>
