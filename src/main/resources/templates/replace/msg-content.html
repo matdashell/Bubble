@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<body>
+    <!--fragmento icon navbar-->
+    <li th:fragment="msg-icon" sec:authorize="${isAuthenticated()}" class="nav-item" id="replace-msg-icon">
+        <button class="btn btn-link nav-link" type="button" data-toggle="modal" data-target="#modalMsg">
+            Msg <span th:text="${mensagens}" th:class="${mensagens > 0} ? ('badge badge-info') : ('badge badge-primary')"></span>
+        </button>
+    </li>
+
+    <!-- Modal mesnagens-->
+    <div th:fragment="msg-modal" class="modal fade" id="modalMsg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Lista de Mensagens</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--TABS-->
+                    <div class="card card-nav-tabs card-plain">
+                        <div class="card-header card-header-danger">
+                            <div class="nav-tabs-navigation">
+                                <div class="nav-tabs-wrapper">
+                                    <ul class="nav nav-tabs" data-tabs="tabs">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#avisos" data-toggle="tab">
+                                                Avisos <span th:if="${msgAvisos.size() > 0}" th:text="${msgAvisos.size()}"></span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#solicit" data-toggle="tab">
+                                                Solicitações <span th:if="${msgSolicitacoes.size() > 0}" th:text="${msgSolicitacoes.size()}"></span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#conversas" data-toggle="tab">
+                                                Conversas <span th:if="${msgRapidas.size() > 0}" th:text="${msgRapidas.size()}"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div class="tab-content text-center">
+                                <div class="tab-pane active" id="avisos">
+
+                                    <div th:each="aviso : ${msgAvisos}" class="card">
+                                        <p th:text="${aviso.getMensagem}"></p>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="solicit">
+
+                                    <!--solicitações de amizade-->
+                                    <div th:each="solicitacao : ${msgSolicitacoes}" class="container row">
+                                        <div class="col-4">
+                                            <a class="btn btn-link" th:href="${'/perfil/'+solicitacao.getMensagemDoUsuario}">
+                                                <span th:text="${'@'+solicitacao.getMensagemDoUsuario}"></span>
+                                            </a>
+                                        </div>
+                                        <div class="col-4"><span>Aceitar Solicitação?</span></div>
+                                        <div class="vol-4 row">
+                                            <form action="/principalUser/respSolicitacao" method="post">
+                                                <button class="btn btn-success" type="submit">
+                                                    <i class="material-icons">done</i>
+                                                </button>
+                                                <input type="hidden" name="username" th:value="${solicitacao.getMensagemDoUsuario}">
+                                                <input type="hidden" name="resposta" value="true">
+                                            </form>
+
+                                            <form action="/principalUser/respSolicitacao" method="post">
+                                                <button class="btn btn-danger" type="submit">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                                <input type="hidden" name="username" th:value="${solicitacao.getMensagemDoUsuario}">
+                                                <input type="hidden" name="resposta" value="false">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="conversas">
+
+                                    <div th:each="mensagem : ${msgRapidas}" class="card">
+                                        <p th:text="${mensagem.getMensagem}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

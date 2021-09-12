@@ -32,10 +32,6 @@ public class BubbleChat {
     @ManyToMany(mappedBy = "bubbleChats", fetch = FetchType.EAGER)
     private List<Usuario> usuariosChat;
 
-    @OneToMany(mappedBy = "usuarioMsgm")
-    @ToString.Exclude
-    private List<Mensagem> mensagensChat;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

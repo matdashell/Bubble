@@ -4,7 +4,8 @@ public enum Msg {
 
     AVISO("Aviso"),
     MENSAGEMRAPIDA("Mensagem Rapida"),
-    MENSAGEM("Mensagem");
+    MENSAGEM("Mensagem"),
+    SOLICITACAO("Solicitacao");
 
     Msg(String mensagem) {
     }

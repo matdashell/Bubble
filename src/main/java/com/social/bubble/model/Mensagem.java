@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
@@ -22,23 +23,21 @@ public class Mensagem{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private long ordem;
+    private LocalDate date;
 
     boolean visualizada;
 
     @Enumerated(EnumType.STRING)
     Msg tipoMensagem;
 
-    @NotNull
-    @NotBlank
+    private String assinatura;
+    private String mensagemDoUsuario;
+    private String mensagemParaUsuario;
+
     private String mensagem;
 
     @Lob
     private byte[] imagemMsgm;
-
-    @ManyToOne
-    @JoinColumn(name = "rel_mensagem")
-    private Usuario usuarioMsgm;
 
     @Override
     public boolean equals(Object o) {
