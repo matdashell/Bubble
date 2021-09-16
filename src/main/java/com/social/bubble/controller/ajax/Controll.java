@@ -55,6 +55,20 @@ public class Controll {
         return modelAndView;
     }
 
+    //carregar panel de mensagem recebida solicitação
+    @RequestMapping(value = "/content/mensagem-panel-solicit", method = RequestMethod.GET)
+    ModelAndView carregarPanelSolicit(){
+        ModelAndView modelAndView = new ModelAndView("replace/msg-content :: panel-solicit");
+
+        Usuario myUser = principalUserService.get();
+
+        List<Mensagem> msgSolictacoes = mensagemService.getMensagemRecebida(Msg.SOLICITACAO, myUser);
+
+        modelAndView.addObject("msgSolicitacoes", msgSolictacoes);
+
+        return modelAndView;
+    }
+
     //metodo responsavel por enviar mensagem rapida entre dois usuario por meio ajax
     @RequestMapping(value = "/mensagemRapida", method = RequestMethod.POST)
     public void mensagemRapida(@RequestParam("mensagem") String mensagem, @RequestParam("username") String username){

@@ -1,16 +1,11 @@
 package com.social.bubble.service.serviceImpl;
 
 import com.social.bubble.model.Usuario;
-import com.social.bubble.model.enums.Animais;
-import com.social.bubble.model.enums.Cores;
-import com.social.bubble.model.enums.EstMusical;
-import com.social.bubble.model.enums.Genero;
 import com.social.bubble.repository.UsuarioRepository;
 import com.social.bubble.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {

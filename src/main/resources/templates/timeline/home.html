@@ -7,6 +7,7 @@
         <!--container postagem-->
         <div class="container">
             <div th:replace="replace/base :: alert"></div>
+            <div id="replace-msg-modal"></div>
             <!--each-->
             <section th:each="post : ${postagens}">
                 <div class="col-md-8 mx-auto padding-top-2">

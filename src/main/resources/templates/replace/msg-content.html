@@ -55,7 +55,7 @@
                                 <div class="tab-pane" id="solicit">
 
                                     <!--solicitações de amizade-->
-                                    <div th:each="solicitacao : ${msgSolicitacoes}" class="container row">
+                                    <div th:each="solicitacao : ${msgSolicitacoes}" th:class="${'container row class-solicit-'+solicitacao.getMensagemDoUsuario}">
                                         <div class="col-4">
                                             <a class="btn btn-link" th:href="${'/perfil/'+solicitacao.getMensagemDoUsuario}">
                                                 <span th:text="${'@'+solicitacao.getMensagemDoUsuario}"></span>
@@ -63,21 +63,13 @@
                                         </div>
                                         <div class="col-4"><span>Aceitar Solicitação?</span></div>
                                         <div class="vol-4 row">
-                                            <form action="/principalUser/respSolicitacao" method="post">
-                                                <button class="btn btn-success" type="submit">
-                                                    <i class="material-icons">done</i>
-                                                </button>
-                                                <input type="hidden" name="username" th:value="${solicitacao.getMensagemDoUsuario}">
-                                                <input type="hidden" name="resposta" value="true">
-                                            </form>
+                                            <button class="btn btn-success" th:attr="onclick=|confirmarSolicit('${solicitacao.getMensagemDoUsuario}')|">
+                                                <i class="material-icons">done</i>
+                                            </button>
 
-                                            <form action="/principalUser/respSolicitacao" method="post">
-                                                <button class="btn btn-danger" type="submit">
-                                                    <i class="material-icons">close</i>
-                                                </button>
-                                                <input type="hidden" name="username" th:value="${solicitacao.getMensagemDoUsuario}">
-                                                <input type="hidden" name="resposta" value="false">
-                                            </form>
+                                            <button class="btn btn-danger" th:attr="onclick=|negarSolicit('${solicitacao.getMensagemDoUsuario}')|">
+                                                <i class="material-icons">close</i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

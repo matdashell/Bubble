@@ -81,8 +81,9 @@
                                                         <form id="formPerfil" action="/perfil/altAmizade" method="GET">
                                                             <input type="hidden" name="username" th:value="${usuario.getUsername}">
                                                             <button id="btnSeguir" type="submit" class="btn btn-primary">
-                                                                <span id="textoSeguir"
+                                                                <span th:if="${!solicitEnviada}" id="textoSeguir"
                                                                       th:text="${principalUser.friendWith(usuario)} ? 'Desconectar' : 'Conectar'"></span>
+                                                                <span th:if="${solicitEnviada}">Cancelar Solicitação</span>
                                                             </button>
                                                         </form>
 
@@ -195,12 +196,14 @@
                                         </div>
                                         <!--Amigos do usuario dentro do perfil ( for)-->
                                         <div class="tab-pane" id="amigos2">
-                                            <div class="container row mx-auto container-img max-10em">
+                                            <div class="container row mx-auto max-10em">
                                                 <a th:each="amigo : ${usuario.ListAmigosUsuarios}"
                                                    th:href="${'/perfil/'+amigo.getUsername}" class="col-md-4 col-sm-6">
                                                     <h4 th:text="${'@'+amigo.getNickname}"></h4>
-                                                    <img th:src="${'/provedor/nickImg/'+amigo.getUsername}"
-                                                         alt="Raised Image" class="img-raised rounded-circle img-fluid"/>
+                                                    <div class="container-img-md">
+                                                        <img th:src="${'/provedor/nickImg/'+amigo.getUsername}"
+                                                             alt="Raised Image" class="img-raised rounded-circle img-fluid"/>
+                                                    </div>
                                                 </a>
                                             </div>
                                         </div>

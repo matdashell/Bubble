@@ -89,7 +89,7 @@ public class UsuarioController {
 
             Mensagem send = new Mensagem();
             send.setTipoMensagem(Msg.AVISO);
-            send.setDate(LocalDate.now());
+            send.setData(LocalDate.now());
             send.setMensagemDoUsuario(myUser.getUsername());
             send.setMensagemParaUsuario(usuario.getUsername());
 
@@ -106,7 +106,6 @@ public class UsuarioController {
             usuarioService.save(myUser);
             usuarioService.save(usuario);
         }
-
-        return new ModelAndView("redirect:/perfil/meuPerfil");
+        return new ModelAndView("redirect:/ajax/content/mensagem-panel-solicit");
     }
 }

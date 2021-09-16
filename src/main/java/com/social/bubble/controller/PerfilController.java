@@ -30,28 +30,30 @@ public class PerfilController {
     @Autowired
     private MensagemService mensagemService;
 
-    //encaminhar para perfil pessoal
+    // encaminhar para perfil pessoal
     @RequestMapping(value = "/meuPerfil", method = RequestMethod.GET)
-    public String redirecPerfilUserGet(){
-        return "redirect:/perfil/"+principalUserService.get().getUsername();
+    public String redirecPerfilUserGet() {
+        return "redirect:/perfil/" + principalUserService.get().getUsername();
     }
 
-    //verificar perfil de usuairo
+    // verificar perfil de usuairo
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-    public ModelAndView perfil(@PathVariable("username") String username){
+    public ModelAndView perfil(@PathVariable("username") String username) {
 
         Usuario usuario = usuarioService.findByUsername(username);
 
-        if(usuario != null){
+        if (usuario != null) {
             Usuario myUser = principalUserService.get();
 
             ModelAndView modelAndView = new ModelAndView("timeline/perfil");
-            if(myUser != usuario && !myUser.getListAmigosUsuarios().contains(usuario)){
-                modelAndView.addObject("info", "Conecte com '"+usuario.getNickname()+"' Para Aumentar Sua Rede De Amizades :)");
+            if (myUser != usuario && !myUser.getListAmigosUsuarios().contains(usuario)) {
+                modelAndView.addObject("info",
+                        "Conecte com '" + usuario.getNickname() + "' Para Aumentar Sua Rede De Amizades :)");
             }
+            modelAndView.addObject("solicitEnviada",
+                    mensagemService.getMensagem(Msg.SOLICITACAO, myUser, usuario).size() > 0);
             modelAndView.addObject("usuario", usuario);
             modelAndView.addObject("principalUser", myUser);
-            modelAndView.addObject("solicitacoes", mensagemService.getMensagemRecebida(Msg.SOLICITACAO, myUser));
 
             return modelAndView;
         }
@@ -61,99 +63,97 @@ public class PerfilController {
         return modelAndView;
     }
 
-    //metodo responsavel por atualizar estado de amizade entre dois usuario por meio ajax
+    // metodo responsavel por atualizar estado de amizade entre dois usuario por
     @RequestMapping(value = "/altAmizade", method = RequestMethod.GET)
-    public ModelAndView method(@RequestParam("username") String username){
+    public ModelAndView method(@RequestParam("username") String username) {
 
         Usuario usuario = usuarioService.findByUsername(username);
         Usuario myUser = principalUserService.get();
 
         ModelAndView modelAndView = new ModelAndView("timeline/perfil");
 
-        if(usuario != null){
+        // reverter envio de solicitação caso o usuairo ja tenha enviado uma solicitação
+        // anterior
+        if (mensagemService.getMensagem(Msg.SOLICITACAO, myUser, usuario).size() > 0) {
 
-            //verificar se já é amigo para alterar status amizade
-            if(myUser.getListAmigosUsuarios().contains(usuario)){
+            mensagemService.excluirMensagensRecebidas(usuario, Msg.SOLICITACAO);
+            modelAndView.addObject("usuario", usuario);
+            modelAndView.addObject("principalUser", myUser);
+            modelAndView.addObject("solicitEnviada", false);
 
-                //caso ja seja amigo a conexão sera quebrada
+            return modelAndView;
+        }
+
+        if (usuario != null) {
+
+            // Verificar se o usuario já é amigo do usuario principal
+            if (myUser.getListAmigosUsuarios().contains(usuario)) {
+
+                mensagemService.excluirMensagensRecebidas(usuario, Msg.SOLICITACAO);
+
+                // caso ja seja amigo a conexão sera quebrada
                 myUser.getListAmigosUsuarios().remove(usuario);
                 modelAndView.addObject("sucess", "Usuario Desconectado com Sucesso!");
 
-                //criar mensagem para notificar usuario da desconexão
-                Mensagem mensagem = new Mensagem();
-                mensagem.setTipoMensagem(Msg.AVISO);
-                mensagem.setMensagem(String.format("Usuario '%s' Desconectou da sua Rede de Amizades.", myUser.getUsername()));
-                mensagem.setDate(LocalDate.now());
-                mensagem.setMensagemDoUsuario(myUser.getUsername());
-                mensagem.setMensagemParaUsuario(usuario.getUsername());
+                // criar mensagem para notificar usuario da desconexão
+                String mensagem = "Usuario "+usuario.getUsername()+" Desconectou da sua Rede de Amizades.";
+                mensagemService.setNewSendMessage(usuario, Msg.AVISO, mensagem);
 
-            }else{
+            } else {
 
-                //caso usuario esteja com a opção de confirmar solicitação marcada
-                if(usuario.isConfirmarSolicitacoes()) {
+                // caso usuario esteja com a opção de confirmar solicitação marcada
+                if (usuario.isConfirmarSolicitacoes()) {
 
-                    //caso o usuario do outro lado ja o tenha na lista de amigos
-                    if(usuario.getListAmigosUsuarios().contains(myUser)){
+                    // caso o usuario do outro lado ja o tenha na lista de amigos
+                    if (usuario.getListAmigosUsuarios().contains(myUser)) {
+
+                        mensagemService.excluirMensagensRecebidas(usuario, Msg.SOLICITACAO);
 
                         myUser.getListAmigosUsuarios().add(usuario);
                         modelAndView.addObject("sucess", "Usuario Conectado com Sucesso!");
 
-                        Mensagem mensagem = new Mensagem();
-                        mensagem.setTipoMensagem(Msg.AVISO);
-                        mensagem.setMensagem(String.format("Usuario '%s' Conectou na sua Rede de Amizades.", myUser.getUsername()));
-                        mensagem.setDate(LocalDate.now());
-                        mensagem.setMensagemDoUsuario(myUser.getUsername());
-                        mensagem.setMensagemParaUsuario(usuario.getUsername());
+                        String mensagem = "Usuario "+usuario.getUsername()+" Conectou em sua Rede de Amizades.";
+                        mensagemService.setNewSendMessage(usuario, Msg.AVISO, mensagem);
 
                     }
-                    //caso o usuario do outro lado ainda nao o tenha na lista de amigos
+                    // caso o usuario do outro lado ainda nao o tenha na lista de amigos
                     else {
 
-                        //verificar se o outro usuario ja tinha enviado uma solicitação de amizade
-                        List<Mensagem> mensagemList =
-                                mensagemService.getMensagem(Msg.SOLICITACAO, usuario, myUser);
+                        // verificar se o outro usuario ja tinha enviado uma solicitação de amizade
+                        List<Mensagem> mensagemList = mensagemService.getMensagem(Msg.SOLICITACAO, usuario, myUser);
 
-                        //caso nao tenha enviado uma nova solicitacao sera enviada
-                        if(mensagemList.isEmpty()){
+                        // caso o usuario nao tenha enviado uma nova solicitacao sera enviada
+                        if (mensagemList.isEmpty()) {
 
-                            Mensagem mensagem = new Mensagem();
-                            mensagem.setTipoMensagem(Msg.SOLICITACAO);
-                            mensagem.setDate(LocalDate.now());
-                            mensagem.setMensagemDoUsuario(myUser.getUsername());
-                            mensagem.setMensagemParaUsuario(usuario.getUsername());
-
-                            mensagemService.save(mensagem);
+                            mensagemService.setNewSendMessage(usuario, Msg.SOLICITACAO, "");
 
                             modelAndView.addObject("Sucess", "Solicitação enviada com sucesso!");
 
                         }
-                        //caso ja tenha enviado a mensagem sera apagada e a conexão sera criada
-                        else{
+                        // caso o usuario ja tenha enviado a mensagem sera apagada e a conexão sera
+                        // criada
+                        else {
 
-                            mensagemList.forEach(m -> mensagemService.delete(m));
+                            mensagemService.excluirMensagensRecebidas(usuario, Msg.SOLICITACAO);
                             myUser.getListAmigosUsuarios().add(usuario);
                             usuario.getListAmigosUsuarios().add(myUser);
                             modelAndView.addObject("sucess", "Usuario Conectado com Sucesso!");
 
-                            Mensagem mensagem = new Mensagem();
-                            mensagem.setTipoMensagem(Msg.AVISO);
-                            mensagem.setMensagem(String.format("Usuario '%s' Conectou na sua Rede de Amizades.", myUser.getUsername()));
-                            mensagem.setDate(LocalDate.now());
-                            mensagem.setMensagemDoUsuario(myUser.getUsername());
-                            mensagem.setMensagemParaUsuario(usuario.getUsername());
+                            String mensagem = "Usuario "+usuario.getUsername()+" Conectou em sua Rede de Amizades.";
+                            mensagemService.setNewSendMessage(usuario, Msg.AVISO, mensagem);
                         }
                     }
                 }
-                //caso usuario nao esteja marcado para confirmar solicitação o usuario ira conectar
-                else{
+                // caso usuario nao esteja marcado para confirmar solicitação o usuario ira
+                // conectar
+                else {
+
+                    mensagemService.excluirMensagensRecebidas(usuario, Msg.SOLICITACAO);
+
                     myUser.getListAmigosUsuarios().add(usuario);
 
-                    Mensagem mensagem = new Mensagem();
-                    mensagem.setTipoMensagem(Msg.AVISO);
-                    mensagem.setMensagem(String.format("Usuario '%s' Conectou na sua Rede de Amizades.", myUser.getUsername()));
-                    mensagem.setDate(LocalDate.now());
-                    mensagem.setMensagemDoUsuario(myUser.getUsername());
-                    mensagem.setMensagemParaUsuario(usuario.getUsername());
+                    String mensagem = "Usuario "+usuario.getUsername()+" Conectou em sua Rede de Amizades.";
+                    mensagemService.setNewSendMessage(usuario, Msg.AVISO, mensagem);
 
                     modelAndView.addObject("sucess", "Usuario Conectado com Sucesso!");
                 }

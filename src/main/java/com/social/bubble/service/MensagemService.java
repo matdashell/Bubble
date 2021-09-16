@@ -18,4 +18,7 @@ public interface MensagemService {
     List<Mensagem> getMensagemEnviada(Msg msg, Usuario sender);
     List<Mensagem> getMensagemRecebida(Msg msg, Usuario getter);
     long getNumeroDeMensagensNaoLidas(Usuario getter);
+    void setNewSendMessage(Usuario getter, Msg tipoMsg, String mensagem);
+    void excluirMensagensRecebidas(Usuario sender, Msg tipoMsg);
+    void excluirMensagensEnviadas(Usuario getter, Msg tipoMsg);
 }

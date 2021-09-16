@@ -5,8 +5,6 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -23,7 +21,7 @@ public class Mensagem{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private LocalDate date;
+    private LocalDate data;
 
     boolean visualizada;
 
