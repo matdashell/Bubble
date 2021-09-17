@@ -8,6 +8,7 @@ import com.social.bubble.service.PrincipalUserService;
 import com.social.bubble.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/ajax")
-public class Controll {
+public class AjaxController {
 
     @Autowired
     PrincipalUserService principalUserService;
@@ -56,15 +57,18 @@ public class Controll {
     }
 
     //carregar panel de mensagem recebida solicitação
-    @RequestMapping(value = "/content/mensagem-panel-solicit", method = RequestMethod.GET)
+    @RequestMapping(value = "/content/mensagem-data", method = RequestMethod.GET)
     ModelAndView carregarPanelSolicit(){
-        ModelAndView modelAndView = new ModelAndView("replace/msg-content :: panel-solicit");
+        ModelAndView modelAndView = new ModelAndView("replace/msg-content :: msg-data");
 
         Usuario myUser = principalUserService.get();
-
         List<Mensagem> msgSolictacoes = mensagemService.getMensagemRecebida(Msg.SOLICITACAO, myUser);
+        List<Mensagem> msgAvisos = mensagemService.getMensagemRecebida(Msg.AVISO, myUser);
+        List<Mensagem> msgRapidas = mensagemService.getMensagemRecebida(Msg.MENSAGEMRAPIDA, myUser);
 
         modelAndView.addObject("msgSolicitacoes", msgSolictacoes);
+        modelAndView.addObject("msgAvisos", msgAvisos);
+        modelAndView.addObject("msgRapidas", msgRapidas);
 
         return modelAndView;
     }

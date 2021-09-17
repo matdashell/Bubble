@@ -80,6 +80,8 @@ public class UsuarioController {
     @RequestMapping(value = "/respSolicitacao", method = RequestMethod.POST)
     ModelAndView respSolicitacao(String username, boolean resposta){
 
+        ModelAndView modelAndView = new ModelAndView("replace/base :: null");
+
         Usuario myUser = principalUserService.get();
         Usuario usuario = usuarioService.findByUsername(username);
         List<Mensagem> mensagem = mensagemService.getMensagem(Msg.SOLICITACAO, usuario, myUser);
@@ -87,25 +89,23 @@ public class UsuarioController {
         if(!mensagem.isEmpty()){
             mensagem.forEach(m -> mensagemService.delete(m));
 
-            Mensagem send = new Mensagem();
-            send.setTipoMensagem(Msg.AVISO);
-            send.setData(LocalDate.now());
-            send.setMensagemDoUsuario(myUser.getUsername());
-            send.setMensagemParaUsuario(usuario.getUsername());
+            String msg;
 
             if(resposta){
-                send.setMensagem(String.format("@%s Aceitou Seu Convite de Amizade!", myUser.getUsername()));
+                msg = String.format("@%s Aceitou Seu Convite de Amizade!", myUser.getUsername());
 
                 myUser.getListAmigosUsuarios().add(usuario);
                 usuario.getListAmigosUsuarios().add(myUser);
             }else{
-                send.setMensagem(String.format("@%s Recusou Seu Convite de Amizade!", myUser.getUsername()));
+                msg = String.format("@%s Recusou Seu Convite de Amizade!", myUser.getUsername());
             }
 
-            mensagemService.save(send);
+            mensagemService.setNewSendMessage(usuario, Msg.AVISO, msg);
+
             usuarioService.save(myUser);
             usuarioService.save(usuario);
         }
-        return new ModelAndView("redirect:/ajax/content/mensagem-panel-solicit");
+
+        return modelAndView;
     }
 }

@@ -22,7 +22,7 @@
             <span th:each="animal : ${usuario.animaisFavoritos}"
                   th:class="${principalUser.containsAnmFav(animal)} ? ('badge badge-success') : ('badge badge-danger')"
                   th:text="${animal}" style="margin-left: 10px; margin-top: 10px;">
-                                    </span>
+            </span>
         </div>
     </div>
 </html>

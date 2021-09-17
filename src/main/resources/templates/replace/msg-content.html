@@ -21,62 +21,65 @@
                 <div class="modal-body">
                     <!--TABS-->
                     <div class="card card-nav-tabs card-plain">
-                        <div class="card-header card-header-danger">
-                            <div class="nav-tabs-navigation">
-                                <div class="nav-tabs-wrapper">
-                                    <ul class="nav nav-tabs" data-tabs="tabs">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#avisos" data-toggle="tab">
-                                                Avisos <span th:if="${msgAvisos.size() > 0}" th:text="${msgAvisos.size()}"></span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#solicit" data-toggle="tab">
-                                                Solicitações <span th:if="${msgSolicitacoes.size() > 0}" th:text="${msgSolicitacoes.size()}"></span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#conversas" data-toggle="tab">
-                                                Conversas <span th:if="${msgRapidas.size() > 0}" th:text="${msgRapidas.size()}"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                        <div th:fragment="msg-data" id="replace-msg-dados">
+
+                            <div class="card-header card-header-info">
+                                <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <ul class="nav nav-tabs" data-tabs="tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#avisos" data-toggle="tab">
+                                                    Avisos <span th:if="${msgAvisos.size() > 0}" th:text="${msgAvisos.size()}"></span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#solicit" data-toggle="tab">
+                                                    Solicitações <span th:if="${msgSolicitacoes.size() > 0}" th:text="${msgSolicitacoes.size()}"></span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#conversas" data-toggle="tab">
+                                                    Conversas <span th:if="${msgRapidas.size() > 0}" th:text="${msgRapidas.size()}"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-body ">
-                            <div class="tab-content text-center">
-                                <div class="tab-pane active" id="avisos">
+                            <div class="card-body ">
+                                <div class="tab-content text-center">
+                                    <div class="tab-pane active" id="avisos">
 
-                                    <div th:each="aviso : ${msgAvisos}" class="card">
-                                        <p th:text="${aviso.getMensagem}"></p>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="solicit">
-
-                                    <!--solicitações de amizade-->
-                                    <div th:each="solicitacao : ${msgSolicitacoes}" th:class="${'container row class-solicit-'+solicitacao.getMensagemDoUsuario}">
-                                        <div class="col-4">
-                                            <a class="btn btn-link" th:href="${'/perfil/'+solicitacao.getMensagemDoUsuario}">
-                                                <span th:text="${'@'+solicitacao.getMensagemDoUsuario}"></span>
-                                            </a>
-                                        </div>
-                                        <div class="col-4"><span>Aceitar Solicitação?</span></div>
-                                        <div class="vol-4 row">
-                                            <button class="btn btn-success" th:attr="onclick=|confirmarSolicit('${solicitacao.getMensagemDoUsuario}')|">
-                                                <i class="material-icons">done</i>
-                                            </button>
-
-                                            <button class="btn btn-danger" th:attr="onclick=|negarSolicit('${solicitacao.getMensagemDoUsuario}')|">
-                                                <i class="material-icons">close</i>
-                                            </button>
+                                        <div th:each="aviso : ${msgAvisos}" class="card">
+                                            <p th:text="${aviso.getMensagem}"></p>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane" id="conversas">
+                                    <div class="tab-pane" id="solicit">
 
-                                    <div th:each="mensagem : ${msgRapidas}" class="card">
-                                        <p th:text="${mensagem.getMensagem}"></p>
+                                        <!--solicitações de amizade-->
+                                        <div th:each="solicitacao : ${msgSolicitacoes}" th:class="${'container row class-solicit-'+solicitacao.getMensagemDoUsuario}">
+                                            <div class="col-4">
+                                                <a class="btn btn-link" th:href="${'/perfil/'+solicitacao.getMensagemDoUsuario}">
+                                                    <span th:text="${'@'+solicitacao.getMensagemDoUsuario}"></span>
+                                                </a>
+                                            </div>
+                                            <div class="col-4"><span>Aceitar Solicitação?</span></div>
+                                            <div class="vol-4 row">
+                                                <button class="btn btn-success" th:attr="onclick=|confirmarSolicit('${solicitacao.getMensagemDoUsuario}')|">
+                                                    <i class="material-icons">done</i>
+                                                </button>
+
+                                                <button class="btn btn-danger" th:attr="onclick=|negarSolicit('${solicitacao.getMensagemDoUsuario}')|">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="conversas">
+
+                                        <div th:each="mensagem : ${msgRapidas}" class="card">
+                                            <p th:text="${mensagem.getMensagem}"></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

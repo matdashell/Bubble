@@ -5,14 +5,44 @@ window.onload = function () {
 
 }
 
+var frm = $("form[id='formPerfil']");
+
+frm.submit(function (e) {
+
+    e.preventDefault();
+
+    e = null;
+
+    $.ajax({
+        type: frm.attr('method'),
+        url: frm.attr('action'),
+        data: frm.serialize(),
+        success: function (data) {
+            console.log('Submission was successful.');
+            console.log(data);
+
+            $("div[id='panel']").replaceWith(data);
+
+        },
+        error: function () {
+            console.log('An error occurred.');
+            console.log(data);
+
+        },
+    });
+});
+
 function confirmarSolicit(user){
     $.ajax({
         type: "POST",
         url: "/principalUser/respSolicitacao",
         data: {username: user, resposta: true},
-        success: function (data) {
+        success: function () {
         console.log('Submission was successful.');
-        $("div[class*='class-solicit-"+user+"']").remove();
+
+        $("li[id='replace-msg-icon']").load("/ajax/content/mensagem-icon");   //recarregar icone msgm nav
+        $("div[id='replace-msg-dados']").load("/ajax/content/mensagem-data"); //recarregar mensagens
+
         },
         error: function (data) {
             console.log('An error occurred.');
@@ -26,9 +56,12 @@ function negarSolicit(user){
         type: "POST",
         url: "/principalUser/respSolicitacao",
         data: {username: user, resposta: false},
-        success: function (data) {
+        success: function () {
             console.log('Submission was successful.');
-            $("div[class*='class-solicit-"+user+"']").remove();
+
+            $("li[id='replace-msg-icon']").load("/ajax/content/mensagem-icon");   //recarregar icone msgm nav
+            $("div[id='replace-msg-dados']").load("/ajax/content/mensagem-data"); //recarregar mensagens
+
         },
         error: function (data) {
             console.log('An error occurred.');

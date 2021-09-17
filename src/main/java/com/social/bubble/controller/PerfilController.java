@@ -64,24 +64,25 @@ public class PerfilController {
     }
 
     // metodo responsavel por atualizar estado de amizade entre dois usuario por
-    @RequestMapping(value = "/altAmizade", method = RequestMethod.GET)
+    @RequestMapping(value = "/altAmizade", method = RequestMethod.POST)
     public ModelAndView method(@RequestParam("username") String username) {
 
         Usuario usuario = usuarioService.findByUsername(username);
         Usuario myUser = principalUserService.get();
 
-        ModelAndView modelAndView = new ModelAndView("timeline/perfil");
+        ModelAndView modelAndView = new ModelAndView("timeline/perfil :: panel");
 
         // reverter envio de solicitação caso o usuairo ja tenha enviado uma solicitação
         // anterior
         if (mensagemService.getMensagem(Msg.SOLICITACAO, myUser, usuario).size() > 0) {
 
-            mensagemService.excluirMensagensRecebidas(usuario, Msg.SOLICITACAO);
+            mensagemService.getMensagem(Msg.SOLICITACAO, myUser, usuario).forEach(m -> mensagemService.delete(m));
+
+            modelAndView.addObject("solicitEnviada",mensagemService.getMensagem(Msg.SOLICITACAO, myUser, usuario).size() > 0);
             modelAndView.addObject("usuario", usuario);
             modelAndView.addObject("principalUser", myUser);
-            modelAndView.addObject("solicitEnviada", false);
 
-            return modelAndView;
+            return  modelAndView;
         }
 
         if (usuario != null) {
@@ -93,7 +94,6 @@ public class PerfilController {
 
                 // caso ja seja amigo a conexão sera quebrada
                 myUser.getListAmigosUsuarios().remove(usuario);
-                modelAndView.addObject("sucess", "Usuario Desconectado com Sucesso!");
 
                 // criar mensagem para notificar usuario da desconexão
                 String mensagem = "Usuario "+usuario.getUsername()+" Desconectou da sua Rede de Amizades.";
@@ -110,7 +110,6 @@ public class PerfilController {
                         mensagemService.excluirMensagensRecebidas(usuario, Msg.SOLICITACAO);
 
                         myUser.getListAmigosUsuarios().add(usuario);
-                        modelAndView.addObject("sucess", "Usuario Conectado com Sucesso!");
 
                         String mensagem = "Usuario "+usuario.getUsername()+" Conectou em sua Rede de Amizades.";
                         mensagemService.setNewSendMessage(usuario, Msg.AVISO, mensagem);
@@ -127,8 +126,6 @@ public class PerfilController {
 
                             mensagemService.setNewSendMessage(usuario, Msg.SOLICITACAO, "");
 
-                            modelAndView.addObject("Sucess", "Solicitação enviada com sucesso!");
-
                         }
                         // caso o usuario ja tenha enviado a mensagem sera apagada e a conexão sera
                         // criada
@@ -137,7 +134,6 @@ public class PerfilController {
                             mensagemService.excluirMensagensRecebidas(usuario, Msg.SOLICITACAO);
                             myUser.getListAmigosUsuarios().add(usuario);
                             usuario.getListAmigosUsuarios().add(myUser);
-                            modelAndView.addObject("sucess", "Usuario Conectado com Sucesso!");
 
                             String mensagem = "Usuario "+usuario.getUsername()+" Conectou em sua Rede de Amizades.";
                             mensagemService.setNewSendMessage(usuario, Msg.AVISO, mensagem);
@@ -154,14 +150,13 @@ public class PerfilController {
 
                     String mensagem = "Usuario "+usuario.getUsername()+" Conectou em sua Rede de Amizades.";
                     mensagemService.setNewSendMessage(usuario, Msg.AVISO, mensagem);
-
-                    modelAndView.addObject("sucess", "Usuario Conectado com Sucesso!");
                 }
             }
             usuarioService.save(myUser);
             usuarioService.save(usuario);
         }
 
+        modelAndView.addObject("solicitEnviada",mensagemService.getMensagem(Msg.SOLICITACAO, myUser, usuario).size() > 0);
         modelAndView.addObject("usuario", usuario);
         modelAndView.addObject("principalUser", myUser);
 

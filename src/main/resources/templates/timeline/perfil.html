@@ -68,20 +68,19 @@
                                                          class="img-raised rounded-circle max-20em">
                                                 </div>
                                                 <!--informações/ interações-->
-                                                <div th:fragment="panel" class="col-md-6 mx-auto">
+                                                <div class="col-md-6 mx-auto">
                                                     <h3 th:text="${'@'+usuario.getUsername}" class="title"></h3>
                                                     <h4 th:text="${'@'+usuario.getNickname}" class="title"></h4>
                                                     <h5 th:text="${usuario.getDescricaoPerfil}" class="card-description"></h5>
 
                                                     <!--verificar se perfil pertence ao usuario-->
-                                                    <div th:if="${principalUser != usuario}">
-                                                        <a class="btn btn-secondary btn-sm" href="">Doar Bc</a>
+                                                    <div th:fragment="panel" id="panel" th:if="${principalUser != usuario}">
 
                                                         <!--botao de alt amizade-->
-                                                        <form id="formPerfil" action="/perfil/altAmizade" method="GET">
+                                                        <form id="formPerfil" action="/perfil/altAmizade" method="POST">
                                                             <input type="hidden" name="username" th:value="${usuario.getUsername}">
                                                             <button id="btnSeguir" type="submit" class="btn btn-primary">
-                                                                <span th:if="${!solicitEnviada}" id="textoSeguir"
+                                                                <span th:if="${!solicitEnviada}"
                                                                       th:text="${principalUser.friendWith(usuario)} ? 'Desconectar' : 'Conectar'"></span>
                                                                 <span th:if="${solicitEnviada}">Cancelar Solicitação</span>
                                                             </button>
