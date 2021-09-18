@@ -14,19 +14,19 @@ public interface MensagemRepository extends CrudRepository<Mensagem, Long> {
             "WHERE tipo_mensagem = ?1 " +
             "AND mensagem_do_usuario = ?2 " +
             "AND mensagem_para_usuario = ?3 " +
-            "ORDER BY data", nativeQuery = true)
+            "ORDER BY data DESC", nativeQuery = true)
     List<Mensagem> getMensagens(String msg, String sender, String getter);
 
     @Query(value = "SELECT * FROM mensagem " +
             "WHERE tipo_mensagem = ?1 " +
             "AND mensagem_do_usuario = ?2 " +
-            "ORDER BY data" , nativeQuery = true)
+            "ORDER BY data DESC" , nativeQuery = true)
     List<Mensagem> getMensagensEnviado(String msg, String sender);
 
     @Query(value = "SELECT * FROM mensagem " +
             "WHERE tipo_mensagem = ?1 " +
             "AND mensagem_para_usuario = ?2 " +
-            "ORDER BY data", nativeQuery = true)
+            "ORDER BY data DESC", nativeQuery = true)
     List<Mensagem> getMensagensRecebido(String msg, String getter);
 
     @Query(value = "SELECT COUNT(*) FROM mensagem " +

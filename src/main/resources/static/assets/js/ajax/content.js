@@ -5,13 +5,12 @@ window.onload = function () {
 
 }
 
+//função para submetimento de formulario de amizade
 var frm = $("form[id='formPerfil']");
 
 frm.submit(function (e) {
 
     e.preventDefault();
-
-    e = null;
 
     $.ajax({
         type: frm.attr('method'),
@@ -21,7 +20,7 @@ frm.submit(function (e) {
             console.log('Submission was successful.');
             console.log(data);
 
-            $("div[id='panel']").replaceWith(data);
+            $("button[id='panel']").replaceWith(data);
 
         },
         error: function () {
@@ -32,16 +31,35 @@ frm.submit(function (e) {
     });
 });
 
-function confirmarSolicit(user){
+//metodo para confirmar solicitação enviado via correio
+function respSolicit(user, resposta){
     $.ajax({
         type: "POST",
         url: "/principalUser/respSolicitacao",
-        data: {username: user, resposta: true},
+        data: {username: user, resposta: resposta},
         success: function () {
-        console.log('Submission was successful.');
+            console.log('Submission was successful.');
 
-        $("li[id='replace-msg-icon']").load("/ajax/content/mensagem-icon");   //recarregar icone msgm nav
-        $("div[id='replace-msg-dados']").load("/ajax/content/mensagem-data"); //recarregar mensagens
+            $("li[id='replace-msg-icon']").load("/ajax/content/mensagem-icon");   //recarregar icone msgm nav
+            $("div[id='replace-msg-dados']").load("/ajax/content/mensagem-data"); //recarregar mensagens
+
+        },
+        error: function (data) {
+            console.log('An error occurred.');
+        },
+    });
+}
+
+function curtir(id){
+    $.ajax({
+        type: "POST",
+        url: "/postagem/altCurtir",
+        data: {id : id},
+        success: function (data) {
+            console.log('Submission was successful.');
+            console.log(data);
+
+            $("div[id='btn-curtir"+id+"']").replaceWith(data);   //recarregar icone msgm nav
 
         },
         error: function (data) {
@@ -51,16 +69,19 @@ function confirmarSolicit(user){
     });
 }
 
-function negarSolicit(user){
+function comentarP(id){
+
     $.ajax({
         type: "POST",
-        url: "/principalUser/respSolicitacao",
-        data: {username: user, resposta: false},
-        success: function () {
+        url: "/postagem/comentar",
+        data: {id : id, comentario : $("input[id='input-comentario"+id+"']").val()},
+        success: function (data) {
             console.log('Submission was successful.');
+            console.log(data);
 
-            $("li[id='replace-msg-icon']").load("/ajax/content/mensagem-icon");   //recarregar icone msgm nav
-            $("div[id='replace-msg-dados']").load("/ajax/content/mensagem-data"); //recarregar mensagens
+            $("div[id='comentarios-list"+id+"']").replaceWith(data);
+            $("span[id='comentario-num"+id+"']").load("/ajax/content/numcoment/"+id);
+            $("input[id='input-comentario"+id+"']").val('');
 
         },
         error: function (data) {

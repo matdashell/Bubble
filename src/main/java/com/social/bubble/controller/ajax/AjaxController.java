@@ -4,6 +4,7 @@ import com.social.bubble.model.Mensagem;
 import com.social.bubble.model.Usuario;
 import com.social.bubble.model.enums.Msg;
 import com.social.bubble.service.MensagemService;
+import com.social.bubble.service.PostagemService;
 import com.social.bubble.service.PrincipalUserService;
 import com.social.bubble.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,18 @@ import java.util.List;
 public class AjaxController {
 
     @Autowired
-    PrincipalUserService principalUserService;
+    private PrincipalUserService principalUserService;
 
     @Autowired
-    UsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @Autowired
-    MensagemService mensagemService;
+    private MensagemService mensagemService;
 
-    //carregar icone navbar da mensagem (exibir numero de mensagens nao lidas)
+    @Autowired
+    private PostagemService postagemService;
+
+    //recarrecar tela referente à numero de mensagens na navbar
     @RequestMapping(value = "/content/mensagem-icon", method = RequestMethod.GET)
     ModelAndView carregarContentIconMsgm(){
         ModelAndView modelAndView = new ModelAndView("replace/msg-content :: msg-icon");
@@ -39,7 +43,7 @@ public class AjaxController {
         return modelAndView;
     }
 
-    //carregar modal com todas as mensagens em caixa de entrada
+    //onload para construir mensagens
     @RequestMapping(value = "/content/mensagem-modal", method = RequestMethod.GET)
     ModelAndView carregarContentPanelMsgm(){
         ModelAndView modelAndView = new ModelAndView("replace/msg-content :: msg-modal");
@@ -56,7 +60,7 @@ public class AjaxController {
         return modelAndView;
     }
 
-    //carregar panel de mensagem recebida solicitação
+    //recarregar tela com dados das mensagens do usuario
     @RequestMapping(value = "/content/mensagem-data", method = RequestMethod.GET)
     ModelAndView carregarPanelSolicit(){
         ModelAndView modelAndView = new ModelAndView("replace/msg-content :: msg-data");
@@ -73,18 +77,11 @@ public class AjaxController {
         return modelAndView;
     }
 
-    //metodo responsavel por enviar mensagem rapida entre dois usuario por meio ajax
-    @RequestMapping(value = "/mensagemRapida", method = RequestMethod.POST)
-    public void mensagemRapida(@RequestParam("mensagem") String mensagem, @RequestParam("username") String username){
-
-        Usuario usuario = usuarioService.findByUsername(username);
-        Usuario myUser = principalUserService.get();
-
-        Mensagem mensagemObj = new Mensagem();
-        mensagemObj.setMensagem(mensagem);
-        mensagemObj.setTipoMensagem(Msg.MENSAGEMRAPIDA);
-
-        mensagemService.save(mensagemObj);
+    @RequestMapping(value = "/content/numcoment/{id}", method = RequestMethod.GET)
+    ModelAndView carregarNumComentarios(@PathVariable("id") long id){
+        ModelAndView modelAndView = new ModelAndView("replace/pack-postagem :: comentario-num");
+        modelAndView.addObject("post", postagemService.findById(id));
+        return modelAndView;
     }
 
 }

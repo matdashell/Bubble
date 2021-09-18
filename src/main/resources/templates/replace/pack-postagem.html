@@ -9,18 +9,20 @@
 <!--fragmento botao para ativar modal-->
     <div th:fragment="footer-modal-pack" class="card-footer">
         <!--curtidas postagem-->
-        <form method="post" action="/postagem/altCurtir" class="margin-left-1">
-            <input type="hidden" name="id" th:value="${post.getId}">
-            <button class="btn btn-primary btn-fab btn-fab-mini btn-round" type="submit">
+        <div th:fragment="btn-curtir-postagem" th:id="${'btn-curtir'+post.getId}" class="margin-left-1">
+            <button class="btn btn-primary btn-fab btn-fab-mini btn-round" th:attr="onclick=|curtir(${post.getId})|">
                 <i class="material-icons" th:text="${principalUser.curtiu(post) ? 'favorite' : 'favorite_border'}"></i>
             </button><span th:text="${post.getNumCurtidas}" class="padding-left-1"></span>
-        </form>
+        </div>
 
         <!--comentarios postagem-->
         <button type="button" class="btn btn-primary btn-fab btn-fab-mini btn-round margin-left-1"
                 data-toggle="modal" th:data-target="${'#inputComentarios'+post.getId}">
             <i class="material-icons">textsms</i>
-        </button><span th:text="${post.getNumeroComentarios}" class="padding-left-1"></span>
+        </button>
+        <span th:fragment="comentario-num" th:id="${'comentario-num'+post.getId}">
+            <span th:text="${post.getNumeroComentarios}" class="padding-left-1"></span>
+        </span>
 
         <!--excluir postagem-->
         <button th:if="${principalUser == post.getUsuarioPost}" type="button" class="btn btn-danger btn-fab btn-fab-mini btn-round margin-left-1"
@@ -69,47 +71,46 @@
                 <!--input de comentario na postagem-->
                 <div class="header">
                     <!--formulario input comentarios-->
-                    <form action="/postagem/comentar" method="post">
-                        <span class="container padding-top-2 bmd-form-group">
-                            <div class="container input-group">
-                                <div class="col-1 input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="material-icons">textsms</i>
-                                     </span>
-                                </div>
-                                <input type="hidden" name="id" th:value="${post.getId}" autocomplete="off" required/>
-                                <input type="text" class="col-10 form-control" name="comentario"
-                                       placeholder="Deixe seu Comentário" autocomplete="off" required/>
-                                <button type="submit" class="col-0 btn btn-default btn-fab btn-round">
-                                    <i class="material-icons">send</i>
-                                </button>
+                    <span class="container padding-top-2 bmd-form-group">
+                        <div class="container input-group">
+                            <div class="col-1 input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="material-icons">textsms</i>
+                                 </span>
                             </div>
-                        </span>
-                    </form>
+                            <input th:id="${'input-comentario'+post.getId}" type="text" class="col-10 form-control" name="comentario"
+                                   placeholder="Deixe seu Comentário" autocomplete="off" required/>
+                            <button th:attr="onclick=|comentarP(${post.getId})|" class="col-0 btn btn-default btn-fab btn-round">
+                                <i class="material-icons">send</i>
+                            </button>
+                        </div>
+                    </span>
                 </div>
                 <!--comentarios postagem (lista)-->
                 <div class="modal-body">
-                    <div th:each="comentario : ${post.getComentariosUsers}" class="container card padding-top-0">
-                        <!--top comentario-->
-                        <div class="row">
-                            <!--imagem comentario-->
-                            <div class="col-md-2 col-sm-3 container-img-xm">
-                                <img th:if="${post.getImagemPost}"
-                                     th:src="${'/provedor/nickImg/'+comentario.getComentarioUsuario.getUsername}"
-                                     alt="Thumbnail Image" class="rounded-circle img-fluid"/>
-                            </div>
-                            <div class="col-md-10 col-sm-9 padding-top-0">
-                                <div class="float-left text-left col-2">
-                                    <!--user-->
-                                    <b>
-                                        <a th:href="${'/perfil/'+comentario.getComentarioUsuario.getUsername}">
-                                            <span th:text="${'@'+comentario.getComentarioUsuario.getUsername}"></span>
-                                        </a>
-                                    </b>
+                    <div th:fragment="comentarios-list" th:id="${'comentarios-list'+post.getId}">
+                        <div th:each="comentario : ${post.getComentariosUsers}" class="container card padding-top-0">
+                            <!--top comentario-->
+                            <div class="row">
+                                <!--imagem comentario-->
+                                <div class="col-md-2 col-sm-3 container-img-xm">
+                                    <img th:if="${post.getImagemPost}"
+                                         th:src="${'/provedor/nickImg/'+comentario.getComentarioUsuario.getUsername}"
+                                         alt="Thumbnail Image" class="rounded-circle img-fluid"/>
                                 </div>
-                                <div class="col-12">
-                                    <!--comentario user-->
-                                    <span th:text="${' - '+comentario.getComentario}" class="float-left"></span>
+                                <div class="col-md-10 col-sm-9 padding-top-0">
+                                    <div class="float-left text-left col-2">
+                                        <!--user-->
+                                        <b>
+                                            <a th:href="${'/perfil/'+comentario.getComentarioUsuario.getUsername}">
+                                                <span th:text="${'@'+comentario.getComentarioUsuario.getUsername}"></span>
+                                            </a>
+                                        </b>
+                                    </div>
+                                    <div class="col-12">
+                                        <!--comentario user-->
+                                        <span th:text="${' - '+comentario.getComentario}" class="float-left"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -65,11 +65,11 @@
                                             </div>
                                             <div class="col-4"><span>Aceitar Solicitação?</span></div>
                                             <div class="vol-4 row">
-                                                <button class="btn btn-success" th:attr="onclick=|confirmarSolicit('${solicitacao.getMensagemDoUsuario}')|">
+                                                <button class="btn btn-success" th:attr="onclick=|respSolicit('${solicitacao.getMensagemDoUsuario}', true)|">
                                                     <i class="material-icons">done</i>
                                                 </button>
 
-                                                <button class="btn btn-danger" th:attr="onclick=|negarSolicit('${solicitacao.getMensagemDoUsuario}')|">
+                                                <button class="btn btn-danger" th:attr="onclick=|respSolicit('${solicitacao.getMensagemDoUsuario}', false)|">
                                                     <i class="material-icons">close</i>
                                                 </button>
                                             </div>

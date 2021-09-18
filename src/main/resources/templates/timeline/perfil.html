@@ -74,19 +74,22 @@
                                                     <h5 th:text="${usuario.getDescricaoPerfil}" class="card-description"></h5>
 
                                                     <!--verificar se perfil pertence ao usuario-->
-                                                    <div th:fragment="panel" id="panel" th:if="${principalUser != usuario}">
+                                                    <div th:if="${principalUser != usuario}">
 
                                                         <!--botao de alt amizade-->
                                                         <form id="formPerfil" action="/perfil/altAmizade" method="POST">
                                                             <input type="hidden" name="username" th:value="${usuario.getUsername}">
-                                                            <button id="btnSeguir" type="submit" class="btn btn-primary">
-                                                                <span th:if="${!solicitEnviada}"
+                                                            <button th:fragment="panel" id="panel" type="submit" class="btn btn-primary">
+                                                                <span th:if="${!solicitEnviada and usuario.isConfirmarSolicitacoes}"
+                                                                      th:text="${principalUser.friendWith(usuario)} ? 'Desconectar' : 'Solicitar Conexão'"></span>
+                                                                <span th:if="${!usuario.isConfirmarSolicitacoes}"
                                                                       th:text="${principalUser.friendWith(usuario)} ? 'Desconectar' : 'Conectar'"></span>
                                                                 <span th:if="${solicitEnviada}">Cancelar Solicitação</span>
                                                             </button>
                                                         </form>
 
-                                                        <a class="btn btn-secondary btn-sm" href="">Chat</a>
+                                                        <a th:if="${usuario.isChatPublico or usuario.friendWith(principalUser)}"
+                                                           class="btn btn-secondary btn-sm" href="">Chat</a>
                                                     </div>
                                                 </div>
                                             </div>

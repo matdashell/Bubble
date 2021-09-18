@@ -41,26 +41,28 @@ public class PostagemController {
         Postagem postagem = postagemService.findById(id);
         Usuario myUser = principalUserService.get();
 
-        ModelAndView modelAndView = new ModelAndView("timeline/home");
+        ModelAndView modelAndView = new ModelAndView("replace/pack-postagem :: btn-curtir-postagem");
 
         //caso o usuairo principal não tenha curtido, sera curtida
         if(!postagem.getUsuariosCurtiram().contains(myUser)){
 
             myUser.getPostagensCurtidas().add(postagem);
+            postagem.getUsuariosCurtiram().add(myUser);
+            postagemService.save(postagem);
             usuarioService.save(myUser);
 
-            modelAndView.addObject("sucess" , "Postagem de "+postagem.getUsuarioPost().getNickname()+" favoritada!");
-            modelAndView.addObject("postagens", postagemService.searchByPostAmigos());
+            modelAndView.addObject("post", postagemService.findById(id));
             modelAndView.addObject("principalUser", principalUserService.get());
 
             return modelAndView;
         }
 
         myUser.getPostagensCurtidas().remove(postagem);
+        postagem.getUsuariosCurtiram().remove(myUser);
+        postagemService.save(postagem);
         usuarioService.save(myUser);
 
-        modelAndView.addObject("sucess", "Postagem de "+postagem.getUsuarioPost().getNickname()+" Desfavoritada!");
-        modelAndView.addObject("postagens", postagemService.searchByPostAmigos());
+        modelAndView.addObject("post", postagemService.findById(id));
         modelAndView.addObject("principalUser", principalUserService.get());
 
         return modelAndView;
@@ -68,39 +70,38 @@ public class PostagemController {
 
     //comentar em uma postagem
     @RequestMapping(value = "/comentar", method = RequestMethod.POST)
-    public ModelAndView comentarPostagem(@RequestParam("id") long id, @RequestParam("comentario") String coment){
+    public ModelAndView comentarPostagem(@RequestParam("id") long id, String comentario){
 
-        ModelAndView modelAndView = new ModelAndView("timeline/home");
+        ModelAndView modelAndView = new ModelAndView("replace/pack-postagem :: comentarios-list");
+
         Usuario myUser = principalUserService.get();
         Postagem postagem = postagemService.findById(id);
 
-        Comentario comentario = new Comentario();
+        Comentario coment = new Comentario();
 
         //caso todas as informações estajam corretas
         if(postagem != null){
 
             //relacionamento e save
-            comentario.setComentario(coment);
-            comentario.setDataComentario(LocalDate.now());
-            comentario.setPostComentario(postagem);
-            comentario.setComentarioUsuario(myUser);
+            coment.setComentario(comentario);
+            coment.setDataComentario(LocalDate.now());
+            coment.setPostComentario(postagem);
+            coment.setComentarioUsuario(myUser);
 
-            postagem.getComentariosUsers().add(comentario);
+            postagem.getComentariosUsers().add(coment);
 
-            myUser.getComentariosPost().add(comentario);
+            myUser.getComentariosPost().add(coment);
 
-            comentarioService.save(comentario);
+            comentarioService.save(coment);
             postagemService.save(postagem);
             usuarioService.save(myUser);
 
-            modelAndView.addObject("postagens", postagemService.searchByPostAmigos());
-            modelAndView.addObject("principalUser", myUser);
+            modelAndView.addObject("post", postagemService.findById(id));
 
             return modelAndView;
         }
 
-        modelAndView.addObject("postagens", postagemService.searchByPostAmigos());
-        modelAndView.addObject("principalUser", myUser);
+        modelAndView.addObject("post", postagemService.findById(id));
 
         return modelAndView;
     }
