@@ -9,6 +9,7 @@ import com.social.bubble.service.PrincipalUserService;
 import com.social.bubble.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -81,6 +82,13 @@ public class AjaxController {
     ModelAndView carregarNumComentarios(@PathVariable("id") long id){
         ModelAndView modelAndView = new ModelAndView("replace/pack-postagem :: comentario-num");
         modelAndView.addObject("post", postagemService.findById(id));
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/content/alert/{name}/{msg}", method = RequestMethod.GET)
+    ModelAndView carregarAlert(@PathVariable("name") String name, @PathVariable("msg") String msg){
+        ModelAndView modelAndView = new ModelAndView("replace/base :: alert");
+        modelAndView.addObject(name, msg);
         return modelAndView;
     }
 }

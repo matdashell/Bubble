@@ -58,6 +58,18 @@
     margin-top:25px;
 }
 
+.margin-top-2{
+    margin-top:50px;
+}
+
+.margin-top-3{
+    margin-top:75px;
+}
+
+.margin-top-4{
+    margin-top:100px;
+}
+
 .container-img {
   border: 1px black;
   width: 100%;

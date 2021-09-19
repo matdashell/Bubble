@@ -121,17 +121,17 @@
                                                                 </div>
                                                                 <!--inputs-->
                                                                 <div class="modal-body">
-                                                                <span class="bmd-form-group">
-                                                                    <div class="input-group">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text">
-                                                                                <i class="material-icons">article</i>
-                                                                            </span>
+                                                                    <span class="bmd-form-group">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text">
+                                                                                    <i class="material-icons">article</i>
+                                                                                </span>
+                                                                            </div>
+                                                                            <input type="text" class="form-control"
+                                                                                   name="descricao" placeholder="Texto Postagem" autocomplete="off" required>
                                                                         </div>
-                                                                        <input type="text" class="form-control"
-                                                                               name="descricao" placeholder="Texto Postagem" autocomplete="off" required>
-                                                                    </div>
-                                                                </span>
+                                                                    </span>
                                                                     <span class="bmd-form-group">
                                                                     <div class="input-group">
                                                                         <div class="input-group-prepend">
@@ -142,7 +142,7 @@
                                                                         <input type="file" class="form-control" name="file"
                                                                                placeholder="Foto" autocomplete="off" accept="image/png/jpg/jpeg/jfif" required>
                                                                     </div>
-                                                                </span>
+                                                                    </span>
                                                                 </div>
                                                                 <!--footer modal-->
                                                                 <div class="modal-footer">
@@ -159,7 +159,7 @@
                                             <!--postagens-->
                                             <div class="container row mx-auto">
                                                 <div th:each="post : ${usuario.getPostagens}" th:id="${'container-perfil-post'+post.getId}"
-                                                     class="card col-md-4 col-sm-6 padding-top-1">
+                                                     class="card col-lg-4 col-md-6 col-sm-12 padding-top-1">
                                                     <!--img-->
                                                     <div th:replace="replace/pack-postagem :: img-modal-container">
                                                         <!--replace img-modal-container-->

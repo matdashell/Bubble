@@ -55,83 +55,101 @@
     </nav>
 
     <!--fragmentos de alerta-->
-    <div th:fragment="alert">
+    <div th:fragment="alert" id="alert">
 
         <!--notificacao info-->
-        <div th:if="${info != null}" class="alert alert-info">
-            <div class="container">
-                <div class="alert-icon">
-                    <i class="material-icons">info_outline</i>
+        <div th:if="${info != null}">
+            <div  class="margin-top-3"></div>
+            <div class="alert alert-info fixed-top margin-top-3">
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="material-icons">info_outline</i>
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                    </button>
+                    <b>Info:</b> <span th:text="${info}"></span>
                 </div>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
-                </button>
-                <b>Info:</b> <span th:text="${info}"></span>
             </div>
         </div>
 
         <!--sucess info-->
-        <div th:if="${sucess != null}" class="alert alert-success">
-            <div class="container">
-                <div class="alert-icon">
-                    <i class="material-icons">check</i>
+        <div th:if="${sucess != null}">
+            <div  class="margin-top-3"></div>
+            <div class="alert alert-success fixed-top margin-top-3">
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="material-icons">check</i>
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                    </button>
+                    <b>Success:</b> <span th:text="${sucess}"></span>
                 </div>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
-                </button>
-                <b>Success:</b> <span th:text="${sucess}"></span>
             </div>
         </div>
 
         <!--sucess info-->
-        <div th:if="${param.logout != null}" class="alert alert-success">
-            <div class="container">
-                <div class="alert-icon">
-                    <i class="material-icons">check</i>
+        <div th:if="${param.logout != null}">
+            <div  class="margin-top-3"></div>
+            <div class="alert alert-success fixed-top margin-top-3">
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="material-icons">check</i>
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                    </button>
+                    <b>Success:</b> Deslogado com sucesso!.
                 </div>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
-                </button>
-                <b>Success:</b> Deslogado com sucesso!.
             </div>
         </div>
 
         <!--warning info-->
-        <div th:if="${warning != null}" class="alert alert-warning">
-            <div class="container">
-                <div class="alert-icon">
-                    <i class="material-icons">warning</i>
+        <div th:if="${warning != null}">
+            <div  class="margin-top-3"></div>
+            <div class="alert alert-warning fixed-top margin-top-3">
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="material-icons">warning</i>
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                    </button>
+                    <b>Warning:</b> <span th:text="${warning}"></span>
                 </div>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
-                </button>
-                <b>Warning:</b> <span th:text="${warning}"></span>
             </div>
         </div>
 
         <!--warning info-->
-        <div th:if="${param.error != null}" class="alert alert-warning">
-            <div class="container">
-                <div class="alert-icon">
-                    <i class="material-icons">warning</i>
+        <div th:if="${param.error != null}">
+            <div  class="margin-top-3"></div>
+            <div class="alert alert-warning fixed-top margin-top-3">
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="material-icons">warning</i>
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                    </button>
+                    <b>Warning:</b> Usuário ou senha incorreta!.
                 </div>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
-                </button>
-                <b>Warning:</b> Usuário ou senha incorreta!.
             </div>
         </div>
 
         <!--danger info-->
-        <div th:if="${danger != null}" class="alert alert-danger">
-            <div class="container">
-                <div class="alert-icon">
-                    <i class="material-icons">error_outline</i>
+        <div th:if="${danger != null}">
+            <div  class="margin-top-3"></div>
+            <div class="alert alert-danger fixed-top margin-top-3">
+                <div class="container">
+                    <div class="alert-icon">
+                        <i class="material-icons">error_outline</i>
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                    </button>
+                    <b>Danger:</b> <span th:text="${danger}"></span>
                 </div>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
-                </button>
-                <b>Danger:</b> <span th:text="${danger}"></span>
             </div>
         </div>
         <div class="clearfix"></div>
