@@ -49,9 +49,12 @@
                             <div class="card-body ">
                                 <div class="tab-content text-center">
                                     <div class="tab-pane active" id="avisos">
-
-                                        <div th:each="aviso : ${msgAvisos}" class="card">
-                                            <p th:text="${aviso.getMensagem}"></p>
+                                        <!--avisos-->
+                                        <div th:each="aviso : ${msgAvisos}" class="container row" th:id="${'aviso-msg'+aviso.getId}">
+                                            <div class="col-9"><p th:text="${aviso.getMensagem}"></p></div>
+                                            <div class="col-3">
+                                                <button class="btn btn-primary btn-sm" th:attr="onclick=|deletarAviso(${aviso.getId})|">OK</button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="solicit">

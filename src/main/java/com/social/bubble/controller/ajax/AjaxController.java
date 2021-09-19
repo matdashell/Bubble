@@ -83,5 +83,4 @@ public class AjaxController {
         modelAndView.addObject("post", postagemService.findById(id));
         return modelAndView;
     }
-
 }

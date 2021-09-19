@@ -109,7 +109,7 @@ public class PostagemController {
     @RequestMapping(value = "/deletar", method = RequestMethod.POST)
     ModelAndView deletarPostagem(long id){
 
-        ModelAndView modelAndView = new ModelAndView("timeline/home");
+        ModelAndView modelAndView = new ModelAndView("replace/base :: null");
 
         Usuario myUser = principalUserService.get();
         Postagem postagem = postagemService.findById(id);
@@ -123,7 +123,6 @@ public class PostagemController {
 
             postagemService.delete(postagemService.findById(id));
 
-            modelAndView.addObject("sucess", "Postagem deletada com sucesso!");
         }
 
         return modelAndView;

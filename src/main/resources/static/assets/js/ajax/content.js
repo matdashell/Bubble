@@ -6,24 +6,26 @@ window.onload = function () {
 }
 
 //função para submetimento de formulario de amizade
-var frm = $("form[id='formPerfil']");
+var frmAmizade = $("form[id='formPerfil']");
 
-frm.submit(function (e) {
+frmAmizade.submit(function (e) {
 
     e.preventDefault();
 
     $.ajax({
-        type: frm.attr('method'),
-        url: frm.attr('action'),
-        data: frm.serialize(),
+        type: frmAmizade.attr('method'),
+        url: frmAmizade.attr('action'),
+        data: frmAmizade.serialize(),
         success: function (data) {
             console.log('Submission was successful.');
             console.log(data);
 
             $("button[id='panel']").replaceWith(data);
+            $("li[id='replace-msg-icon']").load("/ajax/content/mensagem-icon");         //mensagem icon navbar
+            $("div[id='replace-msg-modal']").load("/ajax/content/mensagem-modal");      //mensagens (caixa de entrada)
 
         },
-        error: function () {
+        error: function (data) {
             console.log('An error occurred.');
             console.log(data);
 
@@ -42,6 +44,24 @@ function respSolicit(user, resposta){
 
             $("li[id='replace-msg-icon']").load("/ajax/content/mensagem-icon");   //recarregar icone msgm nav
             $("div[id='replace-msg-dados']").load("/ajax/content/mensagem-data"); //recarregar mensagens
+
+        },
+        error: function (data) {
+            console.log('An error occurred.');
+        },
+    });
+}
+
+function deletarAviso(id){
+    $.ajax({
+        type: "POST",
+        url: "/principalUser/deletarAviso",
+        data: {id: id},
+        success: function () {
+            console.log('Submission was successful.');
+
+            $("li[id='replace-msg-icon']").load("/ajax/content/mensagem-icon");   //recarregar icone msgm nav
+            $("div[id='aviso-msg"+id+"']").remove();                              //excluir aviso
 
         },
         error: function (data) {
@@ -87,6 +107,29 @@ function comentarP(id){
         error: function (data) {
             console.log('An error occurred.');
             console.log(data);
+        },
+    });
+}
+
+function deletarPost(id){
+
+    $.ajax({
+        type: "POST",
+        url: "/postagem/deletar",
+        data: {id : id},
+        success: function (data) {
+            console.log('Submission was successful.');
+
+            $("div[id='container-perfil-post"+id+"']").remove();
+            $("div[id='modal-footer-post"+id+"']").remove();
+            $("div[id='inputComentarios"+id+"']").remove();
+            $("div[id='modal-img-post"+id+"']").remove();
+            $("div[id='fotoPostagem"+id+"']").remove();
+            $("div[id='deletePost"+id+"']").remove();
+
+        },
+        error: function (data) {
+            console.log('An error occurred.');
         },
     });
 }

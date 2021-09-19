@@ -7,7 +7,7 @@
 
 
 <!--fragmento botao para ativar modal-->
-    <div th:fragment="footer-modal-pack" class="card-footer">
+    <div th:fragment="footer-modal-pack" th:id="${'modal-footer-post'+post.getId}" class="card-footer">
         <!--curtidas postagem-->
         <div th:fragment="btn-curtir-postagem" th:id="${'btn-curtir'+post.getId}" class="margin-left-1">
             <button class="btn btn-primary btn-fab btn-fab-mini btn-round" th:attr="onclick=|curtir(${post.getId})|">
@@ -46,10 +46,9 @@
                 <!--body-->
                 <div class="modal-body">
                     <button class="btn btn-info col-6" data-dismiss="modal" aria-label="Close">Cancelar</button>
-                    <form action="/postagem/deletar" method="post">
-                        <input type="hidden" name="id" th:value="${post.getId}">
-                        <button type="submit" class="btn btn-primary col-6">Confirmar</button>
-                    </form>
+                    <button th:attr="onclick=|deletarPost(${post.getId})|" data-dismiss="modal"
+                            class="btn btn-primary col-6">Confirmar
+                    </button>
                 </div>
             </div>
         </div>
@@ -125,7 +124,8 @@
 
 
 <!--fragmento imagem postagem ligado ao modal; exibir postagem completa-->
-    <div th:fragment="img-modal-container" class="container-img" data-toggle="modal" th:data-target="${'#fotoPostagem'+post.getId}">
+    <div th:fragment="img-modal-container" th:id="${'modal-img-post'+post.getId}"
+         class="container-img" data-toggle="modal" th:data-target="${'#fotoPostagem'+post.getId}">
         <img th:if="${post.getImagemPost != null}" class="card-img-top img click"
              th:src="${'/provedor/postImg/'+post.getId}" rel="nofollow" alt="Card image cap">
     </div>

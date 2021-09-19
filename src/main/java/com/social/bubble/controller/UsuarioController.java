@@ -108,4 +108,20 @@ public class UsuarioController {
 
         return modelAndView;
     }
+
+    //responder solicitação de amizade
+    @RequestMapping(value = "/deletarAviso", method = RequestMethod.POST)
+    ModelAndView DeletarAvisoMsg(long id){
+
+        ModelAndView modelAndView = new ModelAndView("replace/base :: null");
+
+        Usuario myUser = principalUserService.get();
+        Mensagem mensagem = mensagemService.findById(id);
+
+        if(mensagem.getMensagemParaUsuario().equals(myUser.getUsername())){
+            mensagemService.delete(mensagem);
+        }
+
+        return modelAndView;
+    }
 }

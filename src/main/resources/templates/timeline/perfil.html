@@ -158,7 +158,7 @@
 
                                             <!--postagens-->
                                             <div class="container row mx-auto">
-                                                <div th:each="post : ${usuario.getPostagens}"
+                                                <div th:each="post : ${usuario.getPostagens}" th:id="${'container-perfil-post'+post.getId}"
                                                      class="card col-md-4 col-sm-6 padding-top-1">
                                                     <!--img-->
                                                     <div th:replace="replace/pack-postagem :: img-modal-container">

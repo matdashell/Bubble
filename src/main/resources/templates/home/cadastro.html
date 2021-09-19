@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <!---->
-                    <form id="formCad" action="/cadastro/" method="post" enctype="multipart/form-data">
+                    <form id="formCad" action="/cadastro/" method="post" onsubmit="validarCkeck();" enctype="multipart/form-data">
                         <div class="card-login">
                             <div class="tab-content text-center">
 
@@ -113,11 +113,11 @@
 
                                         <div class="col-md-12">
                                             <div class="title">
-                                                <h3>Com qual gênero se indentifica? *</h3>
+                                                <h4>Com qual gênero se indentifica? *</h4>
                                             </div>
                                             <div class="form-check">
                                                 <label class="form-check-label" th:each="gen : ${genero}">
-                                                    <input class="form-check-input" type="radio" name="genero" th:value="${gen}">
+                                                    <input class="form-check-input check-gen" type="radio" name="genero" th:value="${gen}">
                                                     <p th:text="${gen}"></p>
                                                     <span class="circle">
                                                         <span class="check"></span>
@@ -129,11 +129,11 @@
                                         <div class="form-group col">
                                             <div class="col">
                                                 <div class="title">
-                                                    <h3>Cores Favoritas *</h3>
+                                                    <h4>Cores Favoritas *</h4>
                                                 </div>
                                                 <div class="form-check">
                                                     <label class="form-check-label" th:each="cor : ${cores}">
-                                                        <input class="form-check-input" name="coresFavoritas" type="checkbox" th:value="${cor}">
+                                                        <input class="form-check-input check-cor" name="coresFavoritas" type="checkbox" th:value="${cor}">
                                                         <p th:text="${cor}"></p>
                                                         <span class="form-check-sign">
                                                             <span class="check"></span>
@@ -146,11 +146,11 @@
                                         <div class="form-group col">
                                             <div class="col">
                                                 <div class="title">
-                                                    <h3>Animais Favoritos *</h3>
+                                                    <h4>Animais Favoritos *</h4>
                                                 </div>
                                                 <div class="form-check">
                                                     <label class="form-check-label" th:each="animal : ${animais}">
-                                                        <input class="form-check-input" name="animaisFavoritos" type="checkbox" th:value="${animal}">
+                                                        <input class="form-check-input check-animal" name="animaisFavoritos" type="checkbox" th:value="${animal}">
                                                         <p th:text="${animal}"></p>
                                                         <span class="form-check-sign">
                                                             <span class="check"></span>
@@ -163,11 +163,11 @@
                                         <div class="form-group col">
                                             <div class="col">
                                                 <div class="title">
-                                                    <h3>Musicas favoritas *</h3>
+                                                    <h4>Musicas favoritas *</h4>
                                                 </div>
                                                 <div class="form-check">
                                                     <label class="form-check-label" th:each="musica : ${musicas}">
-                                                        <input class="form-check-input" name="estiloMusical" type="checkbox" th:value="${musica}">
+                                                        <input class="form-check-input check-musica" name="estiloMusical" type="checkbox" th:value="${musica}">
                                                         <p th:text="${musica}"></p>
                                                         <span class="form-check-sign">
                                                             <span class="check"></span>
@@ -249,5 +249,6 @@
         </main>
         <footer th:replace="replace/base :: footer"></footer>
         <div th:replace="replace/base :: js"></div>
+        <script src="/assets/js/custom.js" type="text/javascript"></script>
     </body>
 </html>
