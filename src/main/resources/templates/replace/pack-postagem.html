@@ -71,13 +71,13 @@
                 <div class="header">
                     <!--formulario input comentarios-->
                     <span class="container padding-top-2 bmd-form-group">
-                        <div class="container input-group">
-                            <div class="col-1 input-group-prepend">
+                        <div class="container row input-group">
+                            <div class="col-2 input-group-prepend">
                                 <span class="input-group-text">
                                     <i class="material-icons">textsms</i>
                                  </span>
                             </div>
-                            <input th:id="${'input-comentario'+post.getId}" type="text" class="col-10 form-control" name="comentario"
+                            <input th:id="${'input-comentario'+post.getId}" type="text" class="col-8 form-control" name="comentario"
                                    placeholder="Deixe seu Comentário" autocomplete="off" required/>
                             <button th:attr="onclick=|comentarP(${post.getId})|" class="col-0 btn btn-default btn-fab btn-round">
                                 <i class="material-icons">send</i>
