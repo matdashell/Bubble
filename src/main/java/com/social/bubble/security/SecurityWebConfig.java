@@ -20,7 +20,10 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().anyRequest().permitAll()
+                .authorizeRequests().antMatchers("/login/","/cadastro/").permitAll()
+                .and().authorizeRequests().antMatchers(
+                        "/homePage/**","/perfil/**","/config/**","/bubbleChat/**","/pesquisa/**"
+                ).authenticated()
                 .and().headers().frameOptions().sameOrigin()
                 .and().formLogin().loginPage("/login/").successForwardUrl("/login/").permitAll()
                 .and().logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));

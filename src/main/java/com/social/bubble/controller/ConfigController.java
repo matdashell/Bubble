@@ -73,8 +73,9 @@ public class ConfigController {
     public String configSenha(String antigaSenha, String novaSenha){
 
         Usuario myUser = principalUserService.get();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        if(new BCryptPasswordEncoder().matches(myUser.getPassword(), antigaSenha)){
+        if(bCryptPasswordEncoder.matches(antigaSenha, myUser.getPassword())){
 
             myUser.setSenha(new BCryptPasswordEncoder(8).encode(novaSenha));
 
